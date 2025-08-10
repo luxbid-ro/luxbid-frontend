@@ -9,7 +9,7 @@ body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,s
 .nav-row{display:flex;align-items:center;gap:18px;padding:12px 0}
 .brand {
   font-weight: 700;
-  font-size: 22px;
+  font-size: 26px;
   letter-spacing: 0;
   text-decoration: none;
   color: #111;
@@ -50,7 +50,10 @@ body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,s
 .section{padding:56px 0;background:#fff}
 .section h2{text-align:center;font-size:42px;letter-spacing:-.3px;color:#0f0f0f;margin:0 0 34px;font-weight:900}
 .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
-.card{background:#fff;border:1px solid #ECECEC;border-radius:16px;padding:28px;text-align:center;box-shadow:0 1px 2px rgba(0,0,0,.03)}
+.grid-2x2{display:grid;grid-template-columns:repeat(2,1fr);gap:32px;max-width:800px;margin:0 auto}
+.card{background:#fff;border:1px solid #ECECEC;border-radius:16px;padding:28px;text-align:center;box-shadow:0 1px 2px rgba(0,0,0,.03);transition:all 0.2s ease;cursor:pointer}
+/* No hover effect - force reload v2 */
+
 .icon-badge{width:56px;height:56px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:#FFF1C9;color:#D09A1E;margin-bottom:14px}
 .card h3{margin:6px 0 8px;font-size:22px;color:#202020;font-weight:800}
 .card p{margin:0;color:#7A7A7A;font-size:15px}

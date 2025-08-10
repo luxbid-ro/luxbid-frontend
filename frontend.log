@@ -1,0 +1,172 @@
+
+> luxbid-web@0.1.0 dev
+> next dev --turbopack
+
+   ▲ Next.js 15.4.6 (Turbopack)
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.1.136:3000
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 564ms
+ ○ Compiling /oferte ...
+ ✓ Compiled /oferte in 836ms
+🔄 Render - loading: true listings: 0 error: 
+ GET /oferte 200 in 982ms
+ ✓ Compiled / in 110ms
+ GET / 200 in 148ms
+ ✓ Compiled /dashboard in 102ms
+ GET /dashboard 200 in 130ms
+ ✓ Compiled /auth/login in 105ms
+ GET /auth/login 200 in 135ms
+ GET /dashboard 200 in 17ms
+ ✓ Compiled /dashboard/add-listing in 100ms
+ GET /dashboard/add-listing 200 in 129ms
+ ✓ Compiled in 15ms
+ ✓ Compiled in 16ms
+ ✓ Compiled in 17ms
+ ✓ Compiled in 8ms
+ ✓ Compiled in 20ms
+ ✓ Compiled in 8ms
+ ✓ Compiled in 8ms
+ GET / 200 in 38ms
+ ✓ Compiled in 8ms
+ ✓ Compiled in 10ms
+ GET /dashboard/add-listing 200 in 126ms
+ GET /dashboard/add-listing 200 in 50ms
+ GET /dashboard/add-listing 200 in 49ms
+ GET /auth/login 200 in 50ms
+ GET /dashboard 200 in 17ms
+ ✓ Compiled /dashboard/my-listings in 101ms
+ GET /dashboard/my-listings 200 in 129ms
+ GET /dashboard 200 in 49ms
+ GET /dashboard/add-listing 200 in 50ms
+ GET /dashboard/add-listing 200 in 48ms
+ ✓ Compiled /oferte/[id] in 102ms
+ GET /oferte/cme5vt4w10005urv97f6l5dy8 200 in 360ms
+ ✓ Compiled in 25ms
+ GET /oferte/cme5vt4w10005urv97f6l5dy8 200 in 93ms
+ GET /dashboard 200 in 43ms
+ GET /dashboard/my-listings 200 in 52ms
+ GET /oferte/cme5vt4w10005urv97f6l5dy8 200 in 35ms
+ GET /dashboard 200 in 50ms
+ GET /dashboard/my-listings 200 in 49ms
+ GET /oferte/cme5vkdcn0001ur2ss0hhkpr5 200 in 42ms
+ GET /dashboard 200 in 50ms
+ GET /dashboard/my-listings 200 in 49ms
+ GET /oferte/cme5v3jgb0001ur4zot34v5v8 200 in 47ms
+ GET /dashboard 200 in 48ms
+ GET /dashboard/my-listings 200 in 47ms
+ GET /oferte/cme5uqhru0001urki0mxdjap5 200 in 44ms
+ GET /dashboard 200 in 47ms
+ ✓ Compiled in 7ms
+ GET /dashboard 200 in 17ms
+ ✓ Compiled / in 10ms
+ GET / 200 in 95ms
+ ✓ Compiled / in 8ms
+ GET / 200 in 54ms
+ GET / 200 in 66ms
+ GET /oferte?q=ceas 200 in 51ms
+ GET /oferte/cme5tclwe0004urvrdos50bwn 200 in 37ms
+ GET / 200 in 54ms
+ GET /oferte?q=rolex 200 in 31ms
+ GET /oferte/cme5vt4w10005urv97f6l5dy8 200 in 49ms
+ GET / 200 in 56ms
+ GET / 200 in 45ms
+ GET /oferte?q=rolex 200 in 80ms
+ GET /oferte/cme5vt4w10005urv97f6l5dy8 200 in 130ms
+ GET / 200 in 42ms
+🔄 Render - loading: true listings: 0 error: 
+ GET /oferte 200 in 67ms
+ GET /oferte/cme5ssmxv0005urnnr89x3jzw 200 in 44ms
+ ✓ Compiled in 9ms
+ ✓ Compiled in 9ms
+ GET / 200 in 55ms
+ GET /oferte?q=rolex 200 in 79ms
+ GET /dashboard 200 in 56ms
+ GET /dashboard/my-listings 200 in 55ms
+ GET /oferte/cme5vt4w10005urv97f6l5dy8 200 in 111ms
+ GET /oferte/cme5vt4w10005urv97f6l5dy8 200 in 62ms
+ GET /oferte/cme5vt4w10005urv97f6l5dy8 200 in 27ms
+ ✓ Compiled in 9ms
+ GET /dashboard 200 in 84ms
+ GET /dashboard/my-listings 200 in 103ms
+ ✓ Compiled /dashboard/edit-listing/[id] in 116ms
+ GET /dashboard/edit-listing/cme5vt4w10005urv97f6l5dy8 200 in 366ms
+ GET /oferte/cme5vt4w10005urv97f6l5dy8 200 in 68ms
+ GET /oferte/cme5vt4w10005urv97f6l5dy8 200 in 83ms
+ GET / 200 in 60ms
+ GET /oferte?q=rolex 200 in 48ms
+ GET /oferte/cme5vt4w10005urv97f6l5dy8 200 in 52ms
+ GET /dashboard 200 in 53ms
+ GET / 200 in 56ms
+ GET /auth/login 200 in 61ms
+ GET /dashboard 200 in 21ms
+ GET / 200 in 63ms
+ GET /oferte?q=rolex 200 in 34ms
+ GET /oferte/cme5vt4w10005urv97f6l5dy8 200 in 55ms
+ GET /dashboard 200 in 54ms
+ GET / 200 in 54ms
+ GET /auth/login 200 in 96ms
+ GET /dashboard 200 in 19ms
+ GET / 200 in 53ms
+ GET /oferte?q=rolex 200 in 18ms
+ GET /oferte/cme5vt4w10005urv97f6l5dy8 200 in 55ms
+ GET /dashboard 200 in 52ms
+ GET / 200 in 53ms
+ GET /auth/login 200 in 54ms
+ GET /dashboard 200 in 16ms
+ GET /dashboard/my-listings 200 in 51ms
+ GET /oferte/cme5vt4w10005urv97f6l5dy8 200 in 51ms
+ GET /dashboard/edit-listing/cme5vt4w10005urv97f6l5dy8 200 in 53ms
+ GET / 200 in 54ms
+🔄 Render - loading: true listings: 0 error: 
+ GET /oferte 200 in 53ms
+ GET /dashboard 200 in 55ms
+ GET /dashboard/add-listing 200 in 118ms
+ GET / 200 in 49ms
+ GET / 200 in 69ms
+ ✓ Compiled in 18ms
+ ✓ Compiled in 15ms
+ ✓ Compiled in 77ms
+ GET / 200 in 157ms
+ ✓ Compiled in 45ms
+ ✓ Compiled in 86ms
+ GET / 200 in 129ms
+ ✓ Compiled in 10ms
+ ✓ Compiled in 10ms
+ ✓ Compiled in 12ms
+ ✓ Compiled in 13ms
+ GET /oferte?category=Bijuterii 200 in 90ms
+ GET /oferte?category=Gen%C8%9Bi 200 in 34ms
+ GET /oferte?category=Ceasuri 200 in 34ms
+ GET /oferte?category=Ceasuri 200 in 33ms
+ ✓ Compiled in 9ms
+🔄 Render - loading: true listings: 0 error: 
+ GET /oferte?category=Gen%C8%9Bi 200 in 128ms
+ GET /oferte?category=Ceasuri 200 in 37ms
+ GET /oferte?category=Gen%C8%9Bi 200 in 33ms
+ GET /oferte?category=Bijuterii 200 in 33ms
+🔄 Render - loading: true listings: 0 error: 
+ GET /oferte 200 in 60ms
+ GET / 200 in 60ms
+🔄 Render - loading: true listings: 0 error: 
+ GET /oferte 200 in 59ms
+ GET /oferte?category=Ceasuri 200 in 31ms
+ GET /oferte?category=Gen%C8%9Bi 200 in 34ms
+ GET /oferte?category=Bijuterii 200 in 33ms
+🔄 Render - loading: true listings: 0 error: 
+ GET /oferte 200 in 56ms
+ GET /oferte?category=Ceasuri 200 in 31ms
+ GET / 200 in 57ms
+ ✓ Compiled in 49ms
+ ✓ Compiled in 10ms
+ ✓ Compiled in 10ms
+ GET /oferte?category=Ceasuri 200 in 39ms
+ GET / 200 in 134ms
+ ✓ Compiled in 10ms
+ ✓ Compiled in 8ms
+ ✓ Compiled in 8ms
+ ✓ Compiled in 9ms
+ GET / 200 in 119ms
+[?25h
