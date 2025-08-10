@@ -104,6 +104,9 @@ export default function NavBar() {
         <div className="nav-actions">
           {isAuthed ? (
             <>
+              <a className="btn btn-outline" href="/mesaje" style={{ marginRight: '8px' }}>
+                💬 Mesaje
+              </a>
               <NotificationBell />
               <a className="btn btn-outline" href="/dashboard">Contul Meu</a>
               <button 
