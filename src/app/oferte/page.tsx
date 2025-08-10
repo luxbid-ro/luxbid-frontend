@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 
 type Listing = {
@@ -17,366 +17,315 @@ type Listing = {
   }>
 }
 
-export default function OfertePage() {
+function OfertesContent() {
   const searchParams = useSearchParams()
   const [listings, setListings] = useState<Listing[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
-  
-  // Search & Filter states - initialize from URL params
-  const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '')
-  const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || '')
-  const [sortBy, setSortBy] = useState('newest')
+  const [searchQuery, setSearchQuery] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState('')
+  const [filteredListings, setFilteredListings] = useState<Listing[]>([])
 
-  // Update states when URL params change
+  // Initialize from URL params
   useEffect(() => {
-    const newQuery = searchParams.get('q') || ''
-    const newCategory = searchParams.get('category') || ''
-    
-    setSearchQuery(newQuery)
-    setSelectedCategory(newCategory)
+    const q = searchParams.get('q') || ''
+    const category = searchParams.get('category') || ''
+    setSearchQuery(q)
+    setSelectedCategory(category)
   }, [searchParams])
 
-  const loadListings = useCallback(async () => {
+  // Fetch listings
+  const fetchListings = useCallback(async () => {
     try {
       setLoading(true)
-      console.log('🔍 Loading listings with filters:', { searchQuery, selectedCategory, sortBy })
-      
-      const base = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000'
-      const params = new URLSearchParams()
-      
-      if (searchQuery.trim()) params.append('q', searchQuery.trim())
-      if (selectedCategory) params.append('category', selectedCategory)
-      
-      const url = `${base}/listings${params.toString() ? '?' + params.toString() : ''}`
-      console.log('📡 Fetching:', url)
-      
-      const response = await fetch(url)
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000'}/listings`)
       
       if (response.ok) {
-        let data = await response.json()
-        console.log('📊 Data received:', data.length, 'listings')
-        
-        // Client-side sorting since backend doesn't support all sort options
-        if (sortBy === 'oldest') {
-          data = data.sort((a: Listing, b: Listing) => 
-            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
-        } else if (sortBy === 'title') {
-          data = data.sort((a: Listing, b: Listing) => a.title.localeCompare(b.title))
-        }
-        // 'newest' is already default from backend (orderBy: { createdAt: 'desc' })
-        
+        const data = await response.json()
         setListings(data)
       } else {
-        throw new Error(`HTTP ${response.status}`)
+        setError('Eroare la încărcarea ofertelor')
       }
-    } catch (err: any) {
-      console.error('❌ Fetch error:', err)
-      setError(err.message)
+    } catch (err) {
+      setError('Eroare de conectare la server')
     } finally {
       setLoading(false)
     }
-  }, [searchQuery, selectedCategory, sortBy])
+  }, [])
 
   useEffect(() => {
-    loadListings()
-  }, [loadListings])
+    fetchListings()
+  }, [fetchListings])
 
-  console.log('🔄 Render - loading:', loading, 'listings:', listings.length, 'error:', error)
+  // Filter listings based on search and category
+  useEffect(() => {
+    let filtered = listings
+
+    if (searchQuery) {
+      filtered = filtered.filter(listing => 
+        listing.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        listing.description.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    }
+
+    if (selectedCategory) {
+      filtered = filtered.filter(listing => 
+        listing.category.toLowerCase().includes(selectedCategory.toLowerCase())
+      )
+    }
+
+    setFilteredListings(filtered)
+  }, [listings, searchQuery, selectedCategory])
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault()
+    // Filter is handled by useEffect
+  }
+
+  const getRandomPlaceholder = (category: string) => {
+    const placeholders = {
+      'Ceasuri': 'https://via.placeholder.com/300x200/f0f0f0/666?text=Ceas+de+Lux',
+      'Genți': 'https://via.placeholder.com/300x200/f0f0f0/666?text=Geanta+Designer',
+      'Bijuterii': 'https://via.placeholder.com/300x200/f0f0f0/666?text=Bijuterie+Fina',
+      'Artă': 'https://via.placeholder.com/300x200/f0f0f0/666?text=Opera+de+Arta'
+    }
+    return placeholders[category as keyof typeof placeholders] || 'https://via.placeholder.com/300x200/f0f0f0/666?text=Obiect+de+Lux'
+  }
 
   if (loading) {
     return (
-      <section className="section">
-        <div className="container">
-          <h2>Se încarcă listările...</h2>
-          <p>Debug: loading={String(loading)}</p>
+      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ width: '40px', height: '40px', border: '4px solid #f3f3f3', borderTop: '4px solid #D09A1E', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 16px' }}></div>
+          <p>Se încarcă ofertele...</p>
         </div>
-      </section>
+      </div>
     )
   }
 
   if (error) {
     return (
-      <section className="section">
-        <div className="container">
-          <h2>Eroare la încărcarea listărilor</h2>
-          <p style={{ color: 'red' }}>Error: {error}</p>
-          <button onClick={() => window.location.reload()}>Încearcă din nou</button>
+      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ textAlign: 'center', color: 'red' }}>
+          <h2>❌ Eroare</h2>
+          <p>{error}</p>
+          <button onClick={fetchListings} style={{ padding: '10px 20px', marginTop: '16px', background: '#D09A1E', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer' }}>
+            Încearcă din nou
+          </button>
         </div>
-      </section>
+      </div>
     )
   }
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault()
-    loadListings() // This will use current searchQuery state
-  }
-
-  const clearFilters = () => {
-    setSearchQuery('')
-    setSelectedCategory('')
-    setSortBy('newest')
-  }
-
-  const getPrimaryImage = (listing: Listing) => {
-    const primaryImg = listing.images?.find(img => img.isPrimary)
-    return primaryImg?.imageUrl || listing.images?.[0]?.imageUrl || null
-  }
-
   return (
-    <section className="section">
-      <div className="container">
-        <div style={{ marginBottom: 30 }}>
-          <h2 style={{ marginBottom: 20 }}>Explorează Oferte de Lux</h2>
-          
-          {/* Search & Filter Bar */}
-          <div style={{ 
-            background: '#fff', 
-            padding: 20, 
-            borderRadius: 12, 
-            boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-            marginBottom: 30 
-          }}>
-            <form onSubmit={handleSearch} style={{ marginBottom: 15 }}>
-              <div style={{ 
-                display: 'grid', 
-                gridTemplateColumns: '1fr auto auto auto auto', 
-                gap: 15, 
-                alignItems: 'center' 
-              }}>
-                {/* Search Input */}
-                <div style={{ position: 'relative' }}>
-                  <input
-                    type="text"
-                    placeholder="Caută ceasuri, genți, bijuterii..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    style={{
-                      width: '100%',
-                      padding: '12px 40px 12px 12px',
-                      border: '1px solid #ddd',
-                      borderRadius: 8,
-                      fontSize: '1em'
-                    }}
-                  />
-                  <button
-                    type="submit"
-                    style={{
-                      position: 'absolute',
-                      right: 8,
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      background: '#fff',
-                      color: '#000',
-                      border: '1px solid #ddd',
-                      borderRadius: 6,
-                      padding: '6px 12px',
-                      cursor: 'pointer'
-                    }}
-                  >
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <circle cx="11" cy="11" r="8"/>
-                      <path d="m21 21-4.35-4.35"/>
-                    </svg>
-                  </button>
-                </div>
-                
-                {/* Category Filter */}
-                <select
-                  value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
+    <div style={{ minHeight: '100vh', background: 'var(--surface)', padding: '20px 0' }}>
+      <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px' }}>
+        {/* Header */}
+        <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+          <h1 style={{ fontSize: '48px', fontWeight: '900', color: 'var(--ink)', marginBottom: '16px' }}>
+            Oferte Disponibile
+          </h1>
+          <p style={{ fontSize: '18px', color: '#666', maxWidth: '600px', margin: '0 auto' }}>
+            Descoperă colecția noastră de obiecte de lux și fă o ofertă pentru cele care te atrag
+          </p>
+        </div>
+
+        {/* Search and Filters */}
+        <div style={{ background: '#fff', borderRadius: '16px', padding: '32px', marginBottom: '40px', boxShadow: '0 4px 6px rgba(0,0,0,.1)' }}>
+          {/* Search Bar */}
+          <form onSubmit={handleSearch} style={{ marginBottom: '24px' }}>
+            <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+              <div style={{ flex: 1, position: 'relative' }}>
+                <input
+                  type="text"
+                  placeholder="Caută ceasuri, genți, bijuterii..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                   style={{
-                    padding: 12,
-                    border: '1px solid #ddd',
-                    borderRadius: 8,
-                    minWidth: 150
+                    width: '100%',
+                    padding: '16px 20px',
+                    border: '2px solid #e5e5e5',
+                    borderRadius: '12px',
+                    fontSize: '16px',
+                    outline: 'none',
+                    transition: 'border-color 0.2s ease'
                   }}
-                >
-                  <option value="">Toate categoriile</option>
-                  <option value="Ceasuri">Ceasuri</option>
-                  <option value="Genți">Genți</option>
-                  <option value="Bijuterii">Bijuterii</option>
-                  <option value="Artă">Artă</option>
-                </select>
-                
-                {/* Sort By */}
-                <select
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value)}
-                  style={{
-                    padding: 12,
-                    border: '1px solid #ddd',
-                    borderRadius: 8,
-                    minWidth: 130
-                  }}
-                >
-                  <option value="newest">Cele mai noi</option>
-                  <option value="oldest">Cele mai vechi</option>
-                  <option value="title">Alfabetic</option>
-                </select>
-                
-                {/* Clear Filters */}
-                <button
-                  type="button"
-                  onClick={clearFilters}
-                  style={{
-                    padding: '12px 16px',
-                    background: '#f5f5f5',
-                    border: '1px solid #ddd',
-                    borderRadius: 8,
-                    cursor: 'pointer',
-                    color: '#666'
-                  }}
-                >
-                  Resetează
-                </button>
-                
-                {/* Results Count */}
-                <div style={{ 
-                  fontSize: '0.9em', 
-                  color: '#666',
-                  textAlign: 'center',
-                  minWidth: 100
-                }}>
-                  {listings.length} rezultate
-                </div>
+                />
               </div>
-            </form>
-            
-            {/* Active Filters Display */}
-            {(searchQuery || selectedCategory) && (
-              <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-                <span style={{ fontSize: '0.9em', color: '#666' }}>Filtre active:</span>
+              <button 
+                type="submit"
+                style={{ 
+                  background: '#fff',
+                  color: '#000',
+                  border: '1px solid #ddd',
+                  borderRadius: '12px', 
+                  padding: '16px 24px', 
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  fontSize: '16px',
+                  fontWeight: '600'
+                }}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="11" cy="11" r="8"/>
+                  <path d="m21 21-4.35-4.35"/>
+                </svg>
+                Caută
+              </button>
+            </div>
+          </form>
+
+          {/* Category Filter */}
+          <div>
+            <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '700', color: 'var(--ink)' }}>Categorie</h3>
+            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+              {['Toate', 'Ceasuri', 'Genți', 'Bijuterii', 'Artă'].map(category => (
+                <button
+                  key={category}
+                  onClick={() => setSelectedCategory(category === 'Toate' ? '' : category)}
+                  style={{
+                    padding: '12px 24px',
+                    borderRadius: '24px',
+                    border: '2px solid',
+                    borderColor: selectedCategory === (category === 'Toate' ? '' : category) ? '#D09A1E' : '#e5e5e5',
+                    background: selectedCategory === (category === 'Toate' ? '' : category) ? '#D09A1E' : '#fff',
+                    color: selectedCategory === (category === 'Toate' ? '' : category) ? '#fff' : '#666',
+                    cursor: 'pointer',
+                    fontSize: '14px',
+                    fontWeight: '600',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Active Filters Display */}
+          {(searchQuery || selectedCategory) && (
+            <div style={{ marginTop: '24px', padding: '16px', background: '#f9f9f9', borderRadius: '8px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
+                <span style={{ fontSize: '14px', fontWeight: '600', color: '#666' }}>Filtre active:</span>
                 {searchQuery && (
-                  <span style={{
-                    background: '#9a7b0f',
-                    color: '#fff',
-                    padding: '4px 8px',
-                    borderRadius: 12,
-                    fontSize: '0.8em'
-                  }}>
-                    "{searchQuery}"
+                  <span style={{ padding: '4px 12px', background: '#D09A1E', color: '#fff', borderRadius: '16px', fontSize: '12px' }}>
+                    Căutare: &ldquo;{searchQuery}&rdquo;
                   </span>
                 )}
                 {selectedCategory && (
-                  <span style={{
-                    background: '#9a7b0f',
-                    color: '#fff',
-                    padding: '4px 8px',
-                    borderRadius: 12,
-                    fontSize: '0.8em'
-                  }}>
-                    {selectedCategory}
+                  <span style={{ padding: '4px 12px', background: '#D09A1E', color: '#fff', borderRadius: '16px', fontSize: '12px' }}>
+                    Categorie: {selectedCategory}
                   </span>
                 )}
               </div>
-            )}
-          </div>
+              <p style={{ fontSize: '14px', color: '#666', margin: 0 }}>
+                Se afișează {filteredListings.length} din {listings.length} oferte
+              </p>
+            </div>
+          )}
         </div>
-        
+
         {/* Results */}
-        {listings.length === 0 && !loading ? (
-          <div style={{ textAlign: 'center', padding: '40px' }}>
-            <h3>📭 Nu s-au găsit rezultate</h3>
-            <p style={{ color: '#666', marginBottom: 20 }}>
+        {filteredListings.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '60px 20px' }}>
+            <div style={{ fontSize: '64px', marginBottom: '16px' }}>🔍</div>
+            <h3 style={{ fontSize: '24px', marginBottom: '12px', color: 'var(--ink)' }}>Nu am găsit oferte</h3>
+            <p style={{ color: '#666', marginBottom: '24px' }}>
               {searchQuery || selectedCategory 
-                ? 'Încearcă să modifici filtrele sau caută altceva.' 
-                : 'Nu există listări momentan.'}
+                ? 'Încearcă să modifici filtrele sau să cauți altceva'
+                : 'Nu există oferte disponibile momentan'
+              }
             </p>
             {(searchQuery || selectedCategory) && (
               <button 
-                onClick={clearFilters}
-                className="btn btn-gold"
-                style={{ marginRight: 15 }}
+                onClick={() => { setSearchQuery(''); setSelectedCategory('') }}
+                style={{ padding: '12px 24px', background: '#D09A1E', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer' }}
               >
-                Resetează filtrele
+                Șterge toate filtrele
               </button>
             )}
-            <a href="/dashboard/add-listing" className="btn btn-gold">
-              Adaugă prima listare
-            </a>
           </div>
         ) : (
-          <div className="grid">
-            {listings.map((listing) => {
-              const primaryImage = getPrimaryImage(listing)
-              return (
-                <a 
-                  key={listing.id} 
-                  href={`/oferte/${listing.id}`} 
-                  className="card" 
-                  style={{ textDecoration: 'none', overflow: 'hidden' }}
-                >
-                  {/* Image */}
-                  {primaryImage ? (
-                    <div style={{ 
-                      height: 200, 
-                      backgroundImage: `url(${primaryImage})`,
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
-                      marginBottom: 15
-                    }} />
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '24px' }}>
+            {filteredListings.map(listing => (
+              <div key={listing.id} style={{ background: '#fff', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 4px 6px rgba(0,0,0,.1)', transition: 'transform 0.2s ease', cursor: 'pointer' }}>
+                <div style={{ aspectRatio: '4/3', background: '#f5f5f5', position: 'relative' }}>
+                  {listing.images?.length > 0 ? (
+                    <img 
+                      src={listing.images.find(img => img.isPrimary)?.imageUrl || listing.images[0]?.imageUrl} 
+                      alt={listing.title}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
                   ) : (
                     <div style={{ 
-                      height: 200, 
-                      background: '#f5f5f5',
-                      display: 'flex',
-                      alignItems: 'center',
+                      width: '100%', 
+                      height: '100%', 
+                      display: 'flex', 
+                      alignItems: 'center', 
                       justifyContent: 'center',
+                      background: 'linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%)',
                       color: '#999',
-                      marginBottom: 15
+                      fontSize: '18px',
+                      fontWeight: '600'
                     }}>
-                      📸 Fără imagine
+                      📷 Fără imagine
                     </div>
                   )}
-                  
-                  {/* Content */}
-                  <h3 style={{ marginBottom: 8 }}>{listing.title}</h3>
-                  <p style={{ 
-                    color: '#666', 
-                    fontSize: '0.9em', 
-                    marginBottom: 10,
-                    display: '-webkit-box',
-                    WebkitLineClamp: 2,
-                    WebkitBoxOrient: 'vertical',
-                    overflow: 'hidden'
-                  }}>
-                    {listing.description}
+                  <div style={{ position: 'absolute', top: '12px', left: '12px', background: 'rgba(0,0,0,0.7)', color: '#fff', padding: '6px 12px', borderRadius: '16px', fontSize: '12px', fontWeight: '600' }}>
+                    {listing.category}
+                  </div>
+                </div>
+                <div style={{ padding: '20px' }}>
+                  <h3 style={{ fontSize: '18px', fontWeight: '700', color: 'var(--ink)', marginBottom: '8px', lineHeight: '1.4' }}>
+                    {listing.title}
+                  </h3>
+                  <p style={{ color: '#666', fontSize: '14px', marginBottom: '16px', lineHeight: '1.5' }}>
+                    {listing.description.length > 100 ? `${listing.description.substring(0, 100)}...` : listing.description}
                   </p>
-                  
-                  {/* Preț de pornire */}
-                  <div style={{ marginBottom: 12 }}>
-                    <span style={{ 
-                      color: '#9a7b0f', 
-                      fontWeight: 700, 
-                      fontSize: '1.1em',
-                      background: '#faf9f6',
-                      padding: '4px 8px',
-                      borderRadius: 6,
-                      border: '1px solid #e6d7a3'
-                    }}>
-                      Preț dorit: {listing.desiredPrice.toLocaleString('ro-RO')} {listing.currency}
-                    </span>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div>
+                      <p style={{ fontSize: '20px', fontWeight: '700', color: '#D09A1E', margin: 0 }}>
+                        {listing.desiredPrice.toLocaleString()} {listing.currency}
+                      </p>
+                      <p style={{ fontSize: '12px', color: '#999', margin: 0 }}>Preț dorit</p>
+                    </div>
+                    <button
+                      onClick={() => window.location.href = `/oferte/${listing.id}`}
+                      style={{ padding: '10px 20px', background: '#D09A1E', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontSize: '14px', fontWeight: '600' }}
+                    >
+                      Vezi detalii
+                    </button>
                   </div>
-                  
-                  <div style={{ 
-                    display: 'flex', 
-                    justifyContent: 'space-between', 
-                    alignItems: 'center'
-                  }}>
-                    <span style={{ color: '#9a7b0f', fontWeight: 700, fontSize: '0.9em' }}>
-                      {listing.category}
-                    </span>
-                    <span style={{ color: '#999', fontSize: '0.8em' }}>
-                      {new Date(listing.createdAt).toLocaleDateString('ro-RO')}
-                    </span>
-                  </div>
-                </a>
-              )
-            })}
+                </div>
+              </div>
+            ))}
           </div>
         )}
       </div>
-    </section>
+
+      <style jsx>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}</style>
+    </div>
+  )
+}
+
+export default function OfertePage() {
+  return (
+    <Suspense fallback={
+      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ width: '40px', height: '40px', border: '4px solid #f3f3f3', borderTop: '4px solid #D09A1E', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 16px' }}></div>
+          <p>Se încarcă...</p>
+        </div>
+      </div>
+    }>
+      <OfertesContent />
+    </Suspense>
   )
 }
