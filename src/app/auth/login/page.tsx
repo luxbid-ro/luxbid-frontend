@@ -21,6 +21,9 @@ export default function LoginPage() {
       if (res.ok) {
         const data = await res.json()
         localStorage.setItem('luxbid_token', data.accessToken)
+        if (data?.user?.id) {
+          localStorage.setItem('luxbid_user_id', data.user.id)
+        }
         router.push('/dashboard')
       } else {
         const err = await res.json()
