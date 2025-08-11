@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 
 export default function RegisterPage() {
   const router = useRouter()
-  const [personType, setPersonType] = useState<'FIZICA' | 'JURIDICA'>('FIZICA')
+  const [personType, setPersonType] = useState<'fizica' | 'juridica'>('fizica')
   const [form, setForm] = useState({
     // Date comune
     email: '',
@@ -39,7 +39,7 @@ export default function RegisterPage() {
       const registrationData = {
         ...form,
         personType,
-        name: personType === 'FIZICA' ? `${form.firstName} ${form.lastName}` : form.companyName
+        name: personType === 'fizica' ? `${form.firstName} ${form.lastName}` : form.companyName
       }
       
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000'}/auth/register`, {
