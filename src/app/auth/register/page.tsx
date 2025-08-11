@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 
 export default function RegisterPage() {
   const router = useRouter()
-  const [personType, setPersonType] = useState<'fizica' | 'juridica'>('fizica')
+  const [personType, setPersonType] = useState<'FIZICA' | 'JURIDICA'>('FIZICA')
   const [form, setForm] = useState({
     // Date comune
     email: '',
@@ -39,7 +39,7 @@ export default function RegisterPage() {
       const registrationData = {
         ...form,
         personType,
-        name: personType === 'fizica' ? `${form.firstName} ${form.lastName}` : form.companyName
+        name: personType === 'FIZICA' ? `${form.firstName} ${form.lastName}` : form.companyName
       }
       
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000'}/auth/register`, {
@@ -75,9 +75,9 @@ export default function RegisterPage() {
             <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
               <input
                 type="radio"
-                value="fizica"
-                checked={personType === 'fizica'}
-                onChange={(e) => setPersonType(e.target.value as 'fizica')}
+                value="FIZICA"
+                checked={personType === 'FIZICA'}
+                onChange={(e) => setPersonType(e.target.value as 'FIZICA')}
                 style={{ marginRight: '8px' }}
               />
               Persoană fizică
@@ -85,9 +85,9 @@ export default function RegisterPage() {
             <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
               <input
                 type="radio"
-                value="juridica"
-                checked={personType === 'juridica'}
-                onChange={(e) => setPersonType(e.target.value as 'juridica')}
+                value="JURIDICA"
+                checked={personType === 'JURIDICA'}
+                onChange={(e) => setPersonType(e.target.value as 'JURIDICA')}
                 style={{ marginRight: '8px' }}
               />
               Persoană juridică (Companie/Firmă)
@@ -118,7 +118,7 @@ export default function RegisterPage() {
         </div>
 
         {/* Câmpuri pentru persoană fizică */}
-        {personType === 'fizica' && (
+        {personType === 'FIZICA' && (
           <>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '20px' }}>
               <input
@@ -151,7 +151,7 @@ export default function RegisterPage() {
         )}
 
         {/* Câmpuri pentru persoană juridică */}
-        {personType === 'juridica' && (
+        {personType === 'JURIDICA' && (
           <>
             <div style={{ marginBottom: '20px' }}>
               <input
