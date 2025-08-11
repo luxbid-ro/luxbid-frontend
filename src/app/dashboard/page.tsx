@@ -13,7 +13,7 @@ export default function DashboardPage() {
         return
       }
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000'}/users/me`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000'}/users/profile`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         if (res.ok) {
