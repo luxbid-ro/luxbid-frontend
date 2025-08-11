@@ -7,14 +7,17 @@ type Listing = {
   title: string
   description: string
   category: string
-  desiredPrice: number
+  price: number
   currency: string
   createdAt: string
-  images: Array<{
+  images: string[]
+  user: {
     id: string
-    imageUrl: string
-    isPrimary: boolean
-  }>
+    email: string
+    firstName?: string
+    lastName?: string
+    companyName?: string
+  }
 }
 
 function OfertesContent() {
@@ -254,7 +257,7 @@ function OfertesContent() {
                 <div style={{ aspectRatio: '4/3', background: '#f5f5f5', position: 'relative' }}>
                   {listing.images?.length > 0 ? (
                     <img 
-                      src={listing.images.find(img => img.isPrimary)?.imageUrl || listing.images[0]?.imageUrl} 
+                      src={listing.images[0]} 
                       alt={listing.title}
                       style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                     />
@@ -287,7 +290,7 @@ function OfertesContent() {
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <div>
                       <p style={{ fontSize: '20px', fontWeight: '700', color: '#D09A1E', margin: 0 }}>
-                        {listing.desiredPrice.toLocaleString()} {listing.currency}
+                        {listing.price.toLocaleString()} {listing.currency}
                       </p>
                       <p style={{ fontSize: '12px', color: '#999', margin: 0 }}>Preț dorit</p>
                     </div>
