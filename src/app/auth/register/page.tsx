@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 
 export default function RegisterPage() {
   const router = useRouter()
-  const [personType, setPersonType] = useState<'fizica' | 'juridica'>('fizica')
+  const [personType, setPersonType] = useState<'FIZICA' | 'JURIDICA'>('FIZICA')
   const [form, setForm] = useState({
     // Date comune
     email: '',
@@ -39,7 +39,7 @@ export default function RegisterPage() {
       const registrationData = {
         ...form,
         personType,
-        name: personType === 'fizica' ? `${form.firstName} ${form.lastName}` : form.companyName
+        name: personType === 'FIZICA' ? `${form.firstName} ${form.lastName}` : form.companyName
       }
       
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000'}/auth/register`, {
@@ -77,7 +77,7 @@ export default function RegisterPage() {
                 type="radio"
                 value="FIZICA"
                 checked={personType === 'FIZICA'}
-                onChange={(e) => setPersonType(e.target.value as 'FIZICA')}
+                onChange={(e) => setPersonType(e.target.value as 'FIZICA'))
                 style={{ marginRight: '8px' }}
               />
               Persoană fizică
@@ -86,8 +86,8 @@ export default function RegisterPage() {
               <input
                 type="radio"
                 value="JURIDICA"
-                checked={personType === 'JURIDICA'}
-                onChange={(e) => setPersonType(e.target.value as 'JURIDICA')}
+                checked={personType === 'JURIDICA')
+                onChange={(e) => setPersonType(e.target.value as 'JURIDICA'))
                 style={{ marginRight: '8px' }}
               />
               Persoană juridică (Companie/Firmă)
