@@ -76,7 +76,7 @@ export default function RegisterPage() {
                 type="radio"
                 value="fizica"
                 checked={personType === 'fizica'}
-                onChange={(e) => setPersonType(e.target.value as 'fizica'))
+                onChange={(e) => setPersonType(e.target.value as 'fizica')}
                 style={{ marginRight: '8px' }}
               />
               Persoană fizică
@@ -86,7 +86,7 @@ export default function RegisterPage() {
                 type="radio"
                 value="juridica"
                 checked={personType === 'juridica'}
-                onChange={(e) => setPersonType(e.target.value as 'juridica'))
+                onChange={(e) => setPersonType(e.target.value as 'juridica')}
                 style={{ marginRight: '8px' }}
               />
               Persoană juridică (Companie/Firmă)
