@@ -38,8 +38,7 @@ export default function RegisterPage() {
     try {
       const registrationData = {
         ...form,
-        personType,
-        name: personType === 'fizica' ? `${form.firstName} ${form.lastName}` : form.companyName
+        personType
       }
       
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000'}/auth/register`, {
