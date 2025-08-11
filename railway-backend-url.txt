@@ -1,0 +1,3 @@
+# Railway Deployment
+# Backend URL will be available after Railway deployment
+# Format will be: https://luxbid-backend-production.up.railway.app
