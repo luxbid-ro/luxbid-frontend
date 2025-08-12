@@ -18,11 +18,16 @@ export default function ListingDetailPage() {
   useEffect(() => {
     const fetchData = async () => {
       if (!id) return
-      const base = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000'
+      const base = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://luxbid-backend.onrender.com'
+      
+      console.log('🔄 Fetching listing details for ID:', id)
       
       // Fetch listing details
       const listingRes = await fetch(`${base}/listings/${id}`)
+      console.log('📡 Listing API response status:', listingRes.status)
+      
       const listingData = listingRes.ok ? await listingRes.json() : null
+      console.log('📦 Listing data received:', listingData)
       setListing(listingData)
       
       // Check if current user is the owner
@@ -41,19 +46,38 @@ export default function ListingDetailPage() {
         }
       }
       
-      // Fetch images for listing
-      try {
-        const headers: any = {}
-        if (token) {
-          headers.Authorization = `Bearer ${token}`
+      // Use images from listing data or fallback to backend upload endpoint
+      if (listingData && listingData.images && listingData.images.length > 0) {
+        // Convert string array to ImageGallery format
+        const formattedImages = listingData.images.map((url: string, index: number) => ({
+          id: `${id}-${index}`,
+          imageUrl: url,
+          isPrimary: index === 0
+        }))
+        setImages(formattedImages)
+        console.log('✅ Using images from listing data:', formattedImages.length)
+      } else {
+        // Fallback: try to fetch from upload endpoint
+        try {
+          const headers: any = {}
+          if (token) {
+            headers.Authorization = `Bearer ${token}`
+          }
+          const imagesRes = await fetch(`${base}/upload/images/${id}`, { headers })
+          if (imagesRes.ok) {
+            const imagesData = await imagesRes.json()
+            // Convert to ImageGallery format
+            const formattedImages = imagesData.map((url: string, index: number) => ({
+              id: `${id}-upload-${index}`,
+              imageUrl: url,
+              isPrimary: index === 0
+            }))
+            setImages(formattedImages)
+            console.log('✅ Using images from upload endpoint:', formattedImages.length)
+          }
+        } catch (e) {
+          console.error('Error fetching images:', e)
         }
-        const imagesRes = await fetch(`${base}/upload/images/${id}`, { headers })
-        if (imagesRes.ok) {
-          const imagesData = await imagesRes.json()
-          setImages(imagesData)
-        }
-      } catch (e) {
-        console.error('Error fetching images:', e)
       }
 
       // Fetch offers if user is owner
@@ -80,7 +104,7 @@ export default function ListingDetailPage() {
       if (!token) return (window.location.href = '/auth/login')
       
       setLoading(true)
-      const base = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000'
+      const base = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://luxbid-backend.onrender.com'
       const res = await fetch(`${base}/offers`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
@@ -115,7 +139,7 @@ export default function ListingDetailPage() {
       if (!token) return
       
       setLoading(true)
-      const base = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000'
+      const base = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://luxbid-backend.onrender.com'
       const res = await fetch(`${base}/offers/${offerId}/accept`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` }
