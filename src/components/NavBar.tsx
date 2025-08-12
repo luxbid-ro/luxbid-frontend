@@ -46,24 +46,28 @@ export default function NavBar() {
         <a className="brand" href="/"><span className="lux">Lux</span><span className="bid">Bid</span></a>
         <nav className="nav-menu">
           <button 
+            type="button"
             onClick={() => handleCategoryClick('Ceasuri')}
             style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit', fontSize: 'inherit' }}
           >
             Ceasuri
           </button>
           <button 
+            type="button"
             onClick={() => handleCategoryClick('Genți')}
             style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit', fontSize: 'inherit' }}
           >
             Genți
           </button>
           <button 
+            type="button"
             onClick={() => handleCategoryClick('Bijuterii')}
             style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit', fontSize: 'inherit' }}
           >
             Bijuterii
           </button>
           <button 
+            type="button"
             onClick={() => router.push('/oferte')}
             style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit', fontSize: 'inherit' }}
           >

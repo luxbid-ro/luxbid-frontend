@@ -17,3 +17,4 @@ npm run dev
 ## Deploy
 
 Aplicația este pregătită pentru deploy pe Vercel. Importă repo-ul și folosește configurația implicită Next.js.
+# Force redeploy with correct API URL

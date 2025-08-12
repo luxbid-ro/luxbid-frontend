@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: 'LuxBid – Oferte Premium pentru Articole de Lux',
   description:
     'Platformă premium unde îți listezi obiectele de lux și primești oferte de preț. După acceptare și plata comisionului, se deblochează contactele și chatul privat.',
+  viewport: 'width=device-width, initial-scale=1',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -22,7 +23,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body>
         <NavBar />

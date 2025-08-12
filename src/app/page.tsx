@@ -47,7 +47,7 @@ export default function HomePage() {
                 <h1>Toți cumpărătorii de lux, la un clic distanță.</h1>
       <p>Ceasuri, genți și bijuterii de lux</p>
           <div className="cta-row">
-            <button onClick={handleVindeClick} className="btn-cta">Vinde un Obiect</button>
+            <button type="button" onClick={handleVindeClick} className="btn-cta">Vinde un Obiect</button>
             <a href="/oferte" className="btn-cta">Explorează Ofertele</a>
           </div>
         </div>

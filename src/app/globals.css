@@ -72,3 +72,9 @@ footer p{margin:0;text-align:center;font-size:13px;opacity:.85}
   .hero h1{font-size:40px}
   .grid{grid-template-columns:1fr}
 }
+
+/* LOADING SPINNER ANIMATION */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
