@@ -143,8 +143,7 @@ export default function MesajePage() {
                   padding: '20px',
                   borderBottom: index < conversations.length - 1 ? '1px solid #f0f0f0' : 'none',
                   cursor: 'pointer',
-                  transition: 'background-color 0.2s ease',
-                  ':hover': { backgroundColor: '#f9f9f9' }
+                  transition: 'background-color 0.2s ease'
                 }}
                 onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f9f9f9'}
                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}

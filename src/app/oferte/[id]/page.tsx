@@ -140,11 +140,11 @@ export default function ListingDetailPage() {
           console.error('Error fetching offers:', e)
         }
       }
-      } catch (fetchError) {
+      } catch (fetchError: any) {
         console.error(`💥 Network/Fetch Error:`, fetchError)
-        console.error(`🔧 Error name: ${fetchError.name}`)
-        console.error(`🔧 Error message: ${fetchError.message}`)
-        console.error(`🔧 Error stack:`, fetchError.stack)
+        console.error(`🔧 Error name: ${fetchError?.name}`)
+        console.error(`🔧 Error message: ${fetchError?.message}`)
+        console.error(`🔧 Error stack:`, fetchError?.stack)
         setListing(null)
       }
     }

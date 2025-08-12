@@ -1,9 +1,9 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import NotificationBell from './NotificationBell'
 
-export default function NavBar() {
+function NavBarContent() {
   const [isAuthed, setIsAuthed] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [activeCategory, setActiveCategory] = useState('')
@@ -450,6 +450,14 @@ export default function NavBar() {
         </div>
       )}
     </div>
+  )
+}
+
+export default function NavBar() {
+  return (
+    <Suspense fallback={<div className="nav" style={{ height: '60px', background: '#fff' }} />}>
+      <NavBarContent />
+    </Suspense>
   )
 }
 // Force deployment trigger
