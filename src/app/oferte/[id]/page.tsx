@@ -20,26 +20,69 @@ export default function ListingDetailPage() {
       if (!id) return
       const base = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://luxbid-backend.onrender.com'
       
-      // Fetch listing details
-      const listingRes = await fetch(`${base}/listings/${id}`)
-      const listingData = listingRes.ok ? await listingRes.json() : null
-      setListing(listingData)
-      
-      // Check if current user is the owner
-      const token = localStorage.getItem('luxbid_token')
-      if (token && listingData) {
-        try {
-          const userRes = await fetch(`${base}/users/me`, {
-            headers: { Authorization: `Bearer ${token}` }
-          })
-          if (userRes.ok) {
-            const userData = await userRes.json()
-            setIsOwner(userData.id === listingData.sellerId)
+      try {
+        console.log(`🔗 Fetching listing from: ${base}/listings/${id}`)
+        
+        // Fetch listing details with timeout and cache busting
+        const listingRes = await fetch(`${base}/listings/${id}?t=${Date.now()}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            'Pragma': 'no-cache'
+          },
+          mode: 'cors',
+          credentials: 'omit'
+        })
+        
+        console.log(`📊 Response status: ${listingRes.status} ${listingRes.statusText}`)
+        console.log(`📋 Response headers:`, Object.fromEntries(listingRes.headers.entries()))
+        
+        let listingData = null
+        if (listingRes.ok) {
+          const responseText = await listingRes.text()
+          console.log(`📄 Raw response:`, responseText)
+          
+          if (responseText.trim()) {
+            try {
+              listingData = JSON.parse(responseText)
+              console.log(`✅ Listing data received:`, listingData)
+              setListing(listingData)
+            } catch (jsonError) {
+              console.error(`❌ JSON Parse Error:`, jsonError)
+              console.error(`❌ Invalid JSON response:`, responseText)
+              setListing(null)
+            }
+          } else {
+            console.error(`❌ Empty response body`)
+            setListing(null)
           }
-        } catch (e) {
-          console.error('Error checking ownership:', e)
+        } else {
+          console.error(`❌ HTTP Error: ${listingRes.status} - ${listingRes.statusText}`)
+          const errorText = await listingRes.text()
+          console.error(`❌ Error response body:`, errorText)
+          setListing(null)
         }
-      }
+      
+        // Check if current user is the owner
+        const token = localStorage.getItem('luxbid_token')
+        if (token && listingData) {
+          try {
+            const userRes = await fetch(`${base}/users/me?t=${Date.now()}`, {
+              headers: { 
+                Authorization: `Bearer ${token}`,
+                'Cache-Control': 'no-cache'
+              },
+              mode: 'cors'
+            })
+            if (userRes.ok) {
+              const userData = await userRes.json()
+              setIsOwner(userData.id === listingData.sellerId)
+            }
+          } catch (e) {
+            console.error('Error checking ownership:', e)
+          }
+        }
       
       // Use images from listing data or fallback to backend upload endpoint
       if (listingData && listingData.images && listingData.images.length > 0) {
@@ -57,7 +100,13 @@ export default function ListingDetailPage() {
           if (token) {
             headers.Authorization = `Bearer ${token}`
           }
-          const imagesRes = await fetch(`${base}/upload/images/${id}`, { headers })
+          const imagesRes = await fetch(`${base}/upload/images/${id}?t=${Date.now()}`, { 
+            headers: {
+              ...headers,
+              'Cache-Control': 'no-cache'
+            },
+            mode: 'cors'
+          })
           if (imagesRes.ok) {
             const imagesData = await imagesRes.json()
             // Convert to ImageGallery format
@@ -76,8 +125,12 @@ export default function ListingDetailPage() {
       // Fetch offers if user is owner
       if (token && listingData) {
         try {
-          const offersRes = await fetch(`${base}/offers/listing/${id}`, {
-            headers: { Authorization: `Bearer ${token}` }
+          const offersRes = await fetch(`${base}/offers/listing/${id}?t=${Date.now()}`, {
+            headers: { 
+              Authorization: `Bearer ${token}`,
+              'Cache-Control': 'no-cache'
+            },
+            mode: 'cors'
           })
           if (offersRes.ok) {
             const offersData = await offersRes.json()
@@ -86,6 +139,13 @@ export default function ListingDetailPage() {
         } catch (e) {
           console.error('Error fetching offers:', e)
         }
+      }
+      } catch (fetchError) {
+        console.error(`💥 Network/Fetch Error:`, fetchError)
+        console.error(`🔧 Error name: ${fetchError.name}`)
+        console.error(`🔧 Error message: ${fetchError.message}`)
+        console.error(`🔧 Error stack:`, fetchError.stack)
+        setListing(null)
       }
     }
     fetchData()
@@ -100,7 +160,12 @@ export default function ListingDetailPage() {
       const base = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://luxbid-backend.onrender.com'
       const res = await fetch(`${base}/offers`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        headers: { 
+          'Content-Type': 'application/json', 
+          Authorization: `Bearer ${token}`,
+          'Cache-Control': 'no-cache'
+        },
+        mode: 'cors',
         body: JSON.stringify({ listingId: id, amount: Number(amount), currency }),
       })
       
@@ -109,8 +174,12 @@ export default function ListingDetailPage() {
         setAmount('')
         // Refresh offers if user is owner
         if (isOwner) {
-          const offersRes = await fetch(`${base}/offers/listing/${id}`, {
-            headers: { Authorization: `Bearer ${token}` }
+          const offersRes = await fetch(`${base}/offers/listing/${id}?t=${Date.now()}`, {
+            headers: { 
+              Authorization: `Bearer ${token}`,
+              'Cache-Control': 'no-cache'
+            },
+            mode: 'cors'
           })
           if (offersRes.ok) {
             setOffers(await offersRes.json())
@@ -135,14 +204,22 @@ export default function ListingDetailPage() {
       const base = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://luxbid-backend.onrender.com'
       const res = await fetch(`${base}/offers/${offerId}/accept`, {
         method: 'POST',
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { 
+          Authorization: `Bearer ${token}`,
+          'Cache-Control': 'no-cache'
+        },
+        mode: 'cors'
       })
       
       if (res.ok) {
         setMessage('Oferta a fost acceptată!')
         // Refresh offers
-        const offersRes = await fetch(`${base}/offers/listing/${id}`, {
-          headers: { Authorization: `Bearer ${token}` }
+        const offersRes = await fetch(`${base}/offers/listing/${id}?t=${Date.now()}`, {
+          headers: { 
+            Authorization: `Bearer ${token}`,
+            'Cache-Control': 'no-cache'
+          },
+          mode: 'cors'
         })
         if (offersRes.ok) {
           setOffers(await offersRes.json())
