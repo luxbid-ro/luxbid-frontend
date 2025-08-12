@@ -186,11 +186,11 @@ export default function NavBar() {
             <>
               <a className="btn btn-outline" href="/auth/login">
                 <span className="mobile-hidden">Conectare</span>
-                <span className="mobile-only">Login</span>
+                <span className="mobile-only">IN</span>
               </a>
               <a className="btn btn-gold" href="/auth/register">
                 <span className="mobile-hidden">Înregistrare</span>
-                <span className="mobile-only">Sign up</span>
+                <span className="mobile-only">UP</span>
               </a>
             </>
           )}
