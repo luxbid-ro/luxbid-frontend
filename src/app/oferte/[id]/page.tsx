@@ -20,14 +20,9 @@ export default function ListingDetailPage() {
       if (!id) return
       const base = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://luxbid-backend.onrender.com'
       
-      console.log('🔄 Fetching listing details for ID:', id)
-      
       // Fetch listing details
       const listingRes = await fetch(`${base}/listings/${id}`)
-      console.log('📡 Listing API response status:', listingRes.status)
-      
       const listingData = listingRes.ok ? await listingRes.json() : null
-      console.log('📦 Listing data received:', listingData)
       setListing(listingData)
       
       // Check if current user is the owner
@@ -55,7 +50,6 @@ export default function ListingDetailPage() {
           isPrimary: index === 0
         }))
         setImages(formattedImages)
-        console.log('✅ Using images from listing data:', formattedImages.length)
       } else {
         // Fallback: try to fetch from upload endpoint
         try {
@@ -73,7 +67,6 @@ export default function ListingDetailPage() {
               isPrimary: index === 0
             }))
             setImages(formattedImages)
-            console.log('✅ Using images from upload endpoint:', formattedImages.length)
           }
         } catch (e) {
           console.error('Error fetching images:', e)
