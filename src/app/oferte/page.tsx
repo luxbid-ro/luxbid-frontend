@@ -95,25 +95,33 @@ function OfertesContent() {
     setError('')
     
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || 'https://luxbid-backend.onrender.com'}/listings`)
+      console.log('🔄 Fetching from API...', process.env.NEXT_PUBLIC_API_BASE_URL)
+      const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://luxbid-backend.onrender.com'
+      const response = await fetch(`${apiUrl}/listings`)
+      
+      console.log('📡 API Response status:', response.status)
       
       if (response.ok) {
         const data = await response.json()
+        console.log('📦 API Data received:', data.length, 'listings')
+        
         if (data.length > 0) {
           setListings(data)
           setLoading(false)
+          console.log('✅ Real data loaded from API')
         } else {
-          // Fallback to mock data if API returns empty
+          console.warn('⚠️ API returned empty, using mock data')
           setListings(mockListings)
           setLoading(false)
         }
       } else {
-        console.warn('API response not ok, using mock data')
+        console.warn('⚠️ API response not ok, using mock data')
         setListings(mockListings)
         setLoading(false)
       }
     } catch (err) {
-      console.warn('API connection failed, using mock data:', err)
+      console.error('❌ API connection failed:', err)
+      console.log('🔄 Using mock data as fallback')
       setListings(mockListings)
       setLoading(false)
     }
@@ -269,119 +277,192 @@ function OfertesContent() {
               ))}
             </div>
           </div>
-
-          {/* Active Filters Display */}
-          {(searchQuery || selectedCategory) && (
-            <div style={{ marginTop: '24px', padding: '16px', background: '#f9f9f9', borderRadius: '8px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
-                <span style={{ fontSize: '14px', fontWeight: '600', color: '#666' }}>Filtre active:</span>
-                {searchQuery && (
-                  <span style={{ padding: '4px 12px', background: '#D09A1E', color: '#fff', borderRadius: '16px', fontSize: '12px' }}>
-                    Căutare: &ldquo;{searchQuery}&rdquo;
-                  </span>
-                )}
-                {selectedCategory && (
-                  <span style={{ padding: '4px 12px', background: '#D09A1E', color: '#fff', borderRadius: '16px', fontSize: '12px' }}>
-                    Categorie: {selectedCategory}
-                  </span>
-                )}
-              </div>
-              <p style={{ fontSize: '14px', color: '#666', margin: 0 }}>
-                Se afișează {filteredListings.length} din {listings.length} oferte
-              </p>
-            </div>
-          )}
         </div>
 
-        {/* Results */}
+        {/* Results Counter */}
+        <div style={{ marginBottom: '32px', textAlign: 'center' }}>
+          <p style={{ fontSize: '16px', color: '#666' }}>
+            {filteredListings.length} {filteredListings.length === 1 ? 'ofertă găsită' : 'oferte găsite'}
+          </p>
+        </div>
+
+        {/* Listings Grid */}
         {filteredListings.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '60px 20px' }}>
-            <div style={{ fontSize: '64px', marginBottom: '16px' }}>🔍</div>
-            <h3 style={{ fontSize: '24px', marginBottom: '12px', color: 'var(--ink)' }}>Nu am găsit oferte</h3>
-            <p style={{ color: '#666', marginBottom: '24px' }}>
-              {searchQuery || selectedCategory 
-                ? 'Încearcă să modifici filtrele sau să cauți altceva'
-                : 'Nu există oferte disponibile momentan'
-              }
-            </p>
-            {(searchQuery || selectedCategory) && (
-              <button 
-                onClick={() => { setSearchQuery(''); setSelectedCategory('') }}
-                style={{ padding: '12px 24px', background: '#D09A1E', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer' }}
-              >
-                Șterge toate filtrele
-              </button>
-            )}
+          <div style={{ textAlign: 'center', padding: '60px 20px', background: '#fff', borderRadius: '16px' }}>
+            <h3 style={{ marginBottom: '16px', color: '#666' }}>Nu s-au găsit oferte</h3>
+            <p style={{ color: '#999' }}>Încearcă să modifici criteriile de căutare</p>
           </div>
         ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '24px' }}>
-            {filteredListings.map(listing => (
-              <div key={listing.id} style={{ background: '#fff', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 4px 6px rgba(0,0,0,.1)', transition: 'transform 0.2s ease', cursor: 'pointer' }}>
-                <div style={{ aspectRatio: '4/3', background: '#f5f5f5', position: 'relative' }}>
-                  {listing.images?.length > 0 ? (
-                    <img 
-                      src={listing.images[0]} 
-                      alt={listing.title}
-                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                    />
-                  ) : (
-                    <div style={{ 
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', 
+            gap: '24px',
+            marginBottom: '40px'
+          }}>
+            {filteredListings.map((listing) => (
+              <div 
+                key={listing.id} 
+                style={{ 
+                  background: '#fff', 
+                  borderRadius: '16px', 
+                  overflow: 'hidden',
+                  boxShadow: '0 4px 6px rgba(0,0,0,.1)',
+                  transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                  cursor: 'pointer'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-4px)'
+                  e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,.15)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)'
+                  e.currentTarget.style.boxShadow = '0 4px 6px rgba(0,0,0,.1)'
+                }}
+                onClick={() => window.location.href = `/oferte/${listing.id}`}
+              >
+                {/* Image */}
+                <div style={{ position: 'relative', height: '240px', overflow: 'hidden' }}>
+                  <img 
+                    src={listing.images && listing.images.length > 0 ? listing.images[0] : getRandomPlaceholder(listing.category)}
+                    alt={listing.title}
+                    style={{ 
                       width: '100%', 
                       height: '100%', 
-                      display: 'flex', 
-                      alignItems: 'center', 
-                      justifyContent: 'center',
-                      background: 'linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%)',
-                      color: '#999',
-                      fontSize: '18px',
-                      fontWeight: '600'
-                    }}>
-                      📷 Fără imagine
-                    </div>
-                  )}
-                  <div style={{ position: 'absolute', top: '12px', left: '12px', background: 'rgba(0,0,0,0.7)', color: '#fff', padding: '6px 12px', borderRadius: '16px', fontSize: '12px', fontWeight: '600' }}>
+                      objectFit: 'cover',
+                      transition: 'transform 0.3s ease'
+                    }}
+                    onError={(e) => {
+                      e.currentTarget.src = getRandomPlaceholder(listing.category)
+                    }}
+                  />
+                  {/* Category Badge */}
+                  <div style={{
+                    position: 'absolute',
+                    top: '16px',
+                    left: '16px',
+                    background: 'rgba(0,0,0,0.8)',
+                    color: '#fff',
+                    padding: '6px 12px',
+                    borderRadius: '20px',
+                    fontSize: '12px',
+                    fontWeight: '600'
+                  }}>
                     {listing.category}
                   </div>
                 </div>
-                <div style={{ padding: '20px' }}>
-                  <h3 style={{ fontSize: '18px', fontWeight: '700', color: 'var(--ink)', marginBottom: '8px', lineHeight: '1.4' }}>
+
+                {/* Content */}
+                <div style={{ padding: '24px' }}>
+                  {/* Title */}
+                  <h3 style={{ 
+                    fontSize: '20px', 
+                    fontWeight: '700', 
+                    color: 'var(--ink)', 
+                    marginBottom: '8px',
+                    lineHeight: '1.3'
+                  }}>
                     {listing.title}
                   </h3>
-                  <p style={{ color: '#666', fontSize: '14px', marginBottom: '16px', lineHeight: '1.5' }}>
-                    {listing.description.length > 100 ? `${listing.description.substring(0, 100)}...` : listing.description}
+
+                  {/* Description */}
+                  <p style={{ 
+                    color: '#666', 
+                    fontSize: '14px', 
+                    lineHeight: '1.5',
+                    marginBottom: '16px',
+                    display: '-webkit-box',
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: 'vertical',
+                    overflow: 'hidden'
+                  }}>
+                    {listing.description}
                   </p>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <div>
-                      <p style={{ fontSize: '20px', fontWeight: '700', color: '#D09A1E', margin: 0 }}>
-                        {listing.price.toLocaleString()} {listing.currency}
-                      </p>
-                      <p style={{ fontSize: '12px', color: '#999', margin: 0 }}>Preț dorit</p>
+
+                  {/* Price */}
+                  <div style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'space-between',
+                    marginBottom: '16px'
+                  }}>
+                    <div style={{ 
+                      fontSize: '24px', 
+                      fontWeight: '800', 
+                      color: '#D09A1E'
+                    }}>
+                      {listing.price?.toLocaleString()} {listing.currency}
                     </div>
-                    <button
-                      onClick={() => window.location.href = `/oferte/${listing.id}`}
-                      style={{ padding: '10px 20px', background: '#D09A1E', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontSize: '14px', fontWeight: '600' }}
-                    >
-                      Vezi detalii
-                    </button>
                   </div>
+
+                  {/* User Info */}
+                  <div style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    paddingTop: '16px',
+                    borderTop: '1px solid #f0f0f0'
+                  }}>
+                    <div style={{
+                      width: '32px',
+                      height: '32px',
+                      borderRadius: '50%',
+                      background: '#D09A1E',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#fff',
+                      fontSize: '14px',
+                      fontWeight: '600',
+                      marginRight: '12px'
+                    }}>
+                      {listing.user?.firstName?.charAt(0) || listing.user?.email?.charAt(0) || '?'}
+                    </div>
+                    <div>
+                      <div style={{ fontSize: '14px', fontWeight: '600', color: 'var(--ink)' }}>
+                        {listing.user?.firstName && listing.user?.lastName 
+                          ? `${listing.user.firstName} ${listing.user.lastName}` 
+                          : listing.user?.companyName || 'Utilizator'}
+                      </div>
+                      <div style={{ fontSize: '12px', color: '#999' }}>
+                        {new Date(listing.createdAt).toLocaleDateString('ro-RO')}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Action Button */}
+                  <button 
+                    style={{
+                      width: '100%',
+                      padding: '12px',
+                      marginTop: '16px',
+                      background: '#D09A1E',
+                      color: '#fff',
+                      border: 'none',
+                      borderRadius: '8px',
+                      fontSize: '14px',
+                      fontWeight: '600',
+                      cursor: 'pointer',
+                      transition: 'background 0.2s ease'
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.background = '#B8831A'}
+                    onMouseLeave={(e) => e.currentTarget.style.background = '#D09A1E'}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      window.location.href = `/oferte/${listing.id}`
+                    }}
+                  >
+                    Vezi Detalii
+                  </button>
                 </div>
               </div>
             ))}
           </div>
         )}
       </div>
-
-      <style jsx>{`
-        @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-      `}</style>
     </div>
   )
 }
 
-export default function OfertePage() {
+export default function OfertesPage() {
   return (
     <Suspense fallback={
       <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
