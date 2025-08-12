@@ -61,20 +61,87 @@ body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,s
 footer{background:#2B2B2B;color:#fff}
 footer .container{padding:18px 16px}
 footer p{margin:0;text-align:center;font-size:13px;opacity:.85}
-/* responsive */
-@media (max-width:1200px){ .hero h1{font-size:64px} }
-@media (max-width:900px){
-  .grid{grid-template-columns:1fr 1fr}
-  .nav-menu{display:none}
-  .search-pill{max-width:100%}
+/* RESPONSIVE DESIGN */
+
+/* Large tablets and small desktops */
+@media (max-width: 1200px) {
+  .hero h1 { font-size: 64px; }
+  .container { padding: 0 16px; }
 }
-@media (max-width:640px){
-  .hero h1{font-size:40px}
-  .grid{grid-template-columns:1fr}
+
+/* Tablets */
+@media (max-width: 900px) {
+  .grid { grid-template-columns: 1fr 1fr; }
+  .nav-menu { display: none; }
+  .search-pill { max-width: 100%; }
+  .nav-row { padding: 8px 0; gap: 12px; }
+  .hero-inner { padding: 40px 0; }
+  .hero h1 { font-size: 48px; }
+  .section { padding: 40px 0; }
+  .section h2 { font-size: 32px; }
+}
+
+/* Mobile landscape */
+@media (max-width: 768px) {
+  .nav-actions { gap: 8px; }
+  .btn { padding: 8px 12px; font-size: 13px; }
+  .hero p { font-size: 18px; }
+  .cta-row { flex-direction: column; align-items: center; }
+  .btn-cta, .btn-ghost { width: 200px; }
+}
+
+/* Mobile portrait */
+@media (max-width: 640px) {
+  .hero h1 { font-size: 40px; }
+  .grid { grid-template-columns: 1fr; }
+  .nav-search { display: none; } /* Hide search on mobile nav */
+  .search-row { padding: 12px 0; }
+  .search-big { font-size: 14px; }
+  .filter-btn { padding: 10px 14px; font-size: 14px; }
+  .card { padding: 20px; }
+  .icon-badge { width: 48px; height: 48px; }
+  .card h3 { font-size: 18px; }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+  .container { padding: 0 12px; }
+  .hero h1 { font-size: 32px; }
+  .hero p { font-size: 16px; }
+  .nav-row { flex-wrap: wrap; }
+  .brand { font-size: 22px; }
+  .section h2 { font-size: 28px; }
+  .card { padding: 16px; }
 }
 
 /* LOADING SPINNER ANIMATION */
+/* ANIMATIONS */
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+/* UTILITY CLASSES FOR RESPONSIVE */
+.mobile-hidden { display: block; }
+.mobile-only { display: none; }
+
+@media (max-width: 640px) {
+  .mobile-hidden { display: none; }
+  .mobile-only { display: block; }
+}
+
+/* RESPONSIVE GRID FOR LISTINGS */
+.listings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  padding: 20px 0;
+}
+
+@media (max-width: 640px) {
+  .listings-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 16px 0;
+  }
 }

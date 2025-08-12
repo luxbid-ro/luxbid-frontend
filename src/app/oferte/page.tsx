@@ -27,6 +27,7 @@ function OfertesContent() {
   const [error, setError] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('')
+  const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'price-low' | 'price-high' | 'name'>('newest')
   const [filteredListings, setFilteredListings] = useState<Listing[]>([])
 
   // Initialize from URL params
@@ -37,62 +38,64 @@ function OfertesContent() {
     setSelectedCategory(category)
   }, [searchParams])
 
-  // Mock data for demonstration
-  const mockListings = [
-    {
-      id: '1',
-      title: 'Rolex Submariner 2023',
-      description: 'Ceas de lux Rolex Submariner, model 2023, perfect stare, cutie originală și certificat. Prețul este ferm.',
-      category: 'Ceasuri',
-      price: 45000,
-      currency: 'EUR',
-      createdAt: '2024-08-12T10:00:00Z',
-      images: ['https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=800&h=600&fit=crop'],
-      user: {
-        id: '1',
-        email: 'demo@luxbid.ro',
-        firstName: 'Alexandru',
-        lastName: 'Popescu'
-      }
-    },
-    {
-      id: '2',
-      title: 'Hermès Birkin Bag',
-      description: 'Geantă Hermès Birkin din piele autentică, culoare negru, mărimea 35cm. Vine cu cutie și certificat de autenticitate.',
-      category: 'Genți',
-      price: 25000,
-      currency: 'EUR',
-      createdAt: '2024-08-12T09:30:00Z',
-      images: ['https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=800&h=600&fit=crop'],
-      user: {
-        id: '2',
-        email: 'maria@luxbid.ro',
-        firstName: 'Maria',
-        lastName: 'Ionescu'
-      }
-    },
-    {
-      id: '3',
-      title: 'Inel cu Diamant Tiffany & Co',
-      description: 'Inel de logodnă Tiffany & Co cu diamant de 2 carate, aur alb 18k. Certificat GIA inclus.',
-      category: 'Bijuterii',
-      price: 15000,
-      currency: 'EUR',
-      createdAt: '2024-08-12T09:00:00Z',
-      images: ['https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&h=600&fit=crop'],
-      user: {
-        id: '3',
-        email: 'cristina@luxbid.ro',
-        firstName: 'Cristina',
-        lastName: 'Marin'
-      }
-    }
-  ]
+  // Mock data will be defined locally in fetchListings to avoid dependency issues
 
   // Fetch listings from real API
   const fetchListings = useCallback(async () => {
     setLoading(true)
     setError('')
+    
+    // Mock data as fallback (defined locally to avoid useCallback dependencies)
+    const mockListings = [
+      {
+        id: 'mock-1',
+        title: 'Rolex Submariner 2023',
+        description: 'Ceas de lux Rolex Submariner, model 2023, perfect stare, cutie originală și certificat. Prețul este ferm.',
+        category: 'Ceasuri',
+        price: 45000,
+        currency: 'EUR',
+        createdAt: '2024-08-12T10:00:00Z',
+        images: ['https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=800&h=600&fit=crop'],
+        user: {
+          id: 'mock-user-1',
+          email: 'demo@luxbid.ro',
+          firstName: 'Alexandru',
+          lastName: 'Popescu'
+        }
+      },
+      {
+        id: 'mock-2',
+        title: 'Hermès Birkin Bag',
+        description: 'Geantă Hermès Birkin din piele autentică, culoare negru, mărimea 35cm. Vine cu cutie și certificat de autenticitate.',
+        category: 'Genți',
+        price: 25000,
+        currency: 'EUR',
+        createdAt: '2024-08-12T09:30:00Z',
+        images: ['https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=800&h=600&fit=crop'],
+        user: {
+          id: 'mock-user-2',
+          email: 'maria@luxbid.ro',
+          firstName: 'Maria',
+          lastName: 'Ionescu'
+        }
+      },
+      {
+        id: 'mock-3',
+        title: 'Inel cu Diamant Tiffany & Co',
+        description: 'Inel de logodnă Tiffany & Co cu diamant de 2 carate, aur alb 18k. Certificat GIA inclus.',
+        category: 'Bijuterii',
+        price: 15000,
+        currency: 'EUR',
+        createdAt: '2024-08-12T09:00:00Z',
+        images: ['https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&h=600&fit=crop'],
+        user: {
+          id: 'mock-user-3',
+          email: 'cristina@luxbid.ro',
+          firstName: 'Cristina',
+          lastName: 'Marin'
+        }
+      }
+    ]
     
     try {
       console.log('🔄 Fetching from API...', process.env.NEXT_PUBLIC_API_BASE_URL)
@@ -107,22 +110,20 @@ function OfertesContent() {
         
         if (data.length > 0) {
           setListings(data)
-          setLoading(false)
           console.log('✅ Real data loaded from API')
         } else {
           console.warn('⚠️ API returned empty, using mock data')
           setListings(mockListings)
-          setLoading(false)
         }
       } else {
         console.warn('⚠️ API response not ok, using mock data')
         setListings(mockListings)
-        setLoading(false)
       }
     } catch (err) {
       console.error('❌ API connection failed:', err)
       console.log('🔄 Using mock data as fallback')
       setListings(mockListings)
+    } finally {
       setLoading(false)
     }
   }, [])
@@ -131,10 +132,11 @@ function OfertesContent() {
     fetchListings()
   }, [fetchListings])
 
-  // Filter listings based on search and category
+  // Filter and sort listings based on search, category, and sort option
   useEffect(() => {
-    let filtered = listings
+    let filtered = [...listings]
 
+    // Apply filters
     if (searchQuery) {
       filtered = filtered.filter(listing => 
         listing.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -148,8 +150,26 @@ function OfertesContent() {
       )
     }
 
+    // Apply sorting
+    filtered.sort((a, b) => {
+      switch (sortBy) {
+        case 'newest':
+          return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        case 'oldest':
+          return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+        case 'price-low':
+          return a.price - b.price
+        case 'price-high':
+          return b.price - a.price
+        case 'name':
+          return a.title.localeCompare(b.title)
+        default:
+          return 0
+      }
+    })
+
     setFilteredListings(filtered)
-  }, [listings, searchQuery, selectedCategory])
+  }, [listings, searchQuery, selectedCategory, sortBy])
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
@@ -158,12 +178,12 @@ function OfertesContent() {
 
   const getRandomPlaceholder = (category: string) => {
     const placeholders = {
-      'Ceasuri': 'https://via.placeholder.com/300x200/f0f0f0/666?text=Ceas+de+Lux',
-      'Genți': 'https://via.placeholder.com/300x200/f0f0f0/666?text=Geanta+Designer',
-      'Bijuterii': 'https://via.placeholder.com/300x200/f0f0f0/666?text=Bijuterie+Fina',
-      'Artă': 'https://via.placeholder.com/300x200/f0f0f0/666?text=Opera+de+Arta'
+      'Ceasuri': 'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=300&h=200&fit=crop&crop=center',
+      'Genți': 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=300&h=200&fit=crop&crop=center',
+      'Bijuterii': 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=300&h=200&fit=crop&crop=center',
+      'Artă': 'https://images.unsplash.com/photo-1578321272176-b7bbc0679853?w=300&h=200&fit=crop&crop=center'
     }
-    return placeholders[category as keyof typeof placeholders] || 'https://via.placeholder.com/300x200/f0f0f0/666?text=Obiect+de+Lux'
+    return placeholders[category as keyof typeof placeholders] || 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=300&h=200&fit=crop&crop=center'
   }
 
   if (loading) {
@@ -277,6 +297,38 @@ function OfertesContent() {
               ))}
             </div>
           </div>
+
+          {/* Sort Options */}
+          <div style={{ marginTop: '24px', paddingTop: '24px', borderTop: '1px solid #eee' }}>
+            <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: '700', color: 'var(--ink)' }}>Sortare</h3>
+            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+              {[
+                { value: 'newest', label: 'Cele mai noi' },
+                { value: 'oldest', label: 'Cele mai vechi' },
+                { value: 'price-low', label: 'Preț crescător' },
+                { value: 'price-high', label: 'Preț descrescător' },
+                { value: 'name', label: 'Nume A-Z' }
+              ].map(({ value, label }) => (
+                <button
+                  key={value}
+                  onClick={() => setSortBy(value as any)}
+                  style={{
+                    padding: '8px 16px',
+                    border: '1px solid #ddd',
+                    borderRadius: '20px',
+                    background: sortBy === value ? '#D09A1E' : '#fff',
+                    color: sortBy === value ? '#fff' : '#666',
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Results Counter */}
@@ -295,7 +347,7 @@ function OfertesContent() {
         ) : (
           <div style={{ 
             display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', 
+            gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', 
             gap: '24px',
             marginBottom: '40px'
           }}>

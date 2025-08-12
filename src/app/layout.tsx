@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import React from 'react'
 import './globals.css'
 import NavBar from '@/components/NavBar'
+import ErrorBoundary from '@/components/ErrorBoundary'
 
 export const metadata: Metadata = {
   title: 'LuxBid – Oferte Premium pentru Articole de Lux',
@@ -25,8 +26,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
-        <NavBar />
-        {children}
+        <ErrorBoundary>
+          <NavBar />
+          {children}
+        </ErrorBoundary>
       </body>
     </html>
   )

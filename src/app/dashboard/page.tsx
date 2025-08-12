@@ -17,7 +17,7 @@ export default function DashboardPage() {
       }
       
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || 'https://luxbid-backend.onrender.com'}/users/profile`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || 'https://luxbid-backend.onrender.com'}/users/me`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         

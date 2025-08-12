@@ -1,12 +1,14 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import NotificationBell from './NotificationBell'
 
 export default function NavBar() {
   const [isAuthed, setIsAuthed] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
+  const [activeCategory, setActiveCategory] = useState('')
   const router = useRouter()
+  const searchParams = useSearchParams()
 
   useEffect(() => {
     const check = () => setIsAuthed(!!localStorage.getItem('luxbid_token'))
@@ -17,6 +19,12 @@ export default function NavBar() {
     window.addEventListener('storage', onStorage)
     return () => window.removeEventListener('storage', onStorage)
   }, [])
+
+  // Track active category from URL
+  useEffect(() => {
+    const category = searchParams?.get('category') || ''
+    setActiveCategory(category)
+  }, [searchParams])
 
   // Handle search
   const handleSearch = (e: React.FormEvent) => {
@@ -30,8 +38,22 @@ export default function NavBar() {
 
   // Handle category filter
   const handleCategoryClick = (category: string) => {
+    setActiveCategory(category)
     router.push(`/oferte?category=${encodeURIComponent(category)}`)
   }
+
+  // Get style for category button
+  const getCategoryButtonStyle = (category: string) => ({
+    background: 'none',
+    border: 'none',
+    cursor: 'pointer',
+    color: activeCategory === category ? '#D09A1E' : 'inherit',
+    fontSize: 'inherit',
+    fontWeight: activeCategory === category ? '600' : 'normal',
+    borderBottom: activeCategory === category ? '2px solid #D09A1E' : '2px solid transparent',
+    paddingBottom: '8px',
+    transition: 'all 0.2s ease'
+  })
 
   // Handle logout
   const handleLogout = () => {
@@ -48,30 +70,43 @@ export default function NavBar() {
           <button 
             type="button"
             onClick={() => handleCategoryClick('Ceasuri')}
-            style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit', fontSize: 'inherit' }}
+            style={getCategoryButtonStyle('Ceasuri')}
           >
             Ceasuri
           </button>
           <button 
             type="button"
             onClick={() => handleCategoryClick('Genți')}
-            style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit', fontSize: 'inherit' }}
+            style={getCategoryButtonStyle('Genți')}
           >
             Genți
           </button>
           <button 
             type="button"
             onClick={() => handleCategoryClick('Bijuterii')}
-            style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit', fontSize: 'inherit' }}
+            style={getCategoryButtonStyle('Bijuterii')}
           >
             Bijuterii
           </button>
           <button 
             type="button"
-            onClick={() => router.push('/oferte')}
-            style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'inherit', fontSize: 'inherit' }}
+            onClick={() => {
+              setActiveCategory('')
+              router.push('/oferte')
+            }}
+            style={{
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              color: !activeCategory ? '#D09A1E' : 'inherit',
+              fontSize: 'inherit',
+              fontWeight: !activeCategory ? '600' : 'normal',
+              borderBottom: !activeCategory ? '2px solid #D09A1E' : '2px solid transparent',
+              paddingBottom: '8px',
+              transition: 'all 0.2s ease'
+            }}
           >
-            Oferte
+            Toate Ofertele
           </button>
         </nav>
         <div className="nav-search">

@@ -34,7 +34,7 @@ export default function Chat({ conversationId, otherUserName }: ChatProps) {
     if (!token) return
 
     // Conectare la WebSocket
-    const socketConnection = io(`${process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000'}/chat`, {
+    const socketConnection = io(`${process.env.NEXT_PUBLIC_API_BASE_URL || 'https://luxbid-backend.onrender.com'}/chat`, {
       auth: { token },
       transports: ['websocket'],
     })
@@ -84,7 +84,7 @@ export default function Chat({ conversationId, otherUserName }: ChatProps) {
       try {
         const token = localStorage.getItem('luxbid_token')
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000'}/chat/conversations/${conversationId}/messages`,
+          `${process.env.NEXT_PUBLIC_API_BASE_URL || 'https://luxbid-backend.onrender.com'}/chat/conversations/${conversationId}/messages`,
           { headers: { Authorization: `Bearer ${token}` } }
         )
         
