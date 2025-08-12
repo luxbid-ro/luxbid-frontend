@@ -345,12 +345,7 @@ function OfertesContent() {
             <p style={{ color: '#999' }}>Încearcă să modifici criteriile de căutare</p>
           </div>
         ) : (
-          <div style={{ 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', 
-            gap: '24px',
-            marginBottom: '40px'
-          }}>
+          <div className="listings-grid">
             {filteredListings.map((listing) => (
               <div 
                 key={listing.id} 
