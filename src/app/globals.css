@@ -73,12 +73,26 @@ footer p{margin:0;text-align:center;font-size:13px;opacity:.85}
 @media (max-width: 900px) {
   .grid { grid-template-columns: 1fr 1fr; }
   .nav-menu { display: none; }
+  .nav-search { display: none; } /* Hide search on tablets too */
   .search-pill { max-width: 100%; }
-  .nav-row { padding: 8px 0; gap: 12px; }
+  .nav-row { padding: 8px 0; gap: 8px; justify-content: space-between; }
   .hero-inner { padding: 40px 0; }
   .hero h1 { font-size: 48px; }
   .section { padding: 40px 0; }
   .section h2 { font-size: 32px; }
+  
+  /* Mobile navbar optimization */
+  .nav-actions {
+    gap: 6px;
+  }
+  .nav-actions .btn {
+    padding: 6px 12px;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+  .brand {
+    font-size: 22px;
+  }
 }
 
 /* Mobile landscape */
@@ -101,6 +115,36 @@ footer p{margin:0;text-align:center;font-size:13px;opacity:.85}
   .card { padding: 20px; }
   .icon-badge { width: 48px; height: 48px; }
   .card h3 { font-size: 18px; }
+  
+  /* Ultra mobile optimization */
+  .nav-row {
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+  }
+  
+  .brand {
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  
+  .nav-actions {
+    gap: 4px;
+    flex-shrink: 0;
+  }
+  
+  .nav-actions .btn {
+    padding: 4px 8px;
+    font-size: 11px;
+    min-width: auto;
+  }
+  
+  /* Make notification bell smaller on mobile */
+  .notification-bell {
+    width: 32px;
+    height: 32px;
+  }
 }
 
 /* Small mobile */
@@ -108,10 +152,30 @@ footer p{margin:0;text-align:center;font-size:13px;opacity:.85}
   .container { padding: 0 12px; }
   .hero h1 { font-size: 32px; }
   .hero p { font-size: 16px; }
-  .nav-row { flex-wrap: wrap; }
-  .brand { font-size: 22px; }
   .section h2 { font-size: 28px; }
   .card { padding: 16px; }
+  
+  /* Extreme mobile optimization */
+  .nav-row {
+    flex-wrap: nowrap;
+    gap: 2px;
+  }
+  
+  .brand {
+    font-size: 18px;
+  }
+  
+  .nav-actions .btn {
+    padding: 3px 6px;
+    font-size: 10px;
+  }
+  
+  /* Stack auth buttons vertically if really needed */
+  .nav-actions {
+    flex-direction: column;
+    gap: 2px;
+    align-items: flex-end;
+  }
 }
 
 /* LOADING SPINNER ANIMATION */
@@ -124,10 +188,16 @@ footer p{margin:0;text-align:center;font-size:13px;opacity:.85}
 /* UTILITY CLASSES FOR RESPONSIVE */
 .mobile-hidden { display: block; }
 .mobile-only { display: none; }
+.mobile-menu-btn { display: none !important; }
+
+@media (max-width: 900px) {
+  .mobile-menu-btn { display: block !important; }
+}
 
 @media (max-width: 640px) {
   .mobile-hidden { display: none; }
   .mobile-only { display: block; }
+  .mobile-menu-btn { display: block !important; }
 }
 
 /* RESPONSIVE GRID FOR LISTINGS */
