@@ -679,6 +679,7 @@ footer p{margin:0;text-align:center;font-size:13px;opacity:.85}
 @media (min-width: 768px) {
   .mobile-hidden { display: block !important; }
   .mobile-only { display: none !important; }
+  .mobile-menu-btn { display: none !important; } /* Hide hamburger on desktop */
 }
 
 @media (min-width: 1024px) {

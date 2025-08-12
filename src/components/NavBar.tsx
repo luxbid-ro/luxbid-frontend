@@ -77,8 +77,7 @@ export default function NavBar() {
             border: 'none',
             fontSize: '18px',
             cursor: 'pointer',
-            padding: '8px',
-            display: 'none'
+            padding: '8px'
           }}
         >
           {mobileMenuOpen ? '✕' : '☰'}
