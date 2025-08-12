@@ -8,8 +8,19 @@ export default function NavBar() {
   const [searchQuery, setSearchQuery] = useState('')
   const [activeCategory, setActiveCategory] = useState('')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
+
+  // Detect mobile device
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   useEffect(() => {
     const check = () => setIsAuthed(!!localStorage.getItem('luxbid_token'))
@@ -64,26 +75,48 @@ export default function NavBar() {
   }
 
   return (
-    <div className="nav">
-      <div className="container nav-row">
-        <a className="brand" href="/"><span className="lux">Lux</span><span className="bid">Bid</span></a>
+    <div className="nav" style={{ position: 'relative' }}>
+      <div className="container nav-row" style={{ 
+        display: 'flex', 
+        justifyContent: 'space-between', 
+        alignItems: 'center',
+        width: '100%',
+        maxWidth: '100vw',
+        overflow: 'hidden'
+      }}>
+        <a className="brand" href="/" style={{ 
+          fontSize: isMobile ? '18px' : '24px',
+          fontWeight: '700',
+          textDecoration: 'none',
+          color: '#D09A1E',
+          flexShrink: 0
+        }}>
+          <span className="lux">Lux</span><span className="bid" style={{ color: '#111' }}>Bid</span>
+        </a>
         
-        {/* Mobile Menu Button */}
+        {/* Mobile Menu Button - ALWAYS VISIBLE ON MOBILE */}
         <button 
-          className="mobile-only mobile-menu-btn"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           style={{
+            display: isMobile ? 'block' : 'none',
             background: 'none',
             border: 'none',
-            fontSize: '18px',
+            fontSize: '20px',
             cursor: 'pointer',
-            padding: '8px'
+            padding: '8px',
+            position: 'relative',
+            zIndex: 1001
           }}
         >
           {mobileMenuOpen ? '✕' : '☰'}
         </button>
         
-        <nav className="nav-menu">
+        {/* Desktop Menu - HIDDEN ON MOBILE */}
+        <nav style={{
+          display: isMobile ? 'none' : 'flex',
+          gap: '20px',
+          alignItems: 'center'
+        }}>
           <button 
             type="button"
             onClick={() => handleCategoryClick('Ceasuri')}
@@ -126,7 +159,13 @@ export default function NavBar() {
             Toate Ofertele
           </button>
         </nav>
-        <div className="nav-search">
+        {/* Search - HIDDEN ON MOBILE */}
+        <div style={{
+          display: isMobile ? 'none' : 'block',
+          flex: 1,
+          maxWidth: '300px',
+          margin: '0 20px'
+        }}>
           <form onSubmit={handleSearch} style={{ display: 'contents' }}>
             <div className="search-pill">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -157,20 +196,25 @@ export default function NavBar() {
             </div>
           </form>
         </div>
-        <div className="nav-actions">
+        
+        {/* Auth Buttons - RESPONSIVE */}
+        <div style={{
+          display: isMobile ? 'none' : 'flex',
+          gap: '8px',
+          alignItems: 'center'
+        }}>
           {isAuthed ? (
             <>
               <NotificationBell />
-              <a className="btn btn-outline mobile-hidden" href="/mesaje" style={{ marginRight: '8px' }}>
+              <a className="btn btn-outline" href="/mesaje" style={{ marginRight: '8px' }}>
                 💬 Mesaje
               </a>
               <a className="btn btn-outline" href="/dashboard">
-                <span className="mobile-hidden">Contul Meu</span>
-                <span className="mobile-only">👤</span>
+                Contul Meu
               </a>
               <button 
                 onClick={handleLogout}
-                className="btn mobile-hidden"
+                className="btn"
                 style={{ 
                   background: '#f5f5f5', 
                   color: '#666', 
@@ -184,12 +228,10 @@ export default function NavBar() {
           ) : (
             <>
               <a className="btn btn-outline" href="/auth/login">
-                <span className="mobile-hidden">Conectare</span>
-                <span className="mobile-only">IN</span>
+                Conectare
               </a>
               <a className="btn btn-gold" href="/auth/register">
-                <span className="mobile-hidden">Înregistrare</span>
-                <span className="mobile-only">UP</span>
+                Înregistrare
               </a>
             </>
           )}
@@ -197,8 +239,8 @@ export default function NavBar() {
       </div>
       
               {/* Mobile Navigation Menu */}
-        {mobileMenuOpen && (
-          <div className="mobile-nav-menu" style={{
+        {mobileMenuOpen && isMobile && (
+          <div style={{
             position: 'absolute',
             top: '100%',
             left: 0,
@@ -207,30 +249,33 @@ export default function NavBar() {
             border: '1px solid #eee',
             borderTop: 'none',
             zIndex: 1000,
-            padding: 'var(--spacing-md)',
+            padding: '16px',
             boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
             maxHeight: '80vh',
-            overflowY: 'auto'
+            overflowY: 'auto',
+            width: '100vw',
+            marginLeft: '-16px' // Offset container padding
           }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-md)' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             <button 
               onClick={() => {
                 handleCategoryClick('Ceasuri')
                 setMobileMenuOpen(false)
               }}
               style={{
-                padding: 'var(--spacing-md)',
+                padding: '16px',
                 border: '1px solid #ddd',
                 borderRadius: '8px',
                 background: activeCategory === 'Ceasuri' ? '#D09A1E' : '#fff',
                 color: activeCategory === 'Ceasuri' ? '#fff' : '#333',
                 cursor: 'pointer',
                 textAlign: 'left',
-                fontSize: 'var(--font-base)',
+                fontSize: '16px',
                 width: '100%',
                 minHeight: '48px',
                 display: 'flex',
-                alignItems: 'center'
+                alignItems: 'center',
+                fontWeight: '500'
               }}
             >
               Ceasuri
@@ -291,10 +336,84 @@ export default function NavBar() {
               Toate Ofertele
             </button>
             
+            {/* Mobile Auth Buttons */}
+            <div style={{ 
+              marginTop: '16px', 
+              paddingTop: '16px', 
+              borderTop: '1px solid #eee',
+              display: 'flex',
+              gap: '12px'
+            }}>
+              {isAuthed ? (
+                <>
+                  <a href="/dashboard" style={{
+                    flex: 1,
+                    padding: '16px',
+                    background: '#f8f9fa',
+                    color: '#333',
+                    textDecoration: 'none',
+                    borderRadius: '8px',
+                    textAlign: 'center',
+                    fontSize: '16px',
+                    fontWeight: '500',
+                    border: '1px solid #ddd'
+                  }}>
+                    👤 Contul Meu
+                  </a>
+                  <button 
+                    onClick={handleLogout}
+                    style={{
+                      flex: 1,
+                      padding: '16px',
+                      background: '#fff',
+                      color: '#666',
+                      border: '1px solid #ddd',
+                      borderRadius: '8px',
+                      fontSize: '16px',
+                      fontWeight: '500',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Deconectare
+                  </button>
+                </>
+              ) : (
+                <>
+                  <a href="/auth/login" style={{
+                    flex: 1,
+                    padding: '16px',
+                    background: '#fff',
+                    color: '#333',
+                    textDecoration: 'none',
+                    border: '1px solid #ddd',
+                    borderRadius: '8px',
+                    textAlign: 'center',
+                    fontSize: '16px',
+                    fontWeight: '500'
+                  }}>
+                    Conectare
+                  </a>
+                  <a href="/auth/register" style={{
+                    flex: 1,
+                    padding: '16px',
+                    background: '#D09A1E',
+                    color: '#fff',
+                    textDecoration: 'none',
+                    borderRadius: '8px',
+                    textAlign: 'center',
+                    fontSize: '16px',
+                    fontWeight: '500'
+                  }}>
+                    Înregistrare
+                  </a>
+                </>
+              )}
+            </div>
+
             {/* Mobile Search */}
-            <div style={{ marginTop: 'var(--spacing-md)', paddingTop: 'var(--spacing-md)', borderTop: '1px solid #eee' }}>
+            <div style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid #eee' }}>
               <form onSubmit={(e) => { handleSearch(e); setMobileMenuOpen(false); }}>
-                <div style={{ display: 'flex', gap: 'var(--spacing-sm)' }}>
+                <div style={{ display: 'flex', gap: '8px' }}>
                   <input
                     type="text"
                     placeholder="Caută..."
@@ -302,23 +421,24 @@ export default function NavBar() {
                     onChange={(e) => setSearchQuery(e.target.value)}
                     style={{
                       flex: 1,
-                      padding: 'var(--spacing-md)',
+                      padding: '16px',
                       border: '1px solid #ddd',
-                      borderRadius: '6px',
-                      fontSize: 'var(--font-base)',
+                      borderRadius: '8px',
+                      fontSize: '16px',
                       minHeight: '48px'
                     }}
                   />
                   <button 
                     type="submit"
                     style={{
-                      padding: '10px 16px',
+                      padding: '16px',
                       background: '#D09A1E',
                       color: '#fff',
                       border: 'none',
-                      borderRadius: '6px',
+                      borderRadius: '8px',
                       cursor: 'pointer',
-                      fontSize: '14px'
+                      fontSize: '16px',
+                      minWidth: '60px'
                     }}
                   >
                     🔍
