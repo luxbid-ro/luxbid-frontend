@@ -82,10 +82,11 @@ body{
 
 /* Nav menu - hidden on mobile by default */
 .nav-menu{
-  display:none; /* Hidden on mobile */
+  display:none !important; /* Force hidden on mobile */
 }
 
-.nav-menu a{
+.nav-menu a,
+.nav-menu button{
   color:#4A4A4A;
   text-decoration:none;
   font-weight:600;
@@ -93,7 +94,7 @@ body{
 }
 /* Search - Mobile first (hidden in navbar) */
 .nav-search{
-  display:none; /* Hidden on mobile navbar */
+  display:none !important; /* Force hidden on mobile navbar */
 }
 
 .search-pill{
@@ -123,6 +124,39 @@ body{
   gap:var(--spacing-xs);
   align-items:center;
   flex-shrink:0;
+}
+
+/* Force mobile layout on small screens */
+@media (max-width: 767px) {
+  .nav-menu {
+    display: none !important;
+  }
+  
+  .nav-search {
+    display: none !important;
+  }
+  
+  .mobile-menu-btn {
+    display: block !important;
+  }
+  
+  .container {
+    padding: 0 var(--spacing-sm) !important;
+  }
+  
+  .nav-row {
+    gap: var(--spacing-xs) !important;
+    padding: var(--spacing-xs) 0 !important;
+  }
+  
+  .brand {
+    font-size: var(--font-base) !important;
+  }
+  
+  .nav-actions .btn {
+    padding: var(--spacing-xs) var(--spacing-sm) !important;
+    font-size: var(--font-xs) !important;
+  }
 }
 
 .btn{
@@ -415,13 +449,13 @@ footer p{margin:0;text-align:center;font-size:13px;opacity:.85}
   }
   
   .nav-menu {
-    display: flex;
+    display: flex !important;
     gap: var(--spacing-xl);
     margin-left: var(--spacing-md);
   }
   
   .nav-search {
-    display: flex;
+    display: flex !important;
     flex: 1;
     justify-content: center;
     max-width: 500px;
@@ -637,14 +671,14 @@ footer p{margin:0;text-align:center;font-size:13px;opacity:.85}
 }
 
 /* UTILITY CLASSES - Mobile First */
-.mobile-hidden { display: none; } /* Hidden on mobile by default */
-.mobile-only { display: block; }  /* Shown on mobile by default */
-.mobile-menu-btn { display: block; } /* Shown on mobile by default */
+.mobile-hidden { display: none !important; } /* Hidden on mobile by default */
+.mobile-only { display: block !important; }  /* Shown on mobile by default */
+.mobile-menu-btn { display: block !important; } /* Shown on mobile by default */
 
 /* Tablet and up - show/hide accordingly */
 @media (min-width: 768px) {
-  .mobile-hidden { display: block; }
-  .mobile-only { display: none; }
+  .mobile-hidden { display: block !important; }
+  .mobile-only { display: none !important; }
 }
 
 @media (min-width: 1024px) {

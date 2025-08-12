@@ -197,35 +197,41 @@ export default function NavBar() {
         </div>
       </div>
       
-      {/* Mobile Navigation Menu */}
-      {mobileMenuOpen && (
-        <div className="mobile-nav-menu" style={{
-          position: 'absolute',
-          top: '100%',
-          left: 0,
-          right: 0,
-          background: '#fff',
-          border: '1px solid #eee',
-          borderTop: 'none',
-          zIndex: 1000,
-          padding: '16px',
-          boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
-        }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              {/* Mobile Navigation Menu */}
+        {mobileMenuOpen && (
+          <div className="mobile-nav-menu" style={{
+            position: 'absolute',
+            top: '100%',
+            left: 0,
+            right: 0,
+            background: '#fff',
+            border: '1px solid #eee',
+            borderTop: 'none',
+            zIndex: 1000,
+            padding: 'var(--spacing-md)',
+            boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+            maxHeight: '80vh',
+            overflowY: 'auto'
+          }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-md)' }}>
             <button 
               onClick={() => {
                 handleCategoryClick('Ceasuri')
                 setMobileMenuOpen(false)
               }}
               style={{
-                padding: '12px',
+                padding: 'var(--spacing-md)',
                 border: '1px solid #ddd',
                 borderRadius: '8px',
                 background: activeCategory === 'Ceasuri' ? '#D09A1E' : '#fff',
                 color: activeCategory === 'Ceasuri' ? '#fff' : '#333',
                 cursor: 'pointer',
                 textAlign: 'left',
-                fontSize: '16px'
+                fontSize: 'var(--font-base)',
+                width: '100%',
+                minHeight: '48px',
+                display: 'flex',
+                alignItems: 'center'
               }}
             >
               Ceasuri
@@ -287,9 +293,9 @@ export default function NavBar() {
             </button>
             
             {/* Mobile Search */}
-            <div style={{ marginTop: '12px', paddingTop: '12px', borderTop: '1px solid #eee' }}>
+            <div style={{ marginTop: 'var(--spacing-md)', paddingTop: 'var(--spacing-md)', borderTop: '1px solid #eee' }}>
               <form onSubmit={(e) => { handleSearch(e); setMobileMenuOpen(false); }}>
-                <div style={{ display: 'flex', gap: '8px' }}>
+                <div style={{ display: 'flex', gap: 'var(--spacing-sm)' }}>
                   <input
                     type="text"
                     placeholder="Caută..."
@@ -297,10 +303,11 @@ export default function NavBar() {
                     onChange={(e) => setSearchQuery(e.target.value)}
                     style={{
                       flex: 1,
-                      padding: '10px',
+                      padding: 'var(--spacing-md)',
                       border: '1px solid #ddd',
                       borderRadius: '6px',
-                      fontSize: '14px'
+                      fontSize: 'var(--font-base)',
+                      minHeight: '48px'
                     }}
                   />
                   <button 
