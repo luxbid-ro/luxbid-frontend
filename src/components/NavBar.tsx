@@ -537,124 +537,188 @@ function NavBarContent() {
         </div>
 
         {isAuthed ? (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
             <a href="/dashboard" onClick={() => setAccountMenuOpen(false)} style={{
               display: 'flex',
               alignItems: 'center',
               gap: '12px',
-              padding: '12px',
+              padding: '12px 16px',
               textDecoration: 'none',
               color: '#333',
               borderRadius: '6px',
-              transition: 'background-color 0.2s ease'
+              transition: 'background-color 0.2s ease',
+              fontSize: '16px'
             }}>
-              <span>📊</span> Prezentare generală
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <rect x="3" y="3" width="7" height="7"/>
+                <rect x="14" y="3" width="7" height="7"/>
+                <rect x="14" y="14" width="7" height="7"/>
+                <rect x="3" y="14" width="7" height="7"/>
+              </svg>
+              Prezentare generală
             </a>
             
             <a href="/mesaje" onClick={() => setAccountMenuOpen(false)} style={{
               display: 'flex',
               alignItems: 'center',
               gap: '12px',
-              padding: '12px',
+              padding: '12px 16px',
               textDecoration: 'none',
               color: '#333',
               borderRadius: '6px',
-              transition: 'background-color 0.2s ease'
+              transition: 'background-color 0.2s ease',
+              fontSize: '16px'
             }}>
-              <span>✉️</span> Mesaje
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+              Mesaje
             </a>
             
             <a href="/oferte" onClick={() => setAccountMenuOpen(false)} style={{
               display: 'flex',
               alignItems: 'center',
               gap: '12px',
-              padding: '12px',
+              padding: '12px 16px',
               textDecoration: 'none',
               color: '#333',
               borderRadius: '6px',
-              transition: 'background-color 0.2s ease'
+              transition: 'background-color 0.2s ease',
+              fontSize: '16px'
             }}>
-              <span>🛒</span> Cumpără
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="9" cy="21" r="1"/>
+                <circle cx="20" cy="21" r="1"/>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+              </svg>
+              Cumpără
             </a>
             
             <a href="/dashboard/add-listing" onClick={() => setAccountMenuOpen(false)} style={{
               display: 'flex',
               alignItems: 'center',
               gap: '12px',
-              padding: '12px',
+              padding: '12px 16px',
               textDecoration: 'none',
               color: '#333',
               borderRadius: '6px',
-              transition: 'background-color 0.2s ease'
+              transition: 'background-color 0.2s ease',
+              fontSize: '16px'
             }}>
-              <span>🏷️</span> Vinde
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+              </svg>
+              Vinde
             </a>
             
             <a href="/dashboard" onClick={() => setAccountMenuOpen(false)} style={{
               display: 'flex',
               alignItems: 'center',
               gap: '12px',
-              padding: '12px',
+              padding: '12px 16px',
               textDecoration: 'none',
               color: '#333',
               borderRadius: '6px',
-              transition: 'background-color 0.2s ease'
+              transition: 'background-color 0.2s ease',
+              fontSize: '16px'
             }}>
-              <span>❤️</span> Lista de dorințe
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+              Lista de dorințe
             </a>
             
             <a href="/dashboard" onClick={() => setAccountMenuOpen(false)} style={{
               display: 'flex',
               alignItems: 'center',
               gap: '12px',
-              padding: '12px',
+              padding: '12px 16px',
               textDecoration: 'none',
               color: '#333',
               borderRadius: '6px',
-              transition: 'background-color 0.2s ease'
+              transition: 'background-color 0.2s ease',
+              fontSize: '16px'
             }}>
-              <span>🔍</span> Căutări salvate
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="M21 21l-4.35-4.35"/>
+              </svg>
+              Căutări salvate
             </a>
             
             <a href="/dashboard" onClick={() => setAccountMenuOpen(false)} style={{
               display: 'flex',
               alignItems: 'center',
               gap: '12px',
-              padding: '12px',
+              padding: '12px 16px',
               textDecoration: 'none',
               color: '#333',
               borderRadius: '6px',
-              transition: 'background-color 0.2s ease'
+              transition: 'background-color 0.2s ease',
+              fontSize: '16px'
             }}>
-              <span>⌚</span> Colecția de ceasuri
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12,6 12,12 16,14"/>
+              </svg>
+              Colecția de ceasuri
+            </a>
+
+            <a href="/dashboard" onClick={() => setAccountMenuOpen(false)} style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              padding: '12px 16px',
+              textDecoration: 'none',
+              color: '#333',
+              borderRadius: '6px',
+              transition: 'background-color 0.2s ease',
+              fontSize: '16px'
+            }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M12 2L2 7v10c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7l-10-5z"/>
+                <path d="M22 7l-10 5L2 7"/>
+              </svg>
+              Cronografia
             </a>
 
             <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #eee' }} />
-            
-            <a href="/notifications" onClick={() => setAccountMenuOpen(false)} style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '12px',
-              padding: '12px',
-              textDecoration: 'none',
-              color: '#333',
-              borderRadius: '6px',
-              transition: 'background-color 0.2s ease'
-            }}>
-              <span>🔔</span> Notificări
-            </a>
             
             <a href="/profile/edit" onClick={() => setAccountMenuOpen(false)} style={{
               display: 'flex',
               alignItems: 'center',
               gap: '12px',
-              padding: '12px',
+              padding: '12px 16px',
               textDecoration: 'none',
               color: '#333',
               borderRadius: '6px',
-              transition: 'background-color 0.2s ease'
+              transition: 'background-color 0.2s ease',
+              fontSize: '16px'
             }}>
-              <span>👤</span> Profil
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+              Profil
+            </a>
+            
+            <a href="/notifications" onClick={() => setAccountMenuOpen(false)} style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              padding: '12px 16px',
+              textDecoration: 'none',
+              color: '#333',
+              borderRadius: '6px',
+              transition: 'background-color 0.2s ease',
+              fontSize: '16px'
+            }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+              </svg>
+              Notificări
             </a>
             
             <button 
@@ -666,7 +730,7 @@ function NavBarContent() {
                 display: 'flex',
                 alignItems: 'center',
                 gap: '12px',
-                padding: '12px',
+                padding: '12px 16px',
                 background: 'none',
                 border: 'none',
                 color: '#333',
@@ -674,10 +738,16 @@ function NavBarContent() {
                 transition: 'background-color 0.2s ease',
                 cursor: 'pointer',
                 width: '100%',
-                textAlign: 'left'
+                textAlign: 'left',
+                fontSize: '16px'
               }}
             >
-              <span>🚪</span> Deconectare
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                <polyline points="16,17 21,12 16,7"/>
+                <line x1="21" y1="12" x2="9" y2="12"/>
+              </svg>
+              Deconectare
             </button>
           </div>
         ) : (
