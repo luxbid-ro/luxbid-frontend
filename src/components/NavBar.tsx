@@ -116,7 +116,7 @@ function NavBarContent() {
               alignItems: 'center',
               justifyContent: 'center',
               fontSize: '24px'
-            }}>LUX</span>
+            }}>Lux</span>
             <span style={{ 
               color: '#111',
               width: '42.95px', 
@@ -125,7 +125,7 @@ function NavBarContent() {
               alignItems: 'center',
               justifyContent: 'center',
               fontSize: '24px'
-            }}>BID</span>
+            }}>Bid</span>
           </a>
         </div>
       </div>
@@ -198,30 +198,41 @@ function NavBarContent() {
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           {/* Bell Icon for Notifications */}
-          <button style={{
-            background: 'none',
-            border: 'none',
-            fontSize: '20px',
-            cursor: 'pointer',
-            padding: '8px',
-            borderRadius: '50%',
-            transition: 'background-color 0.2s ease',
-            position: 'relative'
-          }}>
-            🔔
-            {/* Notification badge */}
-            <span style={{
-              position: 'absolute',
-              top: '2px',
-              right: '2px',
-              width: '8px',
-              height: '8px',
-              background: '#D09A1E',
+          <button 
+            onClick={() => {
+              if (isAuthed) {
+                router.push('/notifications')
+              } else {
+                router.push('/auth/login')
+              }
+            }}
+            style={{
+              background: 'none',
+              border: 'none',
+              fontSize: '20px',
+              cursor: 'pointer',
+              padding: '8px',
               borderRadius: '50%',
-              fontSize: '10px',
-              color: '#fff',
-              fontWeight: 'bold'
-            }}></span>
+              transition: 'background-color 0.2s ease',
+              position: 'relative'
+            }}
+          >
+            🔔
+            {/* Notification badge - only show if authenticated */}
+            {isAuthed && (
+              <span style={{
+                position: 'absolute',
+                top: '2px',
+                right: '2px',
+                width: '8px',
+                height: '8px',
+                background: '#D09A1E',
+                borderRadius: '50%',
+                fontSize: '10px',
+                color: '#fff',
+                fontWeight: 'bold'
+              }}></span>
+            )}
           </button>
 
           {/* Account Menu */}
@@ -257,7 +268,7 @@ function NavBarContent() {
                 border: '1px solid #ddd',
                 borderRadius: '8px',
                 boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
-                zIndex: 10000,
+                zIndex: 99999,
                 marginTop: '8px',
                 padding: '16px'
               }}>
@@ -540,7 +551,7 @@ function NavBarContent() {
               alignItems: 'center',
               justifyContent: 'center',
               fontSize: '24px'
-            }}>LUX</span>
+            }}>Lux</span>
             <span style={{ 
               color: '#111',
               width: '42.95px', 
@@ -549,7 +560,7 @@ function NavBarContent() {
               alignItems: 'center',
               justifyContent: 'center',
               fontSize: '24px'
-            }}>BID</span>
+            }}>Bid</span>
           </h2>
           <button 
             onClick={() => setMobileMenuOpen(false)}
@@ -679,94 +690,31 @@ function NavBarContent() {
             </a>
           </div>
           
-          <div style={{ 
-            marginTop: '16px', 
-            paddingTop: '16px', 
-            borderTop: '1px solid #eee',
-            display: 'flex',
-            gap: '12px',
-            flexDirection: 'column'
-          }}>
-            {isAuthed ? (
-              <>
-                <a href="/dashboard" style={{
-                  flex: 1,
-                  padding: '16px',
-                  background: '#f8f9fa',
-                  color: '#333',
-                  textDecoration: 'none',
-                  borderRadius: '8px',
-                  textAlign: 'center',
-                  fontSize: '16px',
-                  fontWeight: '500',
-                  border: '1px solid #ddd'
-                }}>
-                  📊 Dashboard
-                </a>
-                <a href="/profile/edit" style={{
-                  flex: 1,
-                  padding: '16px',
-                  background: '#f8f9fa',
-                  color: '#333',
-                  textDecoration: 'none',
-                  borderRadius: '8px',
-                  textAlign: 'center',
-                  fontSize: '16px',
-                  fontWeight: '500',
-                  border: '1px solid #ddd'
-                }}>
-                  ⚙️ Editează Profilul
-                </a>
-                <button 
-                  onClick={handleLogout}
-                  style={{
-                    flex: 1,
-                    padding: '16px',
-                    background: '#fff',
-                    color: '#666',
-                    border: '1px solid #ddd',
-                    borderRadius: '8px',
-                    fontSize: '16px',
-                    fontWeight: '500',
-                    cursor: 'pointer'
-                  }}
-                >
-                  Deconectare
-                </button>
-              </>
-            ) : (
-              <>
-                <a href="/auth/login" style={{
-                  flex: 1,
+          {/* Only show logout button if authenticated */}
+          {isAuthed && (
+            <div style={{ 
+              marginTop: '16px', 
+              paddingTop: '16px', 
+              borderTop: '1px solid #eee'
+            }}>
+              <button 
+                onClick={handleLogout}
+                style={{
+                  width: '100%',
                   padding: '16px',
                   background: '#fff',
-                  color: '#333',
-                  textDecoration: 'none',
+                  color: '#666',
                   border: '1px solid #ddd',
                   borderRadius: '8px',
-                  textAlign: 'center',
-                  fontSize: '16px',
-                  fontWeight: '500'
-                }}>
-                  Conectare
-                </a>
-                <a href="/auth/register" style={{
-                  flex: 1,
-                  padding: '16px',
-                  background: '#D09A1E',
-                  color: '#fff',
-                  textDecoration: 'none',
-                  borderRadius: '8px',
-                  textAlign: 'center',
                   fontSize: '16px',
                   fontWeight: '500',
-                  border: 'none'
-                }}>
-                  Inregistrare
-                </a>
-              </>
-            )}
-          </div>
+                  cursor: 'pointer'
+                }}
+              >
+                Deconectare
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
