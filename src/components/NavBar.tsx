@@ -165,22 +165,66 @@ function NavBarContent() {
         </div>
       </div>
 
-      {/* Mobile Navigation Menu */}
+      {/* Overlay */}
       {mobileMenuOpen && (
-        <div style={{
-          position: 'absolute',
-          top: '100%',
-          left: 0,
-          right: 0,
-          background: '#fff',
-          zIndex: 1000,
-          padding: '16px',
-          boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-          maxHeight: '80vh',
-          overflowY: 'auto',
-          width: '100vw',
-          marginLeft: '-16px' // Offset container padding
+        <div 
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'rgba(0, 0, 0, 0.5)',
+            zIndex: 999
+          }}
+          onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
+
+      {/* Slide Menu */}
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        height: '100vh',
+        width: '300px',
+        background: '#fff',
+        zIndex: 1000,
+        transform: mobileMenuOpen ? 'translateX(0)' : 'translateX(-100%)',
+        transition: 'transform 0.3s ease',
+        overflowY: 'auto',
+        boxShadow: '2px 0 10px rgba(0,0,0,0.1)',
+        padding: '20px'
+      }}>
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center', 
+          marginBottom: '20px',
+          paddingBottom: '16px',
+          borderBottom: '1px solid #eee'
         }}>
+          <h2 style={{ 
+            margin: 0, 
+            fontSize: '24px', 
+            fontWeight: '700', 
+            color: '#D09A1E'
+          }}>
+            LUXBID
+          </h2>
+          <button 
+            onClick={() => setMobileMenuOpen(false)}
+            style={{
+              background: 'none',
+              border: 'none',
+              fontSize: '24px',
+              cursor: 'pointer',
+              padding: '8px'
+            }}
+          >
+            ✕
+          </button>
+        </div>
           {/* CHRONO24 STYLE MENU */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
             
@@ -326,7 +370,7 @@ function NavBarContent() {
             </div>
           </div>
         </div>
-      )}
+      </div>
     </div>
   )
 }
