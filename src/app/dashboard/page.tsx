@@ -56,24 +56,8 @@ export default function DashboardPage() {
     <div style={{ minHeight: '100vh', background: 'var(--surface)', padding: '40px 20px' }}>
       <div style={{ maxWidth: '800px', margin: '0 auto' }}>
         <div style={{ background: '#fff', padding: '32px', borderRadius: '16px', marginBottom: '24px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px' }}>
-            <div>
-              <h1 style={{ marginBottom: '8px' }}>Bună, {user?.name || user?.email}!</h1>
-              <p style={{ color: 'var(--muted)', marginBottom: '0' }}>Bine ai venit în dashboard-ul tău LuxBid.</p>
-            </div>
-            <a href="/profile/edit" style={{
-              background: '#f8f9fa',
-              color: '#333',
-              padding: '10px 16px',
-              borderRadius: '8px',
-              textDecoration: 'none',
-              fontWeight: '500',
-              border: '1px solid #D09A1E',
-              fontSize: '14px'
-            }}>
-              ⚙️ Editează Profil
-            </a>
-          </div>
+          <h1 style={{ marginBottom: '16px' }}>Bună, {user?.name || user?.email}!</h1>
+          <p style={{ color: 'var(--muted)', marginBottom: '20px' }}>Bine ai venit în dashboard-ul tău LuxBid.</p>
           <button onClick={logout} style={{ background: 'var(--gold)', color: '#fff', border: 'none', padding: '10px 16px', borderRadius: '8px', cursor: 'pointer' }}>
             Deconectare
           </button>
