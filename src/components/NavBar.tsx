@@ -369,30 +369,31 @@ function NavBarContent() {
             flexDirection: 'column'
           }}>
             {isAuthed ? (
-              <>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '100%' }}>
                 <a href="/dashboard" style={{
                   flex: 1,
-                  padding: '16px',
-                  background: '#f8f9fa',
-                  color: '#333',
+                  padding: '18px',
+                  background: '#D09A1E',
+                  color: '#fff',
                   textDecoration: 'none',
                   borderRadius: '8px',
                   textAlign: 'center',
                   fontSize: '16px',
-                  fontWeight: '500',
-                  border: '1px solid #ddd'
+                  fontWeight: '600',
+                  border: 'none',
+                  marginBottom: '8px'
                 }}>
                   📊 Dashboard
                 </a>
                 <a href="/profile/edit" style={{
                   flex: 1,
-                  padding: '16px',
+                  padding: '14px',
                   background: '#f8f9fa',
-                  color: '#333',
+                  color: '#666',
                   textDecoration: 'none',
                   borderRadius: '8px',
                   textAlign: 'center',
-                  fontSize: '16px',
+                  fontSize: '14px',
                   fontWeight: '500',
                   border: '1px solid #ddd'
                 }}>
