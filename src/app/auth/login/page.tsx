@@ -27,10 +27,16 @@ export default function LoginPage() {
         router.push('/dashboard')
       } else {
         const err = await res.json()
-        setError(err.message || 'Eroare la conectare')
+        console.log('Login error response:', err)
+        if (res.status === 401) {
+          setError('Email sau parolă incorectă. Te rog verifică datele introduse.')
+        } else {
+          setError(err.message || `Eroare la conectare (${res.status})`)
+        }
       }
     } catch (err) {
-      setError('Eroare de conectare')
+      console.log('Network error:', err)
+      setError('Eroare de conectare cu serverul. Încearcă din nou.')
     } finally {
       setLoading(false)
     }
@@ -71,6 +77,12 @@ export default function LoginPage() {
         <p style={{ textAlign: 'center', marginTop: '20px' }}>
           Nu ai cont? <a href="/auth/register" style={{ color: 'var(--gold)', textDecoration: 'none' }}>Înregistrează-te</a>
         </p>
+        {error.includes('incorectă') && (
+          <p style={{ textAlign: 'center', marginTop: '12px', fontSize: '14px', color: '#666' }}>
+            Dacă contul a fost creat recent și nu funcționează, 
+            <a href="/auth/register" style={{ color: 'var(--gold)', textDecoration: 'none' }}> recreează contul</a>.
+          </p>
+        )}
       </form>
     </div>
   )
