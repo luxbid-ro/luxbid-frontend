@@ -67,7 +67,7 @@ export default function EditProfilePage() {
 
   const loadProfile = async () => {
     try {
-      const token = localStorage.getItem('accessToken');
+      const token = localStorage.getItem('luxbid_token');
       if (!token) {
         router.push('/auth/login');
         return;
@@ -137,7 +137,7 @@ export default function EditProfilePage() {
     setSuccess('');
 
     try {
-      const token = localStorage.getItem('accessToken');
+      const token = localStorage.getItem('luxbid_token');
       if (!token) {
         router.push('/auth/login');
         return;
@@ -207,7 +207,7 @@ export default function EditProfilePage() {
     setSuccess('');
 
     try {
-      const token = localStorage.getItem('accessToken');
+      const token = localStorage.getItem('luxbid_token');
       if (!token) {
         router.push('/auth/login');
         return;
