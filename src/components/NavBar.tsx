@@ -85,13 +85,13 @@ function NavBarContent() {
             href="/"
             style={{
               textDecoration: 'none',
-              color: '#D09A1E',
               fontSize: '28px',
               fontWeight: '700',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              letterSpacing: '1px'
             }}
           >
-            LUXBID
+            <span style={{ color: '#D09A1E' }}>LUX</span><span style={{ color: '#111' }}>BID</span>
           </a>
         </div>
       </div>
@@ -221,10 +221,10 @@ function NavBarContent() {
           <h2 style={{ 
             margin: 0, 
             fontSize: '24px', 
-            fontWeight: '700', 
-            color: '#D09A1E'
+            fontWeight: '700',
+            letterSpacing: '1px'
           }}>
-            LUXBID
+            <span style={{ color: '#D09A1E' }}>LUX</span><span style={{ color: '#111' }}>BID</span>
           </h2>
           <button 
             onClick={() => setMobileMenuOpen(false)}
