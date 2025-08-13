@@ -61,10 +61,11 @@ body{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:var(--spacing-sm) 0;
+  padding:16px 0;
   width:100%;
   max-width:100%;
   gap:var(--spacing-xs);
+  min-height:60px;
 }
 /* Brand - Mobile optimized */
 .brand {

@@ -8,18 +8,28 @@ function NavBarContent() {
   const [searchQuery, setSearchQuery] = useState('')
   const [activeCategory, setActiveCategory] = useState('')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
+  const [isMobile, setIsMobile] = useState(true) // Start as mobile-first
   const router = useRouter()
   const searchParams = useSearchParams()
 
   // Detect mobile device
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768)
+      const mobile = window.innerWidth <= 768
+      setIsMobile(mobile)
     }
+    
+    // Check immediately
     checkMobile()
+    
+    // Also check after a small delay to ensure proper detection
+    const timeout = setTimeout(checkMobile, 100)
+    
     window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
+    return () => {
+      window.removeEventListener('resize', checkMobile)
+      clearTimeout(timeout)
+    }
   }, [])
 
   useEffect(() => {
@@ -85,7 +95,7 @@ function NavBarContent() {
         overflow: 'hidden'
       }}>
         <a className="brand" href="/" style={{ 
-          fontSize: isMobile ? '18px' : '24px',
+          fontSize: isMobile ? '20px' : '28px',
           fontWeight: '700',
           textDecoration: 'none',
           color: '#D09A1E',
