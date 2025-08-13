@@ -182,7 +182,7 @@ function NavBarContent() {
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           {isAuthed ? (
-            <a href="/profile/edit" style={{
+            <a href="/dashboard" style={{
               display: 'flex',
               alignItems: 'center',
               gap: '8px',

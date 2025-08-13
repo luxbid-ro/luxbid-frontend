@@ -56,8 +56,24 @@ export default function DashboardPage() {
     <div style={{ minHeight: '100vh', background: 'var(--surface)', padding: '40px 20px' }}>
       <div style={{ maxWidth: '800px', margin: '0 auto' }}>
         <div style={{ background: '#fff', padding: '32px', borderRadius: '16px', marginBottom: '24px' }}>
-          <h1 style={{ marginBottom: '16px' }}>Bună, {user?.name || user?.email}!</h1>
-          <p style={{ color: 'var(--muted)', marginBottom: '20px' }}>Bine ai venit în dashboard-ul tău LuxBid.</p>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px' }}>
+            <div>
+              <h1 style={{ marginBottom: '8px' }}>Bună, {user?.name || user?.email}!</h1>
+              <p style={{ color: 'var(--muted)', marginBottom: '0' }}>Bine ai venit în dashboard-ul tău LuxBid.</p>
+            </div>
+            <a href="/profile/edit" style={{
+              background: '#f8f9fa',
+              color: '#333',
+              padding: '10px 16px',
+              borderRadius: '8px',
+              textDecoration: 'none',
+              fontWeight: '500',
+              border: '1px solid #D09A1E',
+              fontSize: '14px'
+            }}>
+              ⚙️ Editează Profil
+            </a>
+          </div>
           <button onClick={logout} style={{ background: 'var(--gold)', color: '#fff', border: 'none', padding: '10px 16px', borderRadius: '8px', cursor: 'pointer' }}>
             Deconectare
           </button>
@@ -66,10 +82,13 @@ export default function DashboardPage() {
           <h2>Acțiuni rapide</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', marginTop: '20px' }}>
             <a href="/dashboard/add-listing" style={{ background: 'var(--gold)', color: '#fff', padding: '20px', borderRadius: '12px', textDecoration: 'none', textAlign: 'center', fontWeight: '600' }}>
-              Adaugă Listare
+              📝 Adaugă Listare
             </a>
             <a href="/dashboard/my-listings" style={{ background: 'var(--surface)', color: 'var(--dark)', padding: '20px', borderRadius: '12px', textDecoration: 'none', textAlign: 'center', fontWeight: '600' }}>
-              Listările mele
+              📋 Listările mele
+            </a>
+            <a href="/profile/edit" style={{ background: '#f8f9fa', color: '#333', padding: '20px', borderRadius: '12px', textDecoration: 'none', textAlign: 'center', fontWeight: '600', border: '2px solid #D09A1E' }}>
+              ⚙️ Editează Profil
             </a>
           </div>
         </div>
