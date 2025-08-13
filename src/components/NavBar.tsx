@@ -151,12 +151,14 @@ function NavBarContent() {
             right: 0,
             bottom: 0,
             background: 'rgba(0, 0, 0, 0.5)',
-            zIndex: 999
+            zIndex: 9998,
+            animation: 'fadeIn 0.3s ease'
           }}
           onClick={() => setMobileMenuOpen(false)}
         />
       )}
 
+      {/* Slide Menu - ALWAYS RENDER but transform off-screen */}
       <div style={{
         position: 'fixed',
         top: 0,
@@ -164,12 +166,13 @@ function NavBarContent() {
         height: '100vh',
         width: '300px',
         background: '#fff',
-        zIndex: 1000,
+        zIndex: 9999,
         transform: mobileMenuOpen ? 'translateX(0)' : 'translateX(-100%)',
-        transition: 'transform 0.3s ease',
+        transition: 'transform 0.3s ease-in-out',
         overflowY: 'auto',
-        boxShadow: '2px 0 10px rgba(0,0,0,0.1)',
-        padding: '20px'
+        boxShadow: mobileMenuOpen ? '2px 0 15px rgba(0,0,0,0.2)' : 'none',
+        padding: '20px',
+        border: '1px solid #ddd'
       }}>
         <div style={{ 
           display: 'flex', 
@@ -190,11 +193,12 @@ function NavBarContent() {
           <button 
             onClick={() => setMobileMenuOpen(false)}
             style={{
-              background: 'none',
-              border: 'none',
+              background: '#f0f0f0',
+              border: '1px solid #ccc',
               fontSize: '24px',
               cursor: 'pointer',
-              padding: '8px'
+              padding: '8px',
+              borderRadius: '4px'
             }}
           >
             ✕
