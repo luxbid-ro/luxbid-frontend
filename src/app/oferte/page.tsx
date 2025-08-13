@@ -40,8 +40,9 @@ function OfertesContent() {
 
   // Mock data will be defined locally in fetchListings to avoid dependency issues
 
-  // Fetch listings from real API
-  const fetchListings = useCallback(async () => {
+  // Fetch listings from real API  
+  const fetchListings = async () => {
+    console.log('🚀 fetchListings called, setting loading=true')
     setLoading(true)
     setError('')
     
@@ -124,13 +125,15 @@ function OfertesContent() {
       console.log('🔄 Using mock data as fallback')
       setListings(mockListings)
     } finally {
+      console.log('✅ fetchListings completed, setting loading=false')
       setLoading(false)
     }
-  }, [])
+  }
 
   useEffect(() => {
+    console.log('🔄 useEffect triggered, calling fetchListings')
     fetchListings()
-  }, [fetchListings])
+  }, []) // Remove fetchListings dependency to prevent infinite re-renders
 
   // Filter and sort listings based on search, category, and sort option
   useEffect(() => {
@@ -515,7 +518,7 @@ export default function OfertesPage() {
       <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ textAlign: 'center' }}>
           <div style={{ width: '40px', height: '40px', border: '4px solid #f3f3f3', borderTop: '4px solid #D09A1E', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 16px' }}></div>
-          <p>Se încarcă...</p>
+          <p>Se încarcă ofertele...</p>
         </div>
       </div>
     }>
