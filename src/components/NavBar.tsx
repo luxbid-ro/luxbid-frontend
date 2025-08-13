@@ -240,241 +240,12 @@ function NavBarContent() {
               {!isMobile && <span>{isAuthed ? 'Cont' : 'Conectare'}</span>}
             </button>
 
-            {/* Account Dropdown Menu */}
-            {accountMenuOpen && (
-              <div style={{
-                position: 'absolute',
-                top: '100%',
-                right: '0',
-                width: '280px',
-                background: '#fff',
-                border: '1px solid #ddd',
-                borderRadius: '8px',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
-                zIndex: 99999,
-                marginTop: '8px',
-                padding: '16px'
-              }}>
-                <h3 style={{ 
-                  margin: '0 0 16px 0', 
-                  fontSize: '18px', 
-                  fontWeight: '600', 
-                  color: '#333',
-                  textAlign: 'center',
-                  paddingBottom: '16px',
-                  borderBottom: '1px solid #eee'
-                }}>
-                  Cont
-                </h3>
 
-                {isAuthed ? (
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    <a href="/dashboard" style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '12px',
-                      padding: '12px',
-                      textDecoration: 'none',
-                      color: '#333',
-                      borderRadius: '6px',
-                      transition: 'background-color 0.2s ease'
-                    }}>
-                      <span>📊</span> Prezentare generală
-                    </a>
-                    
-                    <a href="/mesaje" style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '12px',
-                      padding: '12px',
-                      textDecoration: 'none',
-                      color: '#333',
-                      borderRadius: '6px',
-                      transition: 'background-color 0.2s ease'
-                    }}>
-                      <span>✉️</span> Mesaje
-                    </a>
-                    
-                    <a href="/oferte" style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '12px',
-                      padding: '12px',
-                      textDecoration: 'none',
-                      color: '#333',
-                      borderRadius: '6px',
-                      transition: 'background-color 0.2s ease'
-                    }}>
-                      <span>🛒</span> Cumpără
-                    </a>
-                    
-                    <a href="/dashboard/add-listing" style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '12px',
-                      padding: '12px',
-                      textDecoration: 'none',
-                      color: '#333',
-                      borderRadius: '6px',
-                      transition: 'background-color 0.2s ease'
-                    }}>
-                      <span>🏷️</span> Vinde
-                    </a>
-                    
-                    <a href="/dashboard" style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '12px',
-                      padding: '12px',
-                      textDecoration: 'none',
-                      color: '#333',
-                      borderRadius: '6px',
-                      transition: 'background-color 0.2s ease'
-                    }}>
-                      <span>❤️</span> Lista de dorințe
-                    </a>
-                    
-                    <a href="/dashboard" style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '12px',
-                      padding: '12px',
-                      textDecoration: 'none',
-                      color: '#333',
-                      borderRadius: '6px',
-                      transition: 'background-color 0.2s ease'
-                    }}>
-                      <span>🔍</span> Căutări salvate
-                    </a>
-                    
-                    <a href="/dashboard" style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '12px',
-                      padding: '12px',
-                      textDecoration: 'none',
-                      color: '#333',
-                      borderRadius: '6px',
-                      transition: 'background-color 0.2s ease'
-                    }}>
-                      <span>⌚</span> Colecția de ceasuri
-                    </a>
-
-                    <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #eee' }} />
-                    
-                    <a href="/profile/edit" style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '12px',
-                      padding: '12px',
-                      textDecoration: 'none',
-                      color: '#333',
-                      borderRadius: '6px',
-                      transition: 'background-color 0.2s ease'
-                    }}>
-                      <span>👤</span> Profil
-                    </a>
-                    
-                    <a href="/dashboard" style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '12px',
-                      padding: '12px',
-                      textDecoration: 'none',
-                      color: '#333',
-                      borderRadius: '6px',
-                      transition: 'background-color 0.2s ease'
-                    }}>
-                      <span>🔔</span> Notificări
-                    </a>
-                    
-                    <button 
-                      onClick={handleLogout}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '12px',
-                        padding: '12px',
-                        background: 'none',
-                        border: 'none',
-                        color: '#333',
-                        borderRadius: '6px',
-                        transition: 'background-color 0.2s ease',
-                        cursor: 'pointer',
-                        width: '100%',
-                        textAlign: 'left'
-                      }}
-                    >
-                      <span>🚪</span> Deconectare
-                    </button>
-                  </div>
-                ) : (
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                    <a href="/auth/login" style={{
-                      padding: '12px',
-                      background: '#fff',
-                      color: '#333',
-                      textDecoration: 'none',
-                      border: '2px solid #D09A1E',
-                      borderRadius: '8px',
-                      textAlign: 'center',
-                      fontSize: '16px',
-                      fontWeight: '500',
-                      transition: 'all 0.2s ease'
-                    }}>
-                      Conectare
-                    </a>
-                    <a href="/auth/register" style={{
-                      padding: '12px',
-                      background: '#D09A1E',
-                      color: '#fff',
-                      textDecoration: 'none',
-                      borderRadius: '8px',
-                      textAlign: 'center',
-                      fontSize: '16px',
-                      fontWeight: '500',
-                      border: 'none',
-                      transition: 'all 0.2s ease'
-                    }}>
-                      Înregistrare
-                    </a>
-                    
-                    <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #eee' }} />
-                    
-                    <p style={{ 
-                      fontSize: '14px', 
-                      color: '#666', 
-                      margin: '8px 0',
-                      textAlign: 'center'
-                    }}>
-                      Ajută-ne să îmbunătățim LuxBid pentru toată lumea!
-                    </p>
-                    <p style={{ 
-                      fontSize: '12px', 
-                      color: '#999', 
-                      margin: '4px 0',
-                      textAlign: 'center'
-                    }}>
-                      Participă la cercetări compensate și testează funcționalități noi, nepublicate.
-                    </p>
-                    <a href="/auth/register" style={{
-                      fontSize: '14px',
-                      color: '#D09A1E',
-                      textDecoration: 'underline',
-                      textAlign: 'center',
-                      display: 'block',
-                      marginTop: '8px'
-                    }}>
-                      Înregistrează-te acum
-                    </a>
-                  </div>
-                )}
-              </div>
-            )}
           </div>
         </div>
       </div>
 
+      {/* Hamburger Menu Overlay */}
       {mobileMenuOpen && (
         <div 
           style={{
@@ -488,6 +259,23 @@ function NavBarContent() {
             animation: 'fadeIn 0.3s ease'
           }}
           onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
+
+      {/* Account Menu Overlay */}
+      {accountMenuOpen && (
+        <div 
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'rgba(0, 0, 0, 0.5)',
+            zIndex: 9998,
+            animation: 'fadeIn 0.3s ease'
+          }}
+          onClick={() => setAccountMenuOpen(false)}
         />
       )}
 
@@ -688,6 +476,271 @@ function NavBarContent() {
             </div>
           )}
         </div>
+      </div>
+
+      {/* Account Slide Menu - FROM RIGHT TO LEFT */}
+      <div 
+        data-menu="account"
+        style={{
+          position: 'fixed',
+          top: 0,
+          right: 0,
+          height: '100vh',
+          width: '300px',
+          background: '#fff',
+          zIndex: 9999,
+          transform: accountMenuOpen ? 'translateX(0)' : 'translateX(100%)',
+          transition: 'transform 0.3s ease-in-out',
+          overflowY: 'auto',
+          boxShadow: accountMenuOpen ? '-2px 0 15px rgba(0,0,0,0.2)' : 'none',
+          padding: '20px',
+          border: '1px solid #ddd'
+        }}
+      >
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center', 
+          marginBottom: '20px',
+          paddingBottom: '16px',
+          borderBottom: '1px solid #eee'
+        }}>
+          <h2 style={{ 
+            margin: 0, 
+            fontWeight: '700',
+            letterSpacing: '1px',
+            display: 'flex',
+            alignItems: 'center',
+            height: '29.5px'
+          }}>
+            <span style={{ 
+              color: '#D09A1E',
+              fontSize: '24px'
+            }}>Lux</span><span style={{ 
+              color: '#111',
+              fontSize: '24px'
+            }}>Bid</span>
+          </h2>
+          <button 
+            onClick={() => setAccountMenuOpen(false)}
+            style={{
+              background: '#f0f0f0',
+              border: '1px solid #ccc',
+              fontSize: '24px',
+              cursor: 'pointer',
+              padding: '8px',
+              borderRadius: '4px'
+            }}
+          >
+            ✕
+          </button>
+        </div>
+
+        {isAuthed ? (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <a href="/dashboard" onClick={() => setAccountMenuOpen(false)} style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              padding: '12px',
+              textDecoration: 'none',
+              color: '#333',
+              borderRadius: '6px',
+              transition: 'background-color 0.2s ease'
+            }}>
+              <span>📊</span> Prezentare generală
+            </a>
+            
+            <a href="/mesaje" onClick={() => setAccountMenuOpen(false)} style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              padding: '12px',
+              textDecoration: 'none',
+              color: '#333',
+              borderRadius: '6px',
+              transition: 'background-color 0.2s ease'
+            }}>
+              <span>✉️</span> Mesaje
+            </a>
+            
+            <a href="/oferte" onClick={() => setAccountMenuOpen(false)} style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              padding: '12px',
+              textDecoration: 'none',
+              color: '#333',
+              borderRadius: '6px',
+              transition: 'background-color 0.2s ease'
+            }}>
+              <span>🛒</span> Cumpără
+            </a>
+            
+            <a href="/dashboard/add-listing" onClick={() => setAccountMenuOpen(false)} style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              padding: '12px',
+              textDecoration: 'none',
+              color: '#333',
+              borderRadius: '6px',
+              transition: 'background-color 0.2s ease'
+            }}>
+              <span>🏷️</span> Vinde
+            </a>
+            
+            <a href="/dashboard" onClick={() => setAccountMenuOpen(false)} style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              padding: '12px',
+              textDecoration: 'none',
+              color: '#333',
+              borderRadius: '6px',
+              transition: 'background-color 0.2s ease'
+            }}>
+              <span>❤️</span> Lista de dorințe
+            </a>
+            
+            <a href="/dashboard" onClick={() => setAccountMenuOpen(false)} style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              padding: '12px',
+              textDecoration: 'none',
+              color: '#333',
+              borderRadius: '6px',
+              transition: 'background-color 0.2s ease'
+            }}>
+              <span>🔍</span> Căutări salvate
+            </a>
+            
+            <a href="/dashboard" onClick={() => setAccountMenuOpen(false)} style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              padding: '12px',
+              textDecoration: 'none',
+              color: '#333',
+              borderRadius: '6px',
+              transition: 'background-color 0.2s ease'
+            }}>
+              <span>⌚</span> Colecția de ceasuri
+            </a>
+
+            <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #eee' }} />
+            
+            <a href="/notifications" onClick={() => setAccountMenuOpen(false)} style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              padding: '12px',
+              textDecoration: 'none',
+              color: '#333',
+              borderRadius: '6px',
+              transition: 'background-color 0.2s ease'
+            }}>
+              <span>🔔</span> Notificări
+            </a>
+            
+            <a href="/profile/edit" onClick={() => setAccountMenuOpen(false)} style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              padding: '12px',
+              textDecoration: 'none',
+              color: '#333',
+              borderRadius: '6px',
+              transition: 'background-color 0.2s ease'
+            }}>
+              <span>👤</span> Profil
+            </a>
+            
+            <button 
+              onClick={() => {
+                handleLogout()
+                setAccountMenuOpen(false)
+              }}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                padding: '12px',
+                background: 'none',
+                border: 'none',
+                color: '#333',
+                borderRadius: '6px',
+                transition: 'background-color 0.2s ease',
+                cursor: 'pointer',
+                width: '100%',
+                textAlign: 'left'
+              }}
+            >
+              <span>🚪</span> Deconectare
+            </button>
+          </div>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <a href="/auth/login" onClick={() => setAccountMenuOpen(false)} style={{
+              padding: '12px',
+              background: '#fff',
+              color: '#333',
+              textDecoration: 'none',
+              border: '2px solid #D09A1E',
+              borderRadius: '8px',
+              textAlign: 'center',
+              fontSize: '16px',
+              fontWeight: '500',
+              transition: 'all 0.2s ease'
+            }}>
+              Conectare
+            </a>
+            <a href="/auth/register" onClick={() => setAccountMenuOpen(false)} style={{
+              padding: '12px',
+              background: '#D09A1E',
+              color: '#fff',
+              textDecoration: 'none',
+              borderRadius: '8px',
+              textAlign: 'center',
+              fontSize: '16px',
+              fontWeight: '500',
+              border: 'none',
+              transition: 'all 0.2s ease'
+            }}>
+              Înregistrare
+            </a>
+            
+            <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #eee' }} />
+            
+            <p style={{ 
+              fontSize: '14px', 
+              color: '#666', 
+              margin: '8px 0',
+              textAlign: 'center'
+            }}>
+              Ajută-ne să îmbunătățim LuxBid pentru toată lumea!
+            </p>
+            <p style={{ 
+              fontSize: '12px', 
+              color: '#999', 
+              margin: '4px 0',
+              textAlign: 'center'
+            }}>
+              Participă la cercetări compensate și testează funcționalități noi, nepublicate.
+            </p>
+            <a href="/auth/register" onClick={() => setAccountMenuOpen(false)} style={{
+              fontSize: '14px',
+              color: '#D09A1E',
+              textDecoration: 'underline',
+              textAlign: 'center',
+              display: 'block',
+              marginTop: '8px'
+            }}>
+              Înregistrează-te acum
+            </a>
+          </div>
+        )}
       </div>
     </div>
   )
