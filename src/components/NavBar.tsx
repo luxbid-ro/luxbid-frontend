@@ -110,20 +110,9 @@ function NavBarContent() {
           >
             <span style={{ 
               color: '#D09A1E',
-              width: '51.86px',
-              height: '29.5px',
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
               fontSize: '24px'
-            }}>Lux</span>
-            <span style={{ 
+            }}>Lux</span><span style={{ 
               color: '#111',
-              width: '42.95px', 
-              height: '29.5px',
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
               fontSize: '24px'
             }}>Bid</span>
           </a>
@@ -178,22 +167,11 @@ function NavBarContent() {
         }}>
           <span className="lux" style={{ 
             color: '#D09A1E',
-            width: '51.86px',
-            height: '29.5px',
-            display: 'inline-flex',
-            alignItems: 'center',
-            justifyContent: 'center',
             fontSize: '24px'
-          }}>LUX</span>
-          <span className="bid" style={{ 
+          }}>Lux</span><span className="bid" style={{ 
             color: '#111',
-            width: '42.95px', 
-            height: '29.5px',
-            display: 'inline-flex',
-            alignItems: 'center',
-            justifyContent: 'center',
             fontSize: '24px'
-          }}>BID</span>
+          }}>Bid</span>
         </a>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -545,20 +523,9 @@ function NavBarContent() {
           }}>
             <span style={{ 
               color: '#D09A1E',
-              width: '51.86px',
-              height: '29.5px',
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
               fontSize: '24px'
-            }}>Lux</span>
-            <span style={{ 
+            }}>Lux</span><span style={{ 
               color: '#111',
-              width: '42.95px', 
-              height: '29.5px',
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
               fontSize: '24px'
             }}>Bid</span>
           </h2>
