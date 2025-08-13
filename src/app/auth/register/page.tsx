@@ -1,10 +1,11 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
 export default function RegisterPage() {
   const router = useRouter()
   const [personType, setPersonType] = useState<'fizica' | 'juridica'>('fizica')
+  const [isMobile, setIsMobile] = useState(false)
   const [form, setForm] = useState({
     // Date comune
     email: '',
@@ -30,6 +31,15 @@ export default function RegisterPage() {
   })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -65,15 +75,43 @@ export default function RegisterPage() {
   }
 
   return (
-    <div style={{ minHeight: 'calc(100vh - 60px)', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--surface)', padding: '20px', paddingTop: '80px' }}>
-      <form onSubmit={handleSubmit} style={{ background: '#fff', padding: '40px', borderRadius: '16px', width: '100%', maxWidth: '600px', boxShadow: '0 4px 6px rgba(0,0,0,.1)' }}>
-        <h2 style={{ textAlign: 'center', marginBottom: '32px', color: 'var(--ink)' }}>Înregistrare</h2>
+    <div style={{ 
+      minHeight: 'calc(100vh - 60px)', 
+      display: 'flex', 
+      alignItems: 'flex-start', 
+      justifyContent: 'center', 
+      background: 'var(--surface)', 
+      padding: '10px',
+      paddingTop: '20px',
+      overflow: 'auto'
+    }}>
+      <form onSubmit={handleSubmit} style={{ 
+        background: '#fff', 
+        padding: isMobile ? '20px' : '40px', 
+        borderRadius: '16px', 
+        width: '100%', 
+        maxWidth: isMobile ? '100%' : '500px',
+        maxHeight: 'calc(100vh - 100px)',
+        overflowY: 'auto',
+        boxShadow: '0 4px 6px rgba(0,0,0,.1)',
+        margin: '0 auto'
+      }}>
+        <h2 style={{ 
+          textAlign: 'center', 
+          marginBottom: isMobile ? '20px' : '32px', 
+          color: 'var(--ink)',
+          fontSize: isMobile ? '24px' : '28px'
+        }}>Înregistrare</h2>
         {error && <p style={{ color: 'red', textAlign: 'center', marginBottom: '16px' }}>{error}</p>}
         
         {/* Tip persoană */}
-        <div style={{ marginBottom: '24px' }}>
+        <div style={{ marginBottom: isMobile ? '16px' : '24px' }}>
           <label style={{ display: 'block', marginBottom: '8px', fontWeight: '600', color: 'var(--ink)' }}>Tip persoană</label>
-          <div style={{ display: 'flex', gap: '16px' }}>
+          <div style={{ 
+            display: 'flex', 
+            flexDirection: isMobile ? 'column' : 'row',
+            gap: '16px' 
+          }}>
             <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
               <input
                 type="radio"
@@ -122,7 +160,7 @@ export default function RegisterPage() {
         {/* Câmpuri pentru persoană fizică */}
         {personType === 'fizica' && (
           <>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '20px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '16px', marginBottom: '20px' }}>
               <input
                 type="text"
                 placeholder="Prenume *"
@@ -165,7 +203,7 @@ export default function RegisterPage() {
                 style={{ width: '100%', padding: '12px', border: '1px solid #ddd', borderRadius: '8px', fontSize: '16px' }}
               />
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '20px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '16px', marginBottom: '20px' }}>
               <input
                 type="text"
                 placeholder="CUI *"
@@ -213,7 +251,7 @@ export default function RegisterPage() {
             />
           </div>
           
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
             <input
               type="text"
               placeholder="Orașul *"
@@ -232,7 +270,7 @@ export default function RegisterPage() {
             />
           </div>
           
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '20px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '16px', marginBottom: '20px' }}>
             <input
               type="text"
               placeholder="Cod poștal *"
