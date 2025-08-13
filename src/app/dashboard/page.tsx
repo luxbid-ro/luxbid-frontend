@@ -50,13 +50,38 @@ export default function DashboardPage() {
     router.push('/')
   }
 
+  // Function to get greeting based on current time
+  const getGreeting = () => {
+    const hour = new Date().getHours()
+    
+    if (hour >= 6 && hour < 12) {
+      return 'Bună dimineața'
+    } else if (hour >= 12 && hour < 18) {
+      return 'Bună ziua'
+    } else {
+      return 'Bună seara'
+    }
+  }
+
+  // Function to get user's first name
+  const getUserDisplayName = () => {
+    if (user?.firstName) {
+      return user.firstName
+    } else if (user?.name) {
+      return user.name.split(' ')[0] // Get first part of name
+    } else if (user?.email) {
+      return user.email.split('@')[0] // Get part before @
+    }
+    return 'Utilizator'
+  }
+
   if (loading) return <div style={{ textAlign: 'center', padding: '100px' }}>Loading...</div>
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--surface)', padding: '40px 20px' }}>
       <div style={{ maxWidth: '800px', margin: '0 auto' }}>
         <div style={{ background: '#fff', padding: '32px', borderRadius: '16px', marginBottom: '24px' }}>
-          <h1 style={{ marginBottom: '16px' }}>Bună, {user?.name || user?.email}!</h1>
+          <h1 style={{ marginBottom: '16px' }}>{getGreeting()}, {getUserDisplayName()}!</h1>
           <p style={{ color: 'var(--muted)', marginBottom: '20px' }}>Bine ai venit în dashboard-ul tău LuxBid.</p>
           <button onClick={logout} style={{ background: 'var(--gold)', color: '#fff', border: 'none', padding: '10px 16px', borderRadius: '8px', cursor: 'pointer' }}>
             Deconectare
