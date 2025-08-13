@@ -85,13 +85,32 @@ function NavBarContent() {
             href="/"
             style={{
               textDecoration: 'none',
-              fontSize: isMobile ? '24px' : '32px',
               fontWeight: '700',
               cursor: 'pointer',
-              letterSpacing: '1px'
+              letterSpacing: '1px',
+              display: 'flex',
+              alignItems: 'center',
+              height: '29.5px'
             }}
           >
-            <span style={{ color: '#D09A1E' }}>LUX</span><span style={{ color: '#111' }}>BID</span>
+            <span style={{ 
+              color: '#D09A1E',
+              width: '51.86px',
+              height: '29.5px',
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '24px'
+            }}>LUX</span>
+            <span style={{ 
+              color: '#111',
+              width: '42.95px', 
+              height: '29.5px',
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '24px'
+            }}>BID</span>
           </a>
         </div>
       </div>
@@ -131,16 +150,34 @@ function NavBarContent() {
         </button>
 
         <a className="brand" href="/" style={{ 
-          fontSize: isMobile ? '22px' : '32px',
           fontWeight: '700',
           textDecoration: 'none',
-          color: '#D09A1E',
           position: 'absolute',
           left: '50%',
           transform: 'translateX(-50%)',
-          letterSpacing: '1px'
+          letterSpacing: '1px',
+          display: 'flex',
+          alignItems: 'center',
+          height: '29.5px'
         }}>
-          <span className="lux">LUX</span><span className="bid" style={{ color: '#111' }}>BID</span>
+          <span className="lux" style={{ 
+            color: '#D09A1E',
+            width: '51.86px',
+            height: '29.5px',
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '24px'
+          }}>LUX</span>
+          <span className="bid" style={{ 
+            color: '#111',
+            width: '42.95px', 
+            height: '29.5px',
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '24px'
+          }}>BID</span>
         </a>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -220,11 +257,30 @@ function NavBarContent() {
         }}>
           <h2 style={{ 
             margin: 0, 
-            fontSize: isMobile ? '24px' : '32px', 
             fontWeight: '700',
-            letterSpacing: '1px'
+            letterSpacing: '1px',
+            display: 'flex',
+            alignItems: 'center',
+            height: '29.5px'
           }}>
-            <span style={{ color: '#D09A1E' }}>LUX</span><span style={{ color: '#111' }}>BID</span>
+            <span style={{ 
+              color: '#D09A1E',
+              width: '51.86px',
+              height: '29.5px',
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '24px'
+            }}>LUX</span>
+            <span style={{ 
+              color: '#111',
+              width: '42.95px', 
+              height: '29.5px',
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '24px'
+            }}>BID</span>
           </h2>
           <button 
             onClick={() => setMobileMenuOpen(false)}
