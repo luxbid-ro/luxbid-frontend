@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import NavBar from '../../../components/NavBar'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -37,7 +38,9 @@ export default function LoginPage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--surface)' }}>
+    <>
+      <NavBar />
+      <div style={{ minHeight: 'calc(100vh - 60px)', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--surface)', paddingTop: '60px' }}>
       <form onSubmit={handleSubmit} style={{ background: '#fff', padding: '40px', borderRadius: '16px', width: '100%', maxWidth: '400px', boxShadow: '0 4px 6px rgba(0,0,0,.1)' }}>
         <h2 style={{ textAlign: 'center', marginBottom: '32px', color: 'var(--ink)' }}>Conectare</h2>
         {error && <p style={{ color: 'red', textAlign: 'center', marginBottom: '16px' }}>{error}</p>}
@@ -72,6 +75,7 @@ export default function LoginPage() {
           Nu ai cont? <a href="/auth/register" style={{ color: 'var(--gold)', textDecoration: 'none' }}>Înregistrează-te</a>
         </p>
       </form>
-    </div>
+      </div>
+    </>
   )
 }

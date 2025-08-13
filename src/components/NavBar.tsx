@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState, Suspense } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import NotificationBell from './NotificationBell'
 
 function NavBarContent() {
@@ -11,6 +11,10 @@ function NavBarContent() {
   const [isMobile, setIsMobile] = useState(true)
   const router = useRouter()
   const searchParams = useSearchParams()
+  const pathname = usePathname()
+  
+  // Check if we're on login or register pages
+  const isAuthPage = pathname === '/auth/login' || pathname === '/auth/register'
 
   useEffect(() => {
     const checkMobile = () => {
@@ -60,6 +64,38 @@ function NavBarContent() {
     localStorage.removeItem('luxbid_token')
     setIsAuthed(false)
     router.push('/')
+  }
+
+  // Render simple navbar for auth pages
+  if (isAuthPage) {
+    return (
+      <div className="nav" style={{ position: 'relative' }}>
+        <div className="container nav-row" style={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          alignItems: 'center',
+          width: '100%',
+          maxWidth: '100vw',
+          overflow: 'hidden',
+          position: 'relative',
+          padding: '16px 0',
+          minHeight: '60px'
+        }}>
+          <a 
+            href="/"
+            style={{
+              textDecoration: 'none',
+              color: '#D09A1E',
+              fontSize: '28px',
+              fontWeight: '700',
+              cursor: 'pointer'
+            }}
+          >
+            LUXBID
+          </a>
+        </div>
+      </div>
+    )
   }
 
   return (
