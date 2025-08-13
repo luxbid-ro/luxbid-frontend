@@ -182,7 +182,7 @@ function NavBarContent() {
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           {isAuthed ? (
-            <a href="/dashboard" style={{
+            <a href="/profile/edit" style={{
               display: 'flex',
               alignItems: 'center',
               gap: '8px',
@@ -382,7 +382,21 @@ function NavBarContent() {
                   fontWeight: '500',
                   border: '1px solid #ddd'
                 }}>
-                  Contul Meu
+                  📊 Dashboard
+                </a>
+                <a href="/profile/edit" style={{
+                  flex: 1,
+                  padding: '16px',
+                  background: '#f8f9fa',
+                  color: '#333',
+                  textDecoration: 'none',
+                  borderRadius: '8px',
+                  textAlign: 'center',
+                  fontSize: '16px',
+                  fontWeight: '500',
+                  border: '1px solid #ddd'
+                }}>
+                  ⚙️ Editează Profilul
                 </a>
                 <button 
                   onClick={handleLogout}
