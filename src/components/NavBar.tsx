@@ -92,41 +92,90 @@ function NavBarContent() {
         alignItems: 'center',
         width: '100%',
         maxWidth: '100vw',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        position: 'relative'
       }}>
-        <a className="brand" href="/" style={{ 
-          fontSize: isMobile ? '20px' : '28px',
-          fontWeight: '700',
-          textDecoration: 'none',
-          color: '#D09A1E',
-          flexShrink: 0
-        }}>
-          <span className="lux">Lux</span><span className="bid" style={{ color: '#111' }}>Bid</span>
-        </a>
-        
-        {/* Mobile Menu Button - ALWAYS VISIBLE ON MOBILE */}
+        {/* LEFT: Menu Button (Chrono24 style) */}
         <button 
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           style={{
-            display: isMobile ? 'block' : 'none',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
             background: 'none',
             border: 'none',
-            fontSize: '20px',
+            fontSize: '16px',
             cursor: 'pointer',
-            padding: '8px',
-            position: 'relative',
-            zIndex: 1001
+            padding: '8px 12px',
+            color: '#333',
+            borderRadius: '4px',
+            transition: 'background-color 0.2s ease',
+            fontWeight: '500'
           }}
+          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f5f5f5'}
+          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
         >
-          {mobileMenuOpen ? '✕' : '☰'}
+          <span style={{ fontSize: '20px' }}>{mobileMenuOpen ? '✕' : '☰'}</span>
+          {!isMobile && <span>Menu</span>}
         </button>
-        
-        {/* Desktop Menu - HIDDEN ON MOBILE */}
-        <nav style={{
-          display: isMobile ? 'none' : 'flex',
-          gap: '20px',
-          alignItems: 'center'
+
+        {/* CENTER: LuxBid Logo (Chrono24 style) */}
+        <a className="brand" href="/" style={{ 
+          fontSize: isMobile ? '22px' : '32px',
+          fontWeight: '700',
+          textDecoration: 'none',
+          color: '#D09A1E',
+          position: 'absolute',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          letterSpacing: '1px'
         }}>
+          <span className="lux">LUX</span><span className="bid" style={{ color: '#111' }}>BID</span>
+        </a>
+
+        {/* RIGHT: Account (Chrono24 style) */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          {isAuthed ? (
+            <>
+              <a href="/dashboard" style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                textDecoration: 'none',
+                color: '#333',
+                padding: '8px 12px',
+                borderRadius: '4px',
+                transition: 'background-color 0.2s ease',
+                fontWeight: '500'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f5f5f5'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+              >
+                <span style={{ fontSize: '18px' }}>👤</span>
+                {!isMobile && <span>Account</span>}
+              </a>
+            </>
+          ) : (
+            <a href="/auth/login" style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              textDecoration: 'none',
+              color: '#333',
+              padding: '8px 12px',
+              borderRadius: '4px',
+              transition: 'background-color 0.2s ease',
+              fontWeight: '500'
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f5f5f5'}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+            >
+              <span style={{ fontSize: '18px' }}>👤</span>
+              {!isMobile && <span>Log in</span>}
+            </a>
+          )}
+        </div>
+
           <button 
             type="button"
             onClick={() => handleCategoryClick('Ceasuri')}
@@ -266,85 +315,73 @@ function NavBarContent() {
             width: '100vw',
             marginLeft: '-16px' // Offset container padding
           }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            <button 
-              onClick={() => {
-                handleCategoryClick('Ceasuri')
-                setMobileMenuOpen(false)
-              }}
-              style={{
-                padding: '16px',
-                border: '1px solid #ddd',
-                borderRadius: '8px',
-                background: activeCategory === 'Ceasuri' ? '#D09A1E' : '#fff',
-                color: activeCategory === 'Ceasuri' ? '#fff' : '#333',
-                cursor: 'pointer',
-                textAlign: 'left',
-                fontSize: '16px',
-                width: '100%',
-                minHeight: '48px',
-                display: 'flex',
-                alignItems: 'center',
-                fontWeight: '500'
-              }}
-            >
-              Ceasuri
-            </button>
-            <button 
-              onClick={() => {
-                handleCategoryClick('Genți')
-                setMobileMenuOpen(false)
-              }}
-              style={{
-                padding: '12px',
-                border: '1px solid #ddd',
-                borderRadius: '8px',
-                background: activeCategory === 'Genți' ? '#D09A1E' : '#fff',
-                color: activeCategory === 'Genți' ? '#fff' : '#333',
-                cursor: 'pointer',
-                textAlign: 'left',
-                fontSize: '16px'
-              }}
-            >
-              Genți
-            </button>
-            <button 
-              onClick={() => {
-                handleCategoryClick('Bijuterii')
-                setMobileMenuOpen(false)
-              }}
-              style={{
-                padding: '12px',
-                border: '1px solid #ddd',
-                borderRadius: '8px',
-                background: activeCategory === 'Bijuterii' ? '#D09A1E' : '#fff',
-                color: activeCategory === 'Bijuterii' ? '#fff' : '#333',
-                cursor: 'pointer',
-                textAlign: 'left',
-                fontSize: '16px'
-              }}
-            >
-              Bijuterii
-            </button>
-            <button 
-              onClick={() => {
-                setActiveCategory('')
-                router.push('/oferte')
-                setMobileMenuOpen(false)
-              }}
-              style={{
-                padding: '12px',
-                border: '1px solid #ddd',
-                borderRadius: '8px',
-                background: !activeCategory ? '#D09A1E' : '#fff',
-                color: !activeCategory ? '#fff' : '#333',
-                cursor: 'pointer',
-                textAlign: 'left',
-                fontSize: '16px'
-              }}
-            >
-              Toate Ofertele
-            </button>
+          {/* CHRONO24 STYLE MENU */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
+            
+            {/* Buy a luxury item section */}
+            <div style={{ padding: '16px 0', borderBottom: '1px solid #eee' }}>
+              <h3 style={{ margin: '0 0 12px 0', fontSize: '18px', fontWeight: '600', color: '#333' }}>Cumpără un obiect de lux</h3>
+              
+              <button onClick={() => { handleCategoryClick('Ceasuri'); setMobileMenuOpen(false); }} 
+                style={{ display: 'block', width: '100%', textAlign: 'left', padding: '12px 0', background: 'none', border: 'none', fontSize: '16px', color: '#666', cursor: 'pointer' }}>
+                Ceasuri de lux
+              </button>
+              
+              <button onClick={() => { handleCategoryClick('Genți'); setMobileMenuOpen(false); }} 
+                style={{ display: 'block', width: '100%', textAlign: 'left', padding: '12px 0', background: 'none', border: 'none', fontSize: '16px', color: '#666', cursor: 'pointer' }}>
+                Genți de designer
+              </button>
+              
+              <button onClick={() => { handleCategoryClick('Bijuterii'); setMobileMenuOpen(false); }} 
+                style={{ display: 'block', width: '100%', textAlign: 'left', padding: '12px 0', background: 'none', border: 'none', fontSize: '16px', color: '#666', cursor: 'pointer' }}>
+                Bijuterii fine
+              </button>
+              
+              <button onClick={() => { setActiveCategory(''); router.push('/oferte'); setMobileMenuOpen(false); }} 
+                style={{ display: 'block', width: '100%', textAlign: 'left', padding: '12px 0', background: 'none', border: 'none', fontSize: '16px', color: '#666', cursor: 'pointer' }}>
+                Explorează toate categoriile
+              </button>
+            </div>
+
+            {/* Sell section */}
+            <div style={{ padding: '16px 0', borderBottom: '1px solid #eee' }}>
+              <h3 style={{ margin: '0 0 12px 0', fontSize: '18px', fontWeight: '600', color: '#333' }}>Vinde un obiect</h3>
+              
+              <a href="/dashboard/add-listing" onClick={() => setMobileMenuOpen(false)}
+                style={{ display: 'block', width: '100%', textAlign: 'left', padding: '12px 0', textDecoration: 'none', fontSize: '16px', color: '#666' }}>
+                Ca vânzător privat
+              </a>
+              
+              <a href="/dashboard" onClick={() => setMobileMenuOpen(false)}
+                style={{ display: 'block', width: '100%', textAlign: 'left', padding: '12px 0', textDecoration: 'none', fontSize: '16px', color: '#666' }}>
+                Devino dealer LuxBid
+              </a>
+              
+              <a href="/dashboard" onClick={() => setMobileMenuOpen(false)}
+                style={{ display: 'block', width: '100%', textAlign: 'left', padding: '12px 0', textDecoration: 'none', fontSize: '16px', color: '#666' }}>
+                Evaluare gratuită
+              </a>
+            </div>
+
+            {/* Services section */}
+            <div style={{ padding: '16px 0', borderBottom: '1px solid #eee' }}>
+              <h3 style={{ margin: '0 0 12px 0', fontSize: '18px', fontWeight: '600', color: '#333' }}>Servicii</h3>
+              
+              <a href="/dashboard" onClick={() => setMobileMenuOpen(false)}
+                style={{ display: 'block', width: '100%', textAlign: 'left', padding: '12px 0', textDecoration: 'none', fontSize: '16px', color: '#666' }}>
+                Colecția mea
+              </a>
+              
+              <a href="/dashboard" onClick={() => setMobileMenuOpen(false)}
+                style={{ display: 'block', width: '100%', textAlign: 'left', padding: '12px 0', textDecoration: 'none', fontSize: '16px', color: '#666' }}>
+                LuxPulse
+              </a>
+              
+              <a href="/dashboard" onClick={() => setMobileMenuOpen(false)}
+                style={{ display: 'block', width: '100%', textAlign: 'left', padding: '12px 0', textDecoration: 'none', fontSize: '16px', color: '#666' }}>
+                Magazin
+              </a>
+            </div>
             
             {/* Mobile Auth Buttons */}
             <div style={{ 
