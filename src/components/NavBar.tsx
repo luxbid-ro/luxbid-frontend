@@ -85,7 +85,7 @@ function NavBarContent() {
             href="/"
             style={{
               textDecoration: 'none',
-              fontSize: '28px',
+              fontSize: isMobile ? '24px' : '32px',
               fontWeight: '700',
               cursor: 'pointer',
               letterSpacing: '1px'
@@ -220,7 +220,7 @@ function NavBarContent() {
         }}>
           <h2 style={{ 
             margin: 0, 
-            fontSize: '24px', 
+            fontSize: isMobile ? '24px' : '32px', 
             fontWeight: '700',
             letterSpacing: '1px'
           }}>
