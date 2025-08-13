@@ -35,7 +35,9 @@ function NavBarContent() {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement
+      console.log('Click outside detected, target:', target)
       if (!target.closest('[data-menu="hamburger"]') && !target.closest('[data-menu="account"]')) {
+        console.log('Closing menus due to outside click')
         setMobileMenuOpen(false)
         setAccountMenuOpen(false)
       }
@@ -216,7 +218,10 @@ function NavBarContent() {
           {/* Account Menu */}
           <div style={{ position: 'relative' }} data-menu="account">
             <button 
-              onClick={() => setAccountMenuOpen(!accountMenuOpen)}
+              onClick={() => {
+                console.log('Account button clicked, current state:', accountMenuOpen)
+                setAccountMenuOpen(!accountMenuOpen)
+              }}
               style={{
                 display: 'flex',
                 alignItems: 'center',
