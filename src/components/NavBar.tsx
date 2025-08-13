@@ -42,20 +42,21 @@ function NavBarContent() {
     return () => window.removeEventListener('storage', onStorage)
   }, [])
 
-  // Track active category from URL
+  // Initialize from URL params
   useEffect(() => {
-    const category = searchParams?.get('category') || ''
+    const q = searchParams.get('q') || ''
+    const category = searchParams.get('category') || ''
+    setSearchQuery(q)
     setActiveCategory(category)
   }, [searchParams])
 
   // Handle search
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
-    if (searchQuery.trim()) {
-      router.push(`/oferte?q=${encodeURIComponent(searchQuery.trim())}`)
-    } else {
-      router.push('/oferte')
-    }
+    const params = new URLSearchParams()
+    if (searchQuery) params.set('q', searchQuery)
+    if (activeCategory) params.set('category', activeCategory)
+    router.push(`/oferte?${params.toString()}`)
   }
 
   // Handle category filter
@@ -63,19 +64,6 @@ function NavBarContent() {
     setActiveCategory(category)
     router.push(`/oferte?category=${encodeURIComponent(category)}`)
   }
-
-  // Get style for category button
-  const getCategoryButtonStyle = (category: string) => ({
-    background: 'none',
-    border: 'none',
-    cursor: 'pointer',
-    color: activeCategory === category ? '#D09A1E' : 'inherit',
-    fontSize: 'inherit',
-    fontWeight: activeCategory === category ? '600' : 'normal',
-    borderBottom: activeCategory === category ? '2px solid #D09A1E' : '2px solid transparent',
-    paddingBottom: '8px',
-    transition: 'all 0.2s ease'
-  })
 
   // Handle logout
   const handleLogout = () => {
@@ -175,146 +163,24 @@ function NavBarContent() {
             </a>
           )}
         </div>
-
-          <button 
-            type="button"
-            onClick={() => handleCategoryClick('Ceasuri')}
-            style={getCategoryButtonStyle('Ceasuri')}
-          >
-            Ceasuri
-          </button>
-          <button 
-            type="button"
-            onClick={() => handleCategoryClick('Genți')}
-            style={getCategoryButtonStyle('Genți')}
-          >
-            Genți
-          </button>
-          <button 
-            type="button"
-            onClick={() => handleCategoryClick('Bijuterii')}
-            style={getCategoryButtonStyle('Bijuterii')}
-          >
-            Bijuterii
-          </button>
-          <button 
-            type="button"
-            onClick={() => {
-              setActiveCategory('')
-              router.push('/oferte')
-            }}
-            style={{
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              color: !activeCategory ? '#D09A1E' : 'inherit',
-              fontSize: 'inherit',
-              fontWeight: !activeCategory ? '600' : 'normal',
-              borderBottom: !activeCategory ? '2px solid #D09A1E' : '2px solid transparent',
-              paddingBottom: '8px',
-              transition: 'all 0.2s ease'
-            }}
-          >
-            Toate Ofertele
-          </button>
-        </nav>
-        {/* Search - HIDDEN ON MOBILE */}
-        <div style={{
-          display: isMobile ? 'none' : 'block',
-          flex: 1,
-          maxWidth: '300px',
-          margin: '0 20px'
-        }}>
-          <form onSubmit={handleSearch} style={{ display: 'contents' }}>
-            <div className="search-pill">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="11" cy="11" r="8"/>
-                <path d="m21 21-4.35-4.35"/>
-              </svg>
-              <input 
-                type="text" 
-                placeholder="Caută ceasuri, genți, bijuterii..." 
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <button 
-                type="submit" 
-                style={{ 
-                  background: 'none', 
-                  border: 'none', 
-                  position: 'absolute', 
-                  right: '8px', 
-                  top: '50%', 
-                  transform: 'translateY(-50%)', 
-                  cursor: 'pointer',
-                  opacity: 0 
-                }}
-              >
-                🔍
-              </button>
-            </div>
-          </form>
-        </div>
-        
-        {/* Auth Buttons - RESPONSIVE */}
-        <div style={{
-          display: isMobile ? 'none' : 'flex',
-          gap: '8px',
-          alignItems: 'center'
-        }}>
-          {isAuthed ? (
-            <>
-              <NotificationBell />
-              <a className="btn btn-outline" href="/mesaje" style={{ marginRight: '8px' }}>
-                💬 Mesaje
-              </a>
-              <a className="btn btn-outline" href="/dashboard">
-                Contul Meu
-              </a>
-              <button 
-                onClick={handleLogout}
-                className="btn"
-                style={{ 
-                  background: '#f5f5f5', 
-                  color: '#666', 
-                  border: '1px solid #ddd',
-                  marginLeft: '8px'
-                }}
-              >
-                Deconectare
-              </button>
-            </>
-          ) : (
-            <>
-              <a className="btn btn-outline" href="/auth/login">
-                Conectare
-              </a>
-              <a className="btn btn-gold" href="/auth/register">
-                Înregistrare
-              </a>
-            </>
-          )}
-        </div>
       </div>
-      
-              {/* Mobile Navigation Menu */}
-        {mobileMenuOpen && isMobile && (
-          <div style={{
-            position: 'absolute',
-            top: '100%',
-            left: 0,
-            right: 0,
-            background: '#fff',
-            border: '1px solid #eee',
-            borderTop: 'none',
-            zIndex: 1000,
-            padding: '16px',
-            boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-            maxHeight: '80vh',
-            overflowY: 'auto',
-            width: '100vw',
-            marginLeft: '-16px' // Offset container padding
-          }}>
+
+      {/* Mobile Navigation Menu */}
+      {mobileMenuOpen && (
+        <div style={{
+          position: 'absolute',
+          top: '100%',
+          left: 0,
+          right: 0,
+          background: '#fff',
+          zIndex: 1000,
+          padding: '16px',
+          boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+          maxHeight: '80vh',
+          overflowY: 'auto',
+          width: '100vw',
+          marginLeft: '-16px' // Offset container padding
+        }}>
           {/* CHRONO24 STYLE MENU */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
             
@@ -389,7 +255,8 @@ function NavBarContent() {
               paddingTop: '16px', 
               borderTop: '1px solid #eee',
               display: 'flex',
-              gap: '12px'
+              gap: '12px',
+              flexDirection: 'column'
             }}>
               {isAuthed ? (
                 <>
@@ -449,49 +316,13 @@ function NavBarContent() {
                     borderRadius: '8px',
                     textAlign: 'center',
                     fontSize: '16px',
-                    fontWeight: '500'
+                    fontWeight: '500',
+                    border: 'none'
                   }}>
                     Înregistrare
                   </a>
                 </>
               )}
-            </div>
-
-            {/* Mobile Search */}
-            <div style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid #eee' }}>
-              <form onSubmit={(e) => { handleSearch(e); setMobileMenuOpen(false); }}>
-                <div style={{ display: 'flex', gap: '8px' }}>
-                  <input
-                    type="text"
-                    placeholder="Caută..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    style={{
-                      flex: 1,
-                      padding: '16px',
-                      border: '1px solid #ddd',
-                      borderRadius: '8px',
-                      fontSize: '16px',
-                      minHeight: '48px'
-                    }}
-                  />
-                  <button 
-                    type="submit"
-                    style={{
-                      padding: '16px',
-                      background: '#D09A1E',
-                      color: '#fff',
-                      border: 'none',
-                      borderRadius: '8px',
-                      cursor: 'pointer',
-                      fontSize: '16px',
-                      minWidth: '60px'
-                    }}
-                  >
-                    🔍
-                  </button>
-                </div>
-              </form>
             </div>
           </div>
         </div>
