@@ -13,9 +13,18 @@ export default function ListingDetailPage() {
   const [currency, setCurrency] = useState('RON')
   const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const [isOwner, setIsOwner] = useState(false)
 
   useEffect(() => {
+    // Detectez dacă este mobile
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    
     const fetchData = async () => {
       if (!id) return
       const base = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://luxbid-backend.onrender.com'
@@ -149,6 +158,10 @@ export default function ListingDetailPage() {
       }
     }
     fetchData()
+    
+    return () => {
+      window.removeEventListener('resize', checkMobile)
+    }
   }, [id])
 
   const makeOffer = async () => {
@@ -239,7 +252,12 @@ export default function ListingDetailPage() {
   return (
     <section className="section">
       <div className="container">
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40, marginBottom: 30 }}>
+        <div style={{ 
+          display: 'grid', 
+          gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', 
+          gap: isMobile ? 20 : 40, 
+          marginBottom: 30 
+        }}>
           {/* Coloana imaginilor */}
           <div>
             <ImageGallery images={images} />

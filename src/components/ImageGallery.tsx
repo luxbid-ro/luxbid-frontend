@@ -15,6 +15,21 @@ export default function ImageGallery({ images, className = '' }: ImageGalleryPro
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [showZoom, setShowZoom] = useState(false)
   const [isMagnifierActive, setIsMagnifierActive] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  // Detectez mobile pentru a dezactiva magnifier-ul
+  React.useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    
+    return () => {
+      window.removeEventListener('resize', checkMobile)
+    }
+  }, [])
 
   if (!images || images.length === 0) {
     return (
@@ -56,22 +71,40 @@ export default function ImageGallery({ images, className = '' }: ImageGalleryPro
             background: '#f5f5f5'
           }}
         >
-          <ImageMagnifier
-            src={currentImage.imageUrl}
-            alt={`Imagine ${selectedIndex + 1}`}
-            width={400}
-            height={400}
-            magnifierSize={220}
-            zoomLevel={3.5}
-            enableMobile={false}
-            onImageClick={() => setShowZoom(true)}
-            onMagnifierStateChange={setIsMagnifierActive}
-            style={{
-              width: '100%',
-              height: '400px',
-              borderRadius: '12px'
-            }}
-          />
+          {isMobile ? (
+            // Pe mobile afișez doar imaginea simplă cu click pentru zoom
+            <img
+              src={currentImage.imageUrl}
+              alt={`Imagine ${selectedIndex + 1}`}
+              onClick={() => setShowZoom(true)}
+              style={{
+                width: '100%',
+                height: '300px',
+                objectFit: 'cover',
+                display: 'block',
+                borderRadius: '12px',
+                cursor: 'pointer'
+              }}
+            />
+          ) : (
+            // Pe desktop folosesc magnifier-ul
+            <ImageMagnifier
+              src={currentImage.imageUrl}
+              alt={`Imagine ${selectedIndex + 1}`}
+              width={400}
+              height={400}
+              magnifierSize={220}
+              zoomLevel={3.5}
+              enableMobile={false}
+              onImageClick={() => setShowZoom(true)}
+              onMagnifierStateChange={setIsMagnifierActive}
+              style={{
+                width: '100%',
+                height: '400px',
+                borderRadius: '12px'
+              }}
+            />
+          )}
           {currentImage.isPrimary && (
             <div style={{
               position: 'absolute',
@@ -90,8 +123,8 @@ export default function ImageGallery({ images, className = '' }: ImageGalleryPro
             </div>
           )}
           
-          {/* Click pentru zoom complet - se ascunde când magnifier-ul este activ */}
-          {!isMagnifierActive && (
+          {/* Click pentru zoom complet - se afișează pe mobile sau când magnifier-ul nu este activ pe desktop */}
+          {(isMobile || !isMagnifierActive) && (
             <button
               onClick={() => setShowZoom(true)}
               style={{
@@ -117,7 +150,7 @@ export default function ImageGallery({ images, className = '' }: ImageGalleryPro
                 e.currentTarget.style.background = 'rgba(0, 0, 0, 0.8)'
               }}
             >
-              🔍 Zoom complet
+              🔍 {isMobile ? 'Zoom' : 'Zoom complet'}
             </button>
           )}
         </div>
