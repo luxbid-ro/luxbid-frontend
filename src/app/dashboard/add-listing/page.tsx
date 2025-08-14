@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import ImageUpload from '@/components/ImageUpload'
 import { WATCH_BRANDS } from '@/constants/watchBrands'
 import { BAG_BRANDS } from '@/constants/bagBrands'
+import { JEWELRY_BRANDS } from '@/constants/jewelryBrands'
 
 export default function AddListingPage() {
   const router = useRouter()
@@ -13,9 +14,9 @@ export default function AddListingPage() {
   const [step, setStep] = useState(1) // 1: Create listing, 2: Upload images
   const [listingId, setListingId] = useState<string | null>(null)
 
-  // Reset brand when category changes away from watches or bags
+  // Reset brand when category changes away from watches, bags or jewelry
   React.useEffect(() => {
-    if (form.category !== 'Ceasuri' && form.category !== 'Genți') {
+    if (form.category !== 'Ceasuri' && form.category !== 'Genți' && form.category !== 'Bijuterii') {
       setForm(prev => ({ ...prev, brand: '' }))
     }
   }, [form.category])
@@ -183,6 +184,26 @@ export default function AddListingPage() {
             </select>
             <p style={{ fontSize: '0.8em', color: '#666', marginTop: 5 }}>
               Selectează brandul genții pentru a ajuta cumpărătorii să o găsească mai ușor.
+            </p>
+          </div>
+        )}
+
+        {/* Brand selection for jewelry */}
+        {form.category === 'Bijuterii' && (
+          <div style={{ marginBottom: 20 }}>
+            <label style={{ display: 'block', marginBottom: 5, fontWeight: 600 }}>Brand Bijuterie</label>
+            <select 
+              value={form.brand} 
+              onChange={(e)=>setForm({...form,brand:e.target.value})} 
+              style={{ width: '100%', padding: 12, border:'1px solid #ddd', borderRadius: 8 }}
+            >
+              <option value=''>Alege brandul</option>
+              {JEWELRY_BRANDS.map((brand) => (
+                <option key={brand} value={brand}>{brand}</option>
+              ))}
+            </select>
+            <p style={{ fontSize: '0.8em', color: '#666', marginTop: 5 }}>
+              Selectează brandul bijuteriei pentru a ajuta cumpărătorii să o găsească mai ușor.
             </p>
           </div>
         )}
