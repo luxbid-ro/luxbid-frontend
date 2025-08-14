@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import ImageUpload from '@/components/ImageUpload'
 import { WATCH_BRANDS } from '@/constants/watchBrands'
+import { BAG_BRANDS } from '@/constants/bagBrands'
 
 export default function AddListingPage() {
   const router = useRouter()
@@ -11,6 +12,13 @@ export default function AddListingPage() {
   const [error, setError] = useState('')
   const [step, setStep] = useState(1) // 1: Create listing, 2: Upload images
   const [listingId, setListingId] = useState<string | null>(null)
+
+  // Reset brand when category changes away from watches or bags
+  React.useEffect(() => {
+    if (form.category !== 'Ceasuri' && form.category !== 'Genți') {
+      setForm(prev => ({ ...prev, brand: '' }))
+    }
+  }, [form.category])
 
   const createListing = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -155,6 +163,26 @@ export default function AddListingPage() {
             </select>
             <p style={{ fontSize: '0.8em', color: '#666', marginTop: 5 }}>
               Selectează brandul ceasului pentru a ajuta cumpărătorii să îl găsească mai ușor.
+            </p>
+          </div>
+        )}
+
+        {/* Brand selection for bags */}
+        {form.category === 'Genți' && (
+          <div style={{ marginBottom: 20 }}>
+            <label style={{ display: 'block', marginBottom: 5, fontWeight: 600 }}>Brand Geantă</label>
+            <select 
+              value={form.brand} 
+              onChange={(e)=>setForm({...form,brand:e.target.value})} 
+              style={{ width: '100%', padding: 12, border:'1px solid #ddd', borderRadius: 8 }}
+            >
+              <option value=''>Alege brandul</option>
+              {BAG_BRANDS.map((brand) => (
+                <option key={brand} value={brand}>{brand}</option>
+              ))}
+            </select>
+            <p style={{ fontSize: '0.8em', color: '#666', marginTop: 5 }}>
+              Selectează brandul genții pentru a ajuta cumpărătorii să o găsească mai ușor.
             </p>
           </div>
         )}

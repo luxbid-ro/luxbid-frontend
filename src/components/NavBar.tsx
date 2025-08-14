@@ -3,6 +3,7 @@ import React, { useEffect, useState, Suspense } from 'react'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import NotificationBell from './NotificationBell'
 import { WATCH_BRANDS } from '@/constants/watchBrands'
+import { BAG_BRANDS } from '@/constants/bagBrands'
 
 function NavBarContent() {
   const [isAuthed, setIsAuthed] = useState(false)
@@ -11,6 +12,7 @@ function NavBarContent() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [accountMenuOpen, setAccountMenuOpen] = useState(false)
   const [brandsMenuOpen, setBrandsMenuOpen] = useState(false)
+  const [bagBrandsMenuOpen, setBagBrandsMenuOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(true)
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -38,11 +40,12 @@ function NavBarContent() {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement
       console.log('Click outside detected, target:', target)
-      if (!target.closest('[data-menu="hamburger"]') && !target.closest('[data-menu="account"]') && !target.closest('[data-menu="brands"]')) {
+      if (!target.closest('[data-menu="hamburger"]') && !target.closest('[data-menu="account"]') && !target.closest('[data-menu="brands"]') && !target.closest('[data-menu="bag-brands"]')) {
         console.log('Closing menus due to outside click')
         setMobileMenuOpen(false)
         setAccountMenuOpen(false)
         setBrandsMenuOpen(false)
+        setBagBrandsMenuOpen(false)
       }
     }
     
@@ -359,6 +362,7 @@ function NavBarContent() {
           <div style={{ padding: '16px 0' }}>
             <h3 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '600', color: '#333' }}>Cumpără un obiect de lux</h3>
             
+            {/* Watch Brands */}
             <div style={{ position: 'relative' }}>
               <button 
                 onClick={() => setBrandsMenuOpen(!brandsMenuOpen)}
@@ -378,7 +382,7 @@ function NavBarContent() {
                   fontWeight: '500'
                 }}
               >
-                Cumpără după brand
+                Cumpără ceas după brand
                 <span style={{ fontSize: '12px', color: '#999', transform: brandsMenuOpen ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>›</span>
               </button>
               
@@ -406,6 +410,78 @@ function NavBarContent() {
                       onClick={() => {
                         router.push(`/branduri/${encodeURIComponent(brand)}`);
                         setBrandsMenuOpen(false);
+                        setMobileMenuOpen(false);
+                      }}
+                      style={{
+                        display: 'block',
+                        width: '100%',
+                        textAlign: 'left',
+                        padding: '12px 16px',
+                        background: 'none',
+                        border: 'none',
+                        fontSize: '14px',
+                        color: '#333',
+                        cursor: 'pointer',
+                        borderBottom: '1px solid #f5f5f5'
+                      }}
+                      onMouseEnter={(e) => (e.target as HTMLElement).style.background = '#f8f9fa'}
+                      onMouseLeave={(e) => (e.target as HTMLElement).style.background = 'none'}
+                    >
+                      {brand}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Bag Brands */}
+            <div style={{ position: 'relative' }}>
+              <button 
+                onClick={() => setBagBrandsMenuOpen(!bagBrandsMenuOpen)}
+                data-menu="bag-brands"
+                style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'space-between',
+                  width: '100%', 
+                  textAlign: 'left', 
+                  padding: '12px 0', 
+                  background: 'none', 
+                  border: 'none', 
+                  fontSize: '16px', 
+                  color: '#333', 
+                  cursor: 'pointer',
+                  fontWeight: '500'
+                }}
+              >
+                Cumpără genți după brand
+                <span style={{ fontSize: '12px', color: '#999', transform: bagBrandsMenuOpen ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>›</span>
+              </button>
+              
+              {bagBrandsMenuOpen && (
+                <div 
+                  data-menu="bag-brands"
+                  style={{ 
+                    position: 'absolute',
+                    top: '100%',
+                    left: 0,
+                    right: 0,
+                    background: '#fff',
+                    border: '1px solid #eee',
+                    borderRadius: '8px',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                    maxHeight: '300px',
+                    overflowY: 'auto',
+                    zIndex: 1000,
+                    marginTop: '4px'
+                  }}
+                >
+                  {BAG_BRANDS.map((brand) => (
+                    <button
+                      key={brand}
+                      onClick={() => {
+                        router.push(`/branduri-genti/${encodeURIComponent(brand)}`);
+                        setBagBrandsMenuOpen(false);
                         setMobileMenuOpen(false);
                       }}
                       style={{
