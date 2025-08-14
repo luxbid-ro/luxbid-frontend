@@ -404,7 +404,7 @@ function NavBarContent() {
                     <button
                       key={brand}
                       onClick={() => {
-                        router.push(`/oferte?brand=${encodeURIComponent(brand)}`);
+                        router.push(`/branduri/${encodeURIComponent(brand)}`);
                         setBrandsMenuOpen(false);
                         setMobileMenuOpen(false);
                       }}
