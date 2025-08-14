@@ -223,7 +223,9 @@ body{
   flex-direction:column;
   gap:var(--spacing-md);
   align-items:center;
+  justify-content:center;
   padding:0 var(--spacing-md);
+  width:100%;
 }
 
 .btn-cta{
@@ -238,6 +240,11 @@ body{
   width:100%;
   max-width:280px;
   text-align:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  cursor:pointer;
 }
 
 .btn-cta:hover{
@@ -255,6 +262,36 @@ body{
   width:100%;
   max-width:280px;
   text-align:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  cursor:pointer;
+}
+
+/* Desktop responsive design for CTA buttons */
+@media (min-width: 768px) {
+  .cta-row {
+    flex-direction:row;
+    gap:var(--spacing-lg);
+    justify-content:center;
+    max-width:600px;
+    margin:0 auto;
+  }
+  
+  .btn-cta, .btn-ghost {
+    max-width:250px;
+    flex:1;
+  }
+  
+  .hero h1 {
+    font-size:var(--font-4xl); /* 40px on desktop */
+  }
+  
+  .hero p {
+    font-size:var(--font-xl); /* 20px on desktop */
+    max-width:600px;
+  }
 }
 /* SEARCH AREA - Mobile First */
 .surface{
