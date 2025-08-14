@@ -1,6 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
+import { WATCH_BRANDS } from '@/constants/watchBrands'
 
 export default function EditListingPage() {
   const params = useParams()
@@ -11,6 +12,7 @@ export default function EditListingPage() {
     title: '', 
     description: '', 
     category: '', 
+    brand: '',
     desiredPrice: '', 
     currency: 'RON' 
   })
@@ -51,6 +53,7 @@ export default function EditListingPage() {
               title: listing.title || '',
               description: listing.description || '',
               category: listing.category || '',
+              brand: listing.brand || '',
               desiredPrice: listing.desiredPrice?.toString() || '',
               currency: listing.currency || 'RON'
             })
@@ -178,7 +181,7 @@ export default function EditListingPage() {
           <select 
             required 
             value={form.category} 
-            onChange={(e)=>setForm({...form,category:e.target.value})} 
+            onChange={(e)=>setForm({...form,category:e.target.value, brand: form.category === 'Ceasuri' && e.target.value !== 'Ceasuri' ? '' : form.brand})} 
             style={{ width: '100%', padding: 12, border:'1px solid #ddd', borderRadius: 8 }}
           >
             <option value=''>Alege categoria</option>
@@ -188,6 +191,26 @@ export default function EditListingPage() {
             <option value='Artă'>Artă</option>
           </select>
         </div>
+        
+        {/* Brand selection for watches */}
+        {form.category === 'Ceasuri' && (
+          <div style={{ marginBottom: 20 }}>
+            <label style={{ display: 'block', marginBottom: 5, fontWeight: 600 }}>Brand Ceas</label>
+            <select 
+              value={form.brand} 
+              onChange={(e)=>setForm({...form,brand:e.target.value})} 
+              style={{ width: '100%', padding: 12, border:'1px solid #ddd', borderRadius: 8 }}
+            >
+              <option value=''>Alege brandul</option>
+              {WATCH_BRANDS.map((brand) => (
+                <option key={brand} value={brand}>{brand}</option>
+              ))}
+            </select>
+            <p style={{ fontSize: '0.8em', color: '#666', marginTop: 5 }}>
+              Selectează brandul ceasului pentru a ajuta cumpărătorii să îl găsească mai ușor.
+            </p>
+          </div>
+        )}
         
         {/* Preț dorit */}
         <div style={{ marginBottom: 20 }}>

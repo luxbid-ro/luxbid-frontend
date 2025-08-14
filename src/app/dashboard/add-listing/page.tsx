@@ -2,10 +2,11 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import ImageUpload from '@/components/ImageUpload'
+import { WATCH_BRANDS } from '@/constants/watchBrands'
 
 export default function AddListingPage() {
   const router = useRouter()
-  const [form, setForm] = useState({ title: '', description: '', category: '', desiredPrice: '', currency: 'RON' })
+  const [form, setForm] = useState({ title: '', description: '', category: '', brand: '', desiredPrice: '', currency: 'RON' })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [step, setStep] = useState(1) // 1: Create listing, 2: Upload images
@@ -127,7 +128,7 @@ export default function AddListingPage() {
           <select 
             required 
             value={form.category} 
-            onChange={(e)=>setForm({...form,category:e.target.value})} 
+            onChange={(e)=>setForm({...form,category:e.target.value, brand: ''})} 
             style={{ width: '100%', padding: 12, border:'1px solid #ddd', borderRadius: 8 }}
           >
             <option value=''>Alege categoria</option>
@@ -137,6 +138,26 @@ export default function AddListingPage() {
             <option value='Artă'>Artă</option>
           </select>
         </div>
+        
+        {/* Brand selection for watches */}
+        {form.category === 'Ceasuri' && (
+          <div style={{ marginBottom: 20 }}>
+            <label style={{ display: 'block', marginBottom: 5, fontWeight: 600 }}>Brand Ceas</label>
+            <select 
+              value={form.brand} 
+              onChange={(e)=>setForm({...form,brand:e.target.value})} 
+              style={{ width: '100%', padding: 12, border:'1px solid #ddd', borderRadius: 8 }}
+            >
+              <option value=''>Alege brandul</option>
+              {WATCH_BRANDS.map((brand) => (
+                <option key={brand} value={brand}>{brand}</option>
+              ))}
+            </select>
+            <p style={{ fontSize: '0.8em', color: '#666', marginTop: 5 }}>
+              Selectează brandul ceasului pentru a ajuta cumpărătorii să îl găsească mai ușor.
+            </p>
+          </div>
+        )}
         
         {/* Preț dorit */}
         <div style={{ marginBottom: 20 }}>

@@ -7,6 +7,7 @@ type Listing = {
   title: string
   description: string
   category: string
+  brand?: string
   price: number
   currency: string
   createdAt: string
@@ -27,6 +28,7 @@ function OfertesContent() {
   const [error, setError] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('')
+  const [selectedBrand, setSelectedBrand] = useState('')
   const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'price-low' | 'price-high' | 'name'>('newest')
   const [filteredListings, setFilteredListings] = useState<Listing[]>([])
 
@@ -34,8 +36,10 @@ function OfertesContent() {
   useEffect(() => {
     const q = searchParams.get('q') || ''
     const category = searchParams.get('category') || ''
+    const brand = searchParams.get('brand') || ''
     setSearchQuery(q)
     setSelectedCategory(category)
+    setSelectedBrand(brand)
   }, [searchParams])
 
   // Mock data will be defined locally in fetchListings to avoid dependency issues
@@ -153,6 +157,12 @@ function OfertesContent() {
       )
     }
 
+    if (selectedBrand) {
+      filtered = filtered.filter(listing => 
+        listing.brand && listing.brand.toLowerCase().includes(selectedBrand.toLowerCase())
+      )
+    }
+
     // Apply sorting
     filtered.sort((a, b) => {
       switch (sortBy) {
@@ -172,7 +182,7 @@ function OfertesContent() {
     })
 
     setFilteredListings(filtered)
-  }, [listings, searchQuery, selectedCategory, sortBy])
+  }, [listings, searchQuery, selectedCategory, selectedBrand, sortBy])
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
@@ -413,6 +423,23 @@ function OfertesContent() {
                   }}>
                     {listing.title}
                   </h3>
+
+                  {/* Brand for watches */}
+                  {listing.brand && (
+                    <div style={{
+                      background: '#f8f9fa',
+                      color: '#D09A1E',
+                      padding: '4px 8px',
+                      borderRadius: '12px',
+                      fontSize: '12px',
+                      fontWeight: '600',
+                      display: 'inline-block',
+                      marginBottom: '12px',
+                      border: '1px solid #e9ecef'
+                    }}>
+                      {listing.brand}
+                    </div>
+                  )}
 
                   {/* Description */}
                   <p style={{ 
