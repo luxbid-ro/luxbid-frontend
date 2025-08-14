@@ -182,11 +182,11 @@ export default function BasicAuthGate({ children }: BasicAuthGateProps) {
             background: '#f8f9fa',
             borderRadius: '8px',
             fontSize: '14px',
-            color: '#666'
+            color: '#666',
+            textAlign: 'center'
           }}>
-            <strong>💡 Pentru testare:</strong><br />
-            Username: <code>luxbid</code><br />
-            Password: <code>luxbid2024</code>
+            <strong>🔐 Site protejat</strong><br />
+            Pentru acces, contactați echipa de dezvoltare.
           </div>
         </div>
       </div>
