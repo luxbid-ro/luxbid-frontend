@@ -454,7 +454,7 @@ function NavBarContent() {
                   fontWeight: '500'
                 }}
               >
-                Cumpără genți după brand
+                Cumpără geantă după brand
                 <span style={{ fontSize: '12px', color: '#999', transform: bagBrandsMenuOpen ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>›</span>
               </button>
               
