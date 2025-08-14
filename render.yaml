@@ -12,6 +12,10 @@ services:
         value: "https://luxbid-backend.onrender.com"
       - key: PORT
         value: 3000
+      - key: BASIC_AUTH_USER
+        value: "luxbid"
+      - key: BASIC_AUTH_PASSWORD
+        value: "luxbid2024"
     healthCheckPath: /
     plan: starter
     autoDeploy: true
