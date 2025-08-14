@@ -13,4 +13,8 @@ services:
       - key: PORT
         value: 3000
     healthCheckPath: /
-    plan: free
+    plan: starter
+    autoDeploy: true
+    scaling:
+      minInstances: 1
+      maxInstances: 3
