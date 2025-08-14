@@ -109,6 +109,9 @@ export default function LoginPage() {
         <p style={{ textAlign: 'center', marginTop: '20px' }}>
           Nu ai cont? <a href="/auth/register" style={{ color: 'var(--gold)', textDecoration: 'none' }}>Înregistrează-te</a>
         </p>
+        <p style={{ textAlign: 'center', marginTop: '12px' }}>
+          <a href="/auth/forgot-password" style={{ color: '#666', textDecoration: 'none', fontSize: '14px' }}>Ai uitat parola?</a>
+        </p>
         {error.includes('incorectă') && (
           <p style={{ textAlign: 'center', marginTop: '12px', fontSize: '14px', color: '#666' }}>
             Dacă contul a fost creat recent și nu funcționează, 
