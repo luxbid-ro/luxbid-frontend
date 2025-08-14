@@ -70,6 +70,7 @@ export default function ImageGallery({ images, className = '' }: ImageGalleryPro
             overflow: 'hidden',
             background: '#f5f5f5'
           }}
+          onMouseLeave={() => setIsMagnifierActive(false)}
         >
           {isMobile ? (
             // Pe mobile afișez doar imaginea simplă cu click pentru zoom
@@ -123,36 +124,36 @@ export default function ImageGallery({ images, className = '' }: ImageGalleryPro
             </div>
           )}
           
-          {/* Click pentru zoom complet - se afișează pe mobile sau când magnifier-ul nu este activ pe desktop */}
-          {(isMobile || !isMagnifierActive) && (
-            <button
-              onClick={() => setShowZoom(true)}
-              style={{
-                position: 'absolute',
-                top: 12,
-                right: 12,
-                background: 'rgba(0, 0, 0, 0.8)',
-                color: '#fff',
-                border: 'none',
-                padding: '8px 12px',
-                borderRadius: '20px',
-                fontSize: '12px',
-                fontWeight: '500',
-                cursor: 'pointer',
-                backdropFilter: 'blur(4px)',
-                zIndex: 10,
-                transition: 'all 0.2s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'rgba(208, 154, 30, 0.9)'
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'rgba(0, 0, 0, 0.8)'
-              }}
-            >
-              🔍 {isMobile ? 'Zoom' : 'Zoom complet'}
-            </button>
-          )}
+          {/* Click pentru zoom complet - întotdeauna vizibil, cu z-index mare pentru a fi deasupra magnifier-ului */}
+          <button
+            onClick={() => setShowZoom(true)}
+            onMouseEnter={() => setIsMagnifierActive(false)} // Dezactivez magnifier-ul când intru pe buton
+            style={{
+              position: 'absolute',
+              top: 12,
+              right: 12,
+              background: 'rgba(0, 0, 0, 0.8)',
+              color: '#fff',
+              border: 'none',
+              padding: '8px 12px',
+              borderRadius: '20px',
+              fontSize: '12px',
+              fontWeight: '500',
+              cursor: 'pointer',
+              backdropFilter: 'blur(4px)',
+              zIndex: 1500, // Mai mare decât magnifier-ul (1000)
+              transition: 'all 0.2s ease',
+              pointerEvents: 'auto' // Asigur că butonul este clickabil
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.background = 'rgba(208, 154, 30, 0.9)'
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.background = 'rgba(0, 0, 0, 0.8)'
+            }}
+          >
+            🔍 {isMobile ? 'Zoom' : 'Zoom complet'}
+          </button>
         </div>
       </div>
 

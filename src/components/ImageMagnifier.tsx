@@ -73,6 +73,7 @@ export default function ImageMagnifier({
     // Verific dacă mouse-ul este în interiorul imaginii
     if (x < 0 || y < 0 || x > rect.width || y > rect.height) {
       setShowMagnifier(false)
+      onMagnifierStateChange?.(false)
       return
     }
 
@@ -95,13 +96,13 @@ export default function ImageMagnifier({
     }
 
     setMagnifierPosition({ x: magnifierX, y: magnifierY })
+    setShowMagnifier(true)
+    onMagnifierStateChange?.(true)
   }
 
   const handleMouseEnter = () => {
-    // Nu arăt magnifier-ul pe mobile, decât dacă este explicit activat
-    if (isMobile && !enableMobile) return
-    setShowMagnifier(true)
-    onMagnifierStateChange?.(true)
+    // Nu activez magnifier-ul automat la enter, doar la mousemove
+    // Aceasta previne activarea când mouse-ul intră din zona butonului
   }
 
   const handleMouseLeave = () => {
@@ -155,6 +156,10 @@ export default function ImageMagnifier({
         display: 'inline-block',
         cursor: showMagnifier ? 'none' : 'zoom-in',
         ...style 
+      }}
+      onMouseLeave={() => {
+        setShowMagnifier(false)
+        onMagnifierStateChange?.(false)
       }}
     >
       <img
