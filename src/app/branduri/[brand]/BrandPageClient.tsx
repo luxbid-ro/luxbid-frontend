@@ -41,9 +41,33 @@ export default function BrandPageClient() {
     }
 
     const fetchBrandListings = async () => {
+      console.log('🚀 fetchBrandListings called for brand:', brandName)
+      
+      // Mock data for fallback
+      const mockListings: Listing[] = [
+        {
+          id: 'mock-rolex-1',
+          title: 'Rolex Submariner Date',
+          description: 'Ceas Rolex Submariner Date 116610LN, aur negru, automatic. Stare impecabilă.',
+          category: 'Ceasuri',
+          brand: 'Rolex',
+          price: 8500,
+          currency: 'EUR',
+          createdAt: '2024-08-13T10:00:00Z',
+          images: ['https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=800&h=600&fit=crop'],
+          user: {
+            id: 'mock-user-1',
+            email: 'alexandru@luxbid.ro',
+            firstName: 'Alexandru',
+            lastName: 'Popescu'
+          }
+        }
+      ]
+      
       try {
-        const base = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000'
-        const response = await fetch(`${base}/listings?t=${Date.now()}`, {
+        console.log('🔄 Fetching from API...', process.env.NEXT_PUBLIC_API_BASE_URL)
+        const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://luxbid-backend.onrender.com'
+        const response = await fetch(`${apiUrl}/listings?t=${Date.now()}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -52,21 +76,33 @@ export default function BrandPageClient() {
           mode: 'cors'
         })
 
+        console.log('📡 API Response status:', response.status)
+
         if (response.ok) {
           const data = await response.json()
+          console.log('📦 API Data received:', data.length, 'listings')
+          
           // Filter by brand
           const brandListings = data.filter((listing: Listing) => 
             listing.brand === brandName && listing.category === 'Ceasuri'
           )
+          
+          console.log(`🔍 Filtered ${brandListings.length} listings for brand: ${brandName}`)
           setListings(brandListings)
+          
+          if (brandListings.length === 0) {
+            console.log(`ℹ️ No listings found for brand ${brandName}, showing empty state`)
+          }
         } else {
-          console.error('Failed to fetch listings:', response.status)
-          setError('Eroare la încărcarea anunțurilor')
+          console.warn('⚠️ API response not ok, showing empty state for brand')
+          setListings([])
         }
       } catch (error) {
-        console.error('Error fetching brand listings:', error)
-        setError('Eroare la conectarea la server')
+        console.error('❌ API connection failed:', error)
+        console.log('🔄 Showing empty state for brand page')
+        setListings([])
       } finally {
+        console.log('✅ fetchBrandListings completed, setting loading=false')
         setLoading(false)
       }
     }
