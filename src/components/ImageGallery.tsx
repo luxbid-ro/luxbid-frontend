@@ -1,5 +1,6 @@
 'use client'
 import React, { useState } from 'react'
+import ImageMagnifier from './ImageMagnifier'
 
 interface ImageGalleryProps {
   images: Array<{
@@ -44,55 +45,76 @@ export default function ImageGallery({ images, className = '' }: ImageGalleryPro
 
   return (
     <div className={className}>
-      {/* Imaginea principală */}
-      <div style={{ marginBottom: 15 }}>
+      {/* Imaginea principală cu Magnifier */}
+      <div style={{ marginBottom: 15, position: 'relative' }}>
         <div 
           style={{ 
             position: 'relative', 
             borderRadius: 12, 
             overflow: 'hidden',
-            cursor: 'zoom-in',
             background: '#f5f5f5'
           }}
-          onClick={() => setShowZoom(true)}
         >
-          <img
+          <ImageMagnifier
             src={currentImage.imageUrl}
             alt={`Imagine ${selectedIndex + 1}`}
+            width={400}
+            height={400}
+            magnifierSize={160}
+            zoomLevel={3.2}
+            enableMobile={false}
             style={{
               width: '100%',
-              height: 400,
-              objectFit: 'cover',
-              display: 'block'
+              height: '400px',
+              borderRadius: '12px'
             }}
           />
           {currentImage.isPrimary && (
             <div style={{
               position: 'absolute',
-              top: 10,
-              left: 10,
-              background: '#9a7b0f',
+              top: 12,
+              left: 12,
+              background: 'rgba(208, 154, 30, 0.95)',
               color: 'white',
-              padding: '4px 8px',
-              borderRadius: 4,
-              fontSize: '0.8em',
-              fontWeight: 600
+              padding: '6px 12px',
+              borderRadius: '20px',
+              fontSize: '12px',
+              fontWeight: '700',
+              backdropFilter: 'blur(4px)',
+              zIndex: 10
             }}>
-              PRINCIPALĂ
+              ✨ PRINCIPALĂ
             </div>
           )}
-          <div style={{
-            position: 'absolute',
-            bottom: 10,
-            right: 10,
-            background: 'rgba(0,0,0,0.7)',
-            color: 'white',
-            padding: '4px 8px',
-            borderRadius: 4,
-            fontSize: '0.8em'
-          }}>
-            🔍 Click pentru zoom
-          </div>
+          
+          {/* Click pentru zoom complet */}
+          <button
+            onClick={() => setShowZoom(true)}
+            style={{
+              position: 'absolute',
+              top: 12,
+              right: 12,
+              background: 'rgba(0, 0, 0, 0.8)',
+              color: '#fff',
+              border: 'none',
+              padding: '8px 12px',
+              borderRadius: '20px',
+              fontSize: '12px',
+              fontWeight: '500',
+              cursor: 'pointer',
+              backdropFilter: 'blur(4px)',
+              zIndex: 10,
+              transition: 'all 0.2s ease'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'rgba(208, 154, 30, 0.9)'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'rgba(0, 0, 0, 0.8)'
+            }}
+          >
+            🔍 Zoom complet
+          </button>
         </div>
       </div>
 
