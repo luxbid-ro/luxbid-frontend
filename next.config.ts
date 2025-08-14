@@ -17,6 +17,13 @@ const nextConfig: NextConfig = {
     NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL || 'https://luxbid-backend.onrender.com',
   },
   serverExternalPackages: [],
+  // Force all pages to use SSR to ensure middleware runs
+  experimental: {
+    forceSwcTransforms: true,
+  },
+  // Disable static optimization to ensure middleware runs on all requests
+  trailingSlash: false,
+  poweredByHeader: false,
 };
 
 export default nextConfig;
