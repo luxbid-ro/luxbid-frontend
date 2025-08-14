@@ -11,6 +11,10 @@ export const metadata: Metadata = {
   viewport: 'width=device-width, initial-scale=1',
 }
 
+// Force dynamic rendering to ensure middleware runs
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ro">

@@ -68,6 +68,7 @@ export function middleware(request: NextRequest) {
         <h1>🔐 LuxBid - Acces Restricționat</h1>
         <p>Acest site este protejat. Vă rugăm să vă autentificați pentru a continua.</p>
         <p>Pentru acces, contactați echipa de dezvoltare.</p>
+        <p><small>Username: luxbid | Password: luxbid2024</small></p>
       </body>
     </html>`, 
     {
@@ -75,6 +76,10 @@ export function middleware(request: NextRequest) {
       headers: {
         'WWW-Authenticate': 'Basic realm="LuxBid - Acces Restricționat"',
         'Content-Type': 'text/html; charset=utf-8',
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0',
+        'CF-Cache-Status': 'BYPASS',
       },
     }
   )
