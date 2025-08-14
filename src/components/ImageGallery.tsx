@@ -14,6 +14,7 @@ interface ImageGalleryProps {
 export default function ImageGallery({ images, className = '' }: ImageGalleryProps) {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [showZoom, setShowZoom] = useState(false)
+  const [isMagnifierActive, setIsMagnifierActive] = useState(false)
 
   if (!images || images.length === 0) {
     return (
@@ -60,9 +61,11 @@ export default function ImageGallery({ images, className = '' }: ImageGalleryPro
             alt={`Imagine ${selectedIndex + 1}`}
             width={400}
             height={400}
-            magnifierSize={160}
-            zoomLevel={3.2}
+            magnifierSize={220}
+            zoomLevel={3.5}
             enableMobile={false}
+            onImageClick={() => setShowZoom(true)}
+            onMagnifierStateChange={setIsMagnifierActive}
             style={{
               width: '100%',
               height: '400px',
@@ -87,34 +90,36 @@ export default function ImageGallery({ images, className = '' }: ImageGalleryPro
             </div>
           )}
           
-          {/* Click pentru zoom complet */}
-          <button
-            onClick={() => setShowZoom(true)}
-            style={{
-              position: 'absolute',
-              top: 12,
-              right: 12,
-              background: 'rgba(0, 0, 0, 0.8)',
-              color: '#fff',
-              border: 'none',
-              padding: '8px 12px',
-              borderRadius: '20px',
-              fontSize: '12px',
-              fontWeight: '500',
-              cursor: 'pointer',
-              backdropFilter: 'blur(4px)',
-              zIndex: 10,
-              transition: 'all 0.2s ease'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'rgba(208, 154, 30, 0.9)'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'rgba(0, 0, 0, 0.8)'
-            }}
-          >
-            🔍 Zoom complet
-          </button>
+          {/* Click pentru zoom complet - se ascunde când magnifier-ul este activ */}
+          {!isMagnifierActive && (
+            <button
+              onClick={() => setShowZoom(true)}
+              style={{
+                position: 'absolute',
+                top: 12,
+                right: 12,
+                background: 'rgba(0, 0, 0, 0.8)',
+                color: '#fff',
+                border: 'none',
+                padding: '8px 12px',
+                borderRadius: '20px',
+                fontSize: '12px',
+                fontWeight: '500',
+                cursor: 'pointer',
+                backdropFilter: 'blur(4px)',
+                zIndex: 10,
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(208, 154, 30, 0.9)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(0, 0, 0, 0.8)'
+              }}
+            >
+              🔍 Zoom complet
+            </button>
+          )}
         </div>
       </div>
 

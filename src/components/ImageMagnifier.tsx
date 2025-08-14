@@ -11,6 +11,8 @@ interface ImageMagnifierProps {
   className?: string
   style?: React.CSSProperties
   enableMobile?: boolean
+  onImageClick?: () => void
+  onMagnifierStateChange?: (isActive: boolean) => void
 }
 
 export default function ImageMagnifier({
@@ -22,7 +24,9 @@ export default function ImageMagnifier({
   zoomLevel = 2.5,
   className = '',
   style = {},
-  enableMobile = false
+  enableMobile = false,
+  onImageClick,
+  onMagnifierStateChange
 }: ImageMagnifierProps) {
   const [showMagnifier, setShowMagnifier] = useState(false)
   const [magnifierPosition, setMagnifierPosition] = useState({ x: 0, y: 0 })
@@ -97,10 +101,16 @@ export default function ImageMagnifier({
     // Nu arăt magnifier-ul pe mobile, decât dacă este explicit activat
     if (isMobile && !enableMobile) return
     setShowMagnifier(true)
+    onMagnifierStateChange?.(true)
   }
 
   const handleMouseLeave = () => {
     setShowMagnifier(false)
+    onMagnifierStateChange?.(false)
+  }
+
+  const handleImageClick = () => {
+    onImageClick?.()
   }
 
   // Pentru touch pe mobile (dacă este activat)
@@ -143,7 +153,7 @@ export default function ImageMagnifier({
       style={{ 
         position: 'relative', 
         display: 'inline-block',
-        cursor: 'none',
+        cursor: showMagnifier ? 'none' : 'zoom-in',
         ...style 
       }}
     >
@@ -156,6 +166,7 @@ export default function ImageMagnifier({
         onMouseMove={handleMouseMove}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onClick={handleImageClick}
         onTouchStart={enableMobile ? handleMouseEnter : undefined}
         onTouchMove={enableMobile ? handleTouchMove : undefined}
         onTouchEnd={enableMobile ? handleMouseLeave : undefined}
