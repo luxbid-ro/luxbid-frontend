@@ -5,6 +5,12 @@ export default function MyListingsPage() {
   const [items, setItems] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [err, setErr] = useState('')
+  const [deleteModal, setDeleteModal] = useState<{ show: boolean; listingId: string | null; listingTitle: string }>({
+    show: false,
+    listingId: null,
+    listingTitle: ''
+  })
+  const [deleting, setDeleting] = useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,6 +28,42 @@ export default function MyListingsPage() {
     }
     fetchData()
   }, [])
+
+  const handleDelete = async () => {
+    if (!deleteModal.listingId) return
+    
+    setDeleting(true)
+    try {
+      const token = localStorage.getItem('luxbid_token')
+      if (!token) return (window.location.href = '/auth/login')
+      
+      const base = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000'
+      const res = await fetch(`${base}/listings/${deleteModal.listingId}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      
+      if (res.ok) {
+        // Remove from local state
+        setItems(prev => prev.filter(item => item.id !== deleteModal.listingId))
+        setDeleteModal({ show: false, listingId: null, listingTitle: '' })
+      } else {
+        throw new Error('Eroare la ștergere')
+      }
+    } catch (error) {
+      alert('Eroare la ștergerea anunțului')
+    } finally {
+      setDeleting(false)
+    }
+  }
+
+  const openDeleteModal = (listingId: string, listingTitle: string) => {
+    setDeleteModal({ show: true, listingId, listingTitle })
+  }
+
+  const closeDeleteModal = () => {
+    setDeleteModal({ show: false, listingId: null, listingTitle: '' })
+  }
 
   return (
     <section className='section'>
@@ -93,9 +135,93 @@ export default function MyListingsPage() {
                   >
                     ✏️ Editează
                   </a>
+                  <button 
+                    onClick={() => openDeleteModal(l.id, l.title)}
+                    style={{ 
+                      flex: 1,
+                      textAlign: 'center',
+                      background: '#dc3545',
+                      color: '#fff',
+                      border: 'none',
+                      fontSize: '0.9em',
+                      padding: '8px 12px',
+                      borderRadius: 8,
+                      cursor: 'pointer',
+                      transition: 'background 0.2s'
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.background = '#c82333'}
+                    onMouseLeave={(e) => e.currentTarget.style.background = '#dc3545'}
+                  >
+                    🗑️ Șterge
+                  </button>
                 </div>
               </div>
             ))}
+          </div>
+        )}
+
+        {/* Delete Confirmation Modal */}
+        {deleteModal.show && (
+          <div style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'rgba(0,0,0,0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000
+          }}>
+            <div style={{
+              background: '#fff',
+              padding: '24px',
+              borderRadius: '16px',
+              maxWidth: '400px',
+              width: '90%',
+              textAlign: 'center'
+            }}>
+              <h3 style={{ marginTop: 0, color: '#dc3545' }}>🗑️ Șterge anunțul</h3>
+              <p style={{ marginBottom: '24px', color: '#666' }}>
+                Ești sigur că vrei să ștergi anunțul <strong>"{deleteModal.listingTitle}"</strong>?
+              </p>
+              <p style={{ fontSize: '0.9em', color: '#999', marginBottom: '24px' }}>
+                Această acțiune nu poate fi anulată.
+              </p>
+              
+              <div style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}>
+                <button 
+                  onClick={closeDeleteModal}
+                  disabled={deleting}
+                  style={{
+                    padding: '12px 24px',
+                    background: '#f5f5f5',
+                    border: '1px solid #ddd',
+                    borderRadius: '8px',
+                    cursor: 'pointer',
+                    color: '#666'
+                  }}
+                >
+                  Anulează
+                </button>
+                <button 
+                  onClick={handleDelete}
+                  disabled={deleting}
+                  style={{
+                    padding: '12px 24px',
+                    background: '#dc3545',
+                    border: 'none',
+                    borderRadius: '8px',
+                    cursor: 'pointer',
+                    color: '#fff',
+                    fontWeight: '600'
+                  }}
+                >
+                  {deleting ? 'Se șterge...' : 'Șterge definitiv'}
+                </button>
+              </div>
+            </div>
           </div>
         )}
       </div>
