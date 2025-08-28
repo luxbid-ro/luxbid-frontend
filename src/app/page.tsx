@@ -252,6 +252,18 @@ export default function HomePage() {
                 Mențiuni Legale
               </a>
               <a
+                href="/legal/data-retention"
+                style={{
+                  color: '#666',
+                  textDecoration: 'none',
+                  transition: 'color 0.2s'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#D09A1E'}
+                onMouseLeave={(e) => e.currentTarget.style.color = '#666'}
+              >
+                Păstrare Date
+              </a>
+              <a
                 href="mailto:contact@luxbid.ro"
                 style={{
                   color: '#666',
