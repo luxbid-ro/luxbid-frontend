@@ -3,7 +3,7 @@ import React from 'react'
 import './globals.css'
 import NavBar from '@/components/NavBar'
 import ErrorBoundary from '@/components/ErrorBoundary'
-import BasicAuthGate from '@/components/BasicAuthGate'
+import ConditionalAuth from '@/components/ConditionalAuth'
 import CookieBanner from '@/components/CookieBanner'
 
 export const metadata: Metadata = {
@@ -33,11 +33,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <ErrorBoundary>
-          <BasicAuthGate>
+          <ConditionalAuth>
             <NavBar />
             {children}
             <CookieBanner />
-          </BasicAuthGate>
+          </ConditionalAuth>
         </ErrorBoundary>
       </body>
     </html>
