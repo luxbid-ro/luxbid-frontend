@@ -5,6 +5,8 @@ import ImageUpload from '@/components/ImageUpload'
 import { WATCH_BRANDS } from '@/constants/watchBrands'
 import { BAG_BRANDS } from '@/constants/bagBrands'
 import { JEWELRY_BRANDS } from '@/constants/jewelryBrands'
+import { useContentModeration } from '@/hooks/useContentModeration'
+import { RiskLevel } from '@/utils/contentModeration'
 
 export default function AddListingPage() {
   const router = useRouter()
@@ -13,6 +15,20 @@ export default function AddListingPage() {
   const [error, setError] = useState('')
   const [step, setStep] = useState(1) // 1: Create listing, 2: Upload images
   const [listingId, setListingId] = useState<string | null>(null)
+  
+  // Content Moderation
+  const { 
+    moderate, 
+    canPublish, 
+    getUserMessage, 
+    moderationResult,
+    isProcessing,
+    reset: resetModeration 
+  } = useContentModeration({
+    autoModerate: true,
+    showWarnings: true,
+    allowOverride: false
+  })
 
   // Reset brand when category changes away from watches, bags or jewelry
   React.useEffect(() => {
@@ -25,7 +41,25 @@ export default function AddListingPage() {
     e.preventDefault()
     setLoading(true)
     setError('')
+    
     try {
+      // 1. Moderează conținutul înainte de trimitere
+      const moderationResult = await moderate({
+        title: form.title,
+        description: form.description,
+        category: form.category,
+        price: parseFloat(form.desiredPrice) || 0,
+        userRole: 'user' // În implementarea reală ar veni din context
+      })
+
+      // 2. Verifică dacă conținutul poate fi publicat
+      if (!canPublish(moderationResult)) {
+        setError('Conținutul nu poate fi publicat din cauza problemelor detectate. Vă rugăm să corectați și să încercați din nou.')
+        setLoading(false)
+        return
+      }
+
+      // 3. Continuă cu crearea listării dacă moderarea a trecut
       const token = localStorage.getItem('luxbid_token')
       if (!token) return (window.location.href = '/auth/login')
       
@@ -34,7 +68,13 @@ export default function AddListingPage() {
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({
           ...form,
-          desiredPrice: parseFloat(form.desiredPrice) || 0
+          desiredPrice: parseFloat(form.desiredPrice) || 0,
+          moderationData: {
+            score: moderationResult.score,
+            riskLevel: moderationResult.riskLevel,
+            issues: moderationResult.issues,
+            timestamp: new Date().toISOString()
+          }
         }),
       })
       
@@ -43,6 +83,10 @@ export default function AddListingPage() {
       const listing = await res.json()
       setListingId(listing.id)
       setStep(2) // Trece la upload imagini
+      
+      // Reset moderare pentru următoarea utilizare
+      resetModeration()
+      
     } catch (err) {
       setError('Eroare la creare listare')
     } finally {
@@ -110,13 +154,101 @@ export default function AddListingPage() {
         
         {error && <p style={{ color: 'red', marginBottom: 15 }}>{error}</p>}
         
+        {/* Content Moderation Warning */}
+        {moderationResult && getUserMessage() && (
+          <div style={{
+            marginBottom: 20,
+            padding: 16,
+            borderRadius: 8,
+            border: '1px solid',
+            borderColor: getUserMessage()?.type === 'error' ? '#dc2626' : 
+                        getUserMessage()?.type === 'warning' ? '#f59e0b' : '#059669',
+            backgroundColor: getUserMessage()?.type === 'error' ? '#fef2f2' : 
+                           getUserMessage()?.type === 'warning' ? '#fef3c7' : '#f0fdf4'
+          }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: 12
+            }}>
+              <span style={{ fontSize: 20 }}>
+                {getUserMessage()?.type === 'error' ? '🚫' : 
+                 getUserMessage()?.type === 'warning' ? '⚠️' : '✅'}
+              </span>
+              <div style={{ flex: 1 }}>
+                <h4 style={{
+                  margin: '0 0 8px 0',
+                  fontSize: 16,
+                  fontWeight: 600,
+                  color: getUserMessage()?.type === 'error' ? '#dc2626' : 
+                         getUserMessage()?.type === 'warning' ? '#d97706' : '#059669'
+                }}>
+                  {getUserMessage()?.title}
+                </h4>
+                <p style={{
+                  margin: 0,
+                  fontSize: 14,
+                  color: getUserMessage()?.type === 'error' ? '#7f1d1d' : 
+                         getUserMessage()?.type === 'warning' ? '#92400e' : '#064e3b'
+                }}>
+                  {getUserMessage()?.message}
+                </p>
+                {moderationResult.score > 0 && (
+                  <div style={{
+                    marginTop: 8,
+                    fontSize: 12,
+                    color: '#666'
+                  }}>
+                    Scor de risc: {moderationResult.score}/100
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+        
+        {/* Processing indicator */}
+        {isProcessing && (
+          <div style={{
+            marginBottom: 20,
+            padding: 12,
+            backgroundColor: '#f0f9ff',
+            border: '1px solid #0ea5e9',
+            borderRadius: 8,
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8
+          }}>
+            <div style={{
+              width: 16,
+              height: 16,
+              border: '2px solid #0ea5e9',
+              borderTop: '2px solid transparent',
+              borderRadius: '50%',
+              animation: 'spin 1s linear infinite'
+            }} />
+            <span style={{ fontSize: 14, color: '#0369a1' }}>
+              Se verifică conținutul...
+            </span>
+          </div>
+        )}
+        
         <div style={{ marginBottom: 15 }}>
           <label style={{ display: 'block', marginBottom: 5, fontWeight: 600 }}>Titlu *</label>
           <input 
             placeholder='Ex: Rolex Submariner 2023' 
             required 
             value={form.title} 
-            onChange={(e)=>setForm({...form,title:e.target.value})} 
+            onChange={(e) => {
+              setForm({...form, title: e.target.value})
+              // Moderare în timp real (debounced)
+              moderate({
+                title: e.target.value,
+                description: form.description,
+                category: form.category,
+                price: parseFloat(form.desiredPrice) || 0
+              })
+            }}
             style={{ width: '100%', padding: 12, border:'1px solid #ddd', borderRadius: 8 }} 
           />
         </div>
@@ -127,7 +259,16 @@ export default function AddListingPage() {
             placeholder='Descrie starea, anul, orice defecte, accesorii incluse...' 
             required 
             value={form.description} 
-            onChange={(e)=>setForm({...form,description:e.target.value})} 
+            onChange={(e) => {
+              setForm({...form, description: e.target.value})
+              // Moderare în timp real (debounced)
+              moderate({
+                title: form.title,
+                description: e.target.value,
+                category: form.category,
+                price: parseFloat(form.desiredPrice) || 0
+              })
+            }}
             style={{ width: '100%', padding: 12, border:'1px solid #ddd', borderRadius: 8, minHeight: 120 }} 
           />
         </div>

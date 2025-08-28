@@ -1,1 +1,1 @@
-{"last_found_secrets": [{"name": "Username Password - commit://staged/middleware.ts", "match": "7e9a207097c0a85866581dc2d098c64878c1cbdd8a3f956ee3084109508c3fb8"}]}
+{"last_found_secrets": [{"match": "dffef7ce8e06c82c573e987c05162b0498467ab556c1ea3fb9e3a5655e8f73a1", "name": "Generic Password - commit://staged/env.production"}]}
