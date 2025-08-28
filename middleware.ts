@@ -12,12 +12,22 @@ export function middleware(request: NextRequest) {
     pathname.startsWith('/favicon.ico') ||
     pathname.startsWith('/robots.txt') ||
     pathname.startsWith('/sitemap.xml') ||
-    pathname.startsWith('/legal/') ||
     pathname.includes('/static/') ||
     pathname.match(/\.(png|jpg|jpeg|gif|svg|ico|css|js|woff|woff2|ttf|eot)$/i)
   ) {
-    console.log('🟢 Allowing public request (static/API/legal)')
+    console.log('🟢 Allowing static/API request')
     return NextResponse.next()
+  }
+
+  // Check if this is a legal page that should be public
+  if (pathname.startsWith('/legal/')) {
+    console.log('🌍 Legal page - allowing public access:', pathname)
+    const response = NextResponse.next()
+    response.headers.set('x-public-page', 'true')
+    response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate')
+    response.headers.set('Pragma', 'no-cache')
+    response.headers.set('Expires', '0')
+    return response
   }
 
   // Get Basic Auth credentials from environment
