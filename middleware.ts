@@ -12,10 +12,11 @@ export function middleware(request: NextRequest) {
     pathname.startsWith('/favicon.ico') ||
     pathname.startsWith('/robots.txt') ||
     pathname.startsWith('/sitemap.xml') ||
+    pathname.startsWith('/legal/') ||
     pathname.includes('/static/') ||
     pathname.match(/\.(png|jpg|jpeg|gif|svg|ico|css|js|woff|woff2|ttf|eot)$/i)
   ) {
-    console.log('🟢 Allowing static/API request')
+    console.log('🟢 Allowing public request (static/API/legal)')
     return NextResponse.next()
   }
 
