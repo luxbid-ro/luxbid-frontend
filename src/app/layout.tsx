@@ -4,6 +4,7 @@ import './globals.css'
 import NavBar from '@/components/NavBar'
 import ErrorBoundary from '@/components/ErrorBoundary'
 import BasicAuthGate from '@/components/BasicAuthGate'
+import CookieBanner from '@/components/CookieBanner'
 
 export const metadata: Metadata = {
   title: 'LuxBid – Oferte Premium pentru Articole de Lux',
@@ -35,6 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <BasicAuthGate>
             <NavBar />
             {children}
+            <CookieBanner />
           </BasicAuthGate>
         </ErrorBoundary>
       </body>

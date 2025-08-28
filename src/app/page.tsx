@@ -129,7 +129,73 @@ export default function HomePage() {
 
       <footer>
         <div className="container">
-          <p>© 2025 LuxBid. Toate drepturile rezervate.</p>
+          <div style={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            alignItems: 'center', 
+            gap: '12px',
+            padding: '20px 0'
+          }}>
+            <div style={{ 
+              display: 'flex', 
+              gap: '24px', 
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              fontSize: '14px'
+            }}>
+              <a 
+                href="/legal/privacy-policy" 
+                style={{ 
+                  color: '#666', 
+                  textDecoration: 'none',
+                  transition: 'color 0.2s'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#D09A1E'}
+                onMouseLeave={(e) => e.currentTarget.style.color = '#666'}
+              >
+                Politica de Confidențialitate
+              </a>
+              <a 
+                href="/legal/terms-conditions" 
+                style={{ 
+                  color: '#666', 
+                  textDecoration: 'none',
+                  transition: 'color 0.2s'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#D09A1E'}
+                onMouseLeave={(e) => e.currentTarget.style.color = '#666'}
+              >
+                Termeni și Condiții
+              </a>
+              <a 
+                href="/legal/cookie-policy" 
+                style={{ 
+                  color: '#666', 
+                  textDecoration: 'none',
+                  transition: 'color 0.2s'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#D09A1E'}
+                onMouseLeave={(e) => e.currentTarget.style.color = '#666'}
+              >
+                Politica Cookie-uri
+              </a>
+              <a 
+                href="mailto:contact@luxbid.ro" 
+                style={{ 
+                  color: '#666', 
+                  textDecoration: 'none',
+                  transition: 'color 0.2s'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#D09A1E'}
+                onMouseLeave={(e) => e.currentTarget.style.color = '#666'}
+              >
+                Contact
+              </a>
+            </div>
+            <p style={{ margin: 0, fontSize: '14px', color: '#999' }}>
+              © 2025 LuxBid. Toate drepturile rezervate.
+            </p>
+          </div>
         </div>
       </footer>
     </>
