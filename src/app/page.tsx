@@ -228,6 +228,30 @@ export default function HomePage() {
                 DMCA
               </a>
               <a
+                href="/legal/disclaimer"
+                style={{
+                  color: '#666',
+                  textDecoration: 'none',
+                  transition: 'color 0.2s'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#D09A1E'}
+                onMouseLeave={(e) => e.currentTarget.style.color = '#666'}
+              >
+                Disclaimer
+              </a>
+              <a
+                href="/legal/legal-notices"
+                style={{
+                  color: '#666',
+                  textDecoration: 'none',
+                  transition: 'color 0.2s'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#D09A1E'}
+                onMouseLeave={(e) => e.currentTarget.style.color = '#666'}
+              >
+                Mențiuni Legale
+              </a>
+              <a
                 href="mailto:contact@luxbid.ro"
                 style={{
                   color: '#666',
