@@ -1,5 +1,10 @@
 import React from 'react'
 
+export const metadata = {
+  title: 'Mențiuni Legale - LuxBid',
+  description: 'Mențiuni legale și informații despre societatea LuxBid SRL. Date de contact, licențe și conformitate.',
+}
+
 export default function LegalNoticesPage() {
   return (
     <div style={{

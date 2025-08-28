@@ -264,6 +264,30 @@ export default function HomePage() {
                 Păstrare Date
               </a>
               <a
+                href="/legal/security"
+                style={{
+                  color: '#666',
+                  textDecoration: 'none',
+                  transition: 'color 0.2s'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#D09A1E'}
+                onMouseLeave={(e) => e.currentTarget.style.color = '#666'}
+              >
+                Securitate
+              </a>
+              <a
+                href="/legal/compliance"
+                style={{
+                  color: '#666',
+                  textDecoration: 'none',
+                  transition: 'color 0.2s'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#D09A1E'}
+                onMouseLeave={(e) => e.currentTarget.style.color = '#666'}
+              >
+                Conformitate
+              </a>
+              <a
                 href="mailto:contact@luxbid.ro"
                 style={{
                   color: '#666',

@@ -1,5 +1,10 @@
 import React from 'react'
 
+export const metadata = {
+  title: 'Securitate și Protecție - LuxBid',
+  description: 'Măsurile de securitate implementate pe platforma LuxBid. SSL, HSTS, monitorizare și protecția datelor utilizatorilor.',
+}
+
 export default function SecurityPage() {
   return (
     <div style={{

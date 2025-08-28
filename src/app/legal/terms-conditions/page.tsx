@@ -26,10 +26,10 @@ export default function TermsConditionsPage() {
           marginBottom: '24px'
         }}>
           <p style={{ marginBottom: '16px', color: '#666' }}>
-            <strong>Ultima actualizare:</strong> {new Date().toLocaleDateString('ro-RO')}
+            <strong>Ultima actualizare:</strong> 28.08.2025
           </p>
           <p style={{ marginBottom: '16px', color: '#666' }}>
-            <strong>Data intrării în vigoare:</strong> {new Date().toLocaleDateString('ro-RO')}
+            <strong>Data intrării în vigoare:</strong> 28.08.2025
           </p>
         </div>
 

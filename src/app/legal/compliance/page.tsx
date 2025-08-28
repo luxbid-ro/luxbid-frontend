@@ -1,5 +1,10 @@
 import React from 'react'
 
+export const metadata = {
+  title: 'Conformitate și Reglementări - LuxBid',
+  description: 'Conformitatea LuxBid cu GDPR, DSA și reglementările române și europene. Monitorizare automată și raportare transparentă.',
+}
+
 export default function CompliancePage() {
   return (
     <div style={{

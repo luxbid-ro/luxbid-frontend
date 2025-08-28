@@ -1,5 +1,10 @@
 import React from 'react'
 
+export const metadata = {
+  title: 'Avertismente Legale și Disclaimer - LuxBid',
+  description: 'Avertismente legale și disclaimere pentru platforma LuxBid. Limitări de răspundere și natura serviciilor oferite.',
+}
+
 export default function DisclaimerPage() {
   return (
     <div style={{

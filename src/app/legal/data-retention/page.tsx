@@ -1,5 +1,10 @@
 import React from 'react'
 
+export const metadata = {
+  title: 'Politica de Păstrare Date - LuxBid',
+  description: 'Politica de păstrare și ștergere date conform GDPR. Perioade de retenție și procese automate pentru protecția datelor.',
+}
+
 export default function DataRetentionPage() {
   return (
     <div style={{

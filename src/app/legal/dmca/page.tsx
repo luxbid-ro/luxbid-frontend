@@ -1,5 +1,10 @@
 import React from 'react'
 
+export const metadata = {
+  title: 'Procedura DMCA - LuxBid',
+  description: 'Procedura DMCA pentru raportarea încălcărilor drepturilor de autor pe platforma LuxBid. Instrucțiuni complete pentru notificări.',
+}
+
 export default function DMCAPage() {
   return (
     <div style={{
