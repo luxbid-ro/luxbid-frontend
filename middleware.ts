@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { addSecurityHeaders, addAPISecurityHeaders, addPublicPageHeaders } from '@/middleware/security'
 
 export function middleware(request: NextRequest) {
   // Skip authentication for API routes, static files, and Next.js internals
@@ -16,7 +17,15 @@ export function middleware(request: NextRequest) {
     pathname.match(/\.(png|jpg|jpeg|gif|svg|ico|css|js|woff|woff2|ttf|eot)$/i)
   ) {
     console.log('🟢 Allowing static/API request')
-    return NextResponse.next()
+    const response = NextResponse.next()
+    
+    // Add security headers for API routes
+    if (pathname.startsWith('/api/')) {
+      return addAPISecurityHeaders(addSecurityHeaders(request, response))
+    }
+    
+    // Add basic security headers for static files
+    return addSecurityHeaders(request, response)
   }
 
   // Check if this is a legal page that should be public
@@ -27,7 +36,7 @@ export function middleware(request: NextRequest) {
     response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate')
     response.headers.set('Pragma', 'no-cache')
     response.headers.set('Expires', '0')
-    return response
+    return addPublicPageHeaders(addSecurityHeaders(request, response))
   }
 
   // Get Basic Auth credentials from environment
@@ -51,7 +60,8 @@ export function middleware(request: NextRequest) {
       // Check credentials
       if (username === basicAuthUser && password === basicAuthPassword) {
         console.log('✅ Authentication successful')
-        return NextResponse.next()
+        const response = NextResponse.next()
+        return addSecurityHeaders(request, response)
       } else {
         console.log('❌ Invalid credentials')
       }
