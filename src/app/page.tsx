@@ -167,10 +167,10 @@ export default function HomePage() {
               >
                 Termeni și Condiții
               </a>
-              <a 
-                href="/legal/cookie-policy" 
-                style={{ 
-                  color: '#666', 
+                            <a
+                href="/legal/cookie-policy"
+                style={{
+                  color: '#666',
                   textDecoration: 'none',
                   transition: 'color 0.2s'
                 }}
@@ -179,10 +179,46 @@ export default function HomePage() {
               >
                 Politica Cookie-uri
               </a>
-              <a 
-                href="mailto:contact@luxbid.ro" 
-                style={{ 
-                  color: '#666', 
+              <a
+                href="/legal/dpo"
+                style={{
+                  color: '#666',
+                  textDecoration: 'none',
+                  transition: 'color 0.2s'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#D09A1E'}
+                onMouseLeave={(e) => e.currentTarget.style.color = '#666'}
+              >
+                DPO
+              </a>
+              <a
+                href="/legal/dispute-resolution"
+                style={{
+                  color: '#666',
+                  textDecoration: 'none',
+                  transition: 'color 0.2s'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#D09A1E'}
+                onMouseLeave={(e) => e.currentTarget.style.color = '#666'}
+              >
+                Soluționarea Disputelor
+              </a>
+              <a
+                href="/legal/data-request"
+                style={{
+                  color: '#666',
+                  textDecoration: 'none',
+                  transition: 'color 0.2s'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#D09A1E'}
+                onMouseLeave={(e) => e.currentTarget.style.color = '#666'}
+              >
+                Cerere Date GDPR
+              </a>
+              <a
+                href="mailto:contact@luxbid.ro"
+                style={{
+                  color: '#666',
                   textDecoration: 'none',
                   transition: 'color 0.2s'
                 }}
