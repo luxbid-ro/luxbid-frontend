@@ -1,7 +1,6 @@
 'use client'
 
-import { usePathname, useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { usePathname } from 'next/navigation'
 import BasicAuthGate from './BasicAuthGate'
 
 interface ConditionalAuthProps {
@@ -10,43 +9,14 @@ interface ConditionalAuthProps {
 
 export default function ConditionalAuth({ children }: ConditionalAuthProps) {
   const pathname = usePathname()
-  const [isPublicPage, setIsPublicPage] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
+  // Determine page type immediately - no state needed
+  const isLegalPage = pathname.startsWith('/legal/')
 
-  useEffect(() => {
-    // Check if this is a legal/public page
-    const isLegalPage = pathname.startsWith('/legal/')
-    
-    console.log('🔍 ConditionalAuth checking:', { pathname, isLegalPage })
-    
-    setIsPublicPage(isLegalPage)
-    setIsLoading(false)
-  }, [pathname])
-
-  // Show loading during route detection
-  if (isLoading) {
-    return (
-      <div style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
-        fontFamily: 'Inter, sans-serif'
-      }}>
-        <div style={{ textAlign: 'center' }}>
-          <div style={{ marginBottom: '16px', fontSize: '24px' }}>
-            <span style={{ color: '#D09A1E' }}>Lux</span>
-            <span style={{ color: '#000' }}>Bid</span>
-          </div>
-          <div style={{ color: '#666' }}>Loading...</div>
-        </div>
-      </div>
-    )
-  }
+  console.log('🔍 ConditionalAuth checking:', { pathname, isLegalPage })
 
   // Pentru rutele publice, redăm conținutul direct
-  if (isPublicPage) {
-    console.log('✅ Public page - skipping auth')
+  if (isLegalPage) {
+    console.log('✅ Legal page - skipping auth')
     return <>{children}</>
   }
 
