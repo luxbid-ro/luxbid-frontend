@@ -216,6 +216,18 @@ export default function HomePage() {
                 Cerere Date GDPR
               </a>
               <a
+                href="/legal/dmca"
+                style={{
+                  color: '#666',
+                  textDecoration: 'none',
+                  transition: 'color 0.2s'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#D09A1E'}
+                onMouseLeave={(e) => e.currentTarget.style.color = '#666'}
+              >
+                DMCA
+              </a>
+              <a
                 href="mailto:contact@luxbid.ro"
                 style={{
                   color: '#666',
