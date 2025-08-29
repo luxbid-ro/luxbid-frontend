@@ -1,5 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
+import Link from 'next/link'
 
 export default function MyListingsPage() {
   const [items, setItems] = useState<any[]>([])
@@ -146,78 +147,11 @@ export default function MyListingsPage() {
     setDeleteModal({ show: false, listingId: null, listingTitle: '' })
   }
 
-  const handleConsolidateListings = async () => {
-    if (!confirm('Vrei să consolidezi anunțurile din conturile duplicate? Această operațiune va transfera toate anunțurile la contul tău actual.')) {
-      return
-    }
-
-    try {
-      const token = localStorage.getItem('luxbid_token')
-      if (!token) return (window.location.href = '/auth/login')
-      
-      const base = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000'
-      const res = await fetch(`${base}/listings/consolidate`, {
-        method: 'POST',
-        headers: { 
-          Authorization: `Bearer ${token}`,
-          'Cache-Control': 'no-cache, no-store, must-revalidate',
-          'Pragma': 'no-cache',
-          'Expires': '0'
-        }
-      })
-      
-      if (res.ok) {
-        const result = await res.json()
-        alert(`Consolidare completă! ${result.transferredCount} anunțuri transferate.`)
-        // Refresh the list to show consolidated listings
-        fetchAndValidateListings()
-      } else {
-        const errorData = await res.text()
-        alert(`Eroare la consolidare: ${errorData}`)
-      }
-    } catch (error: any) {
-      console.error('Consolidation error:', error)
-      alert(`Eroare la consolidarea anunțurilor: ${error.message || 'Eroare necunoscută'}`)
-    }
-  }
-
   return (
     <section className='section'>
       <div className='container'>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+        <div style={{ marginBottom: 20 }}>
           <h2>Anunțurile mele</h2>
-          <div style={{ display: 'flex', gap: 10 }}>
-            <button 
-              onClick={() => fetchAndValidateListings()} 
-              className="btn"
-              style={{
-                background: '#D09A1E',
-                color: 'white',
-                border: 'none',
-                padding: '8px 16px',
-                borderRadius: 8,
-                cursor: 'pointer',
-                fontSize: '0.9em'
-              }}
-            >
-              🔄 Actualizează
-            </button>
-            <button 
-              onClick={handleConsolidateListings}
-              className="btn"
-              style={{
-                background: '#ff6b35',
-                color: 'white',
-                border: 'none',
-                padding: '8px 16px',
-                borderRadius: 8,
-                cursor: 'pointer',
-                fontSize: '0.9em'
-              }}
-            >
-              🔧 Consolidează Anunțuri
-            </button>
-          </div>
         </div>
         {loading ? (
           <div style={{ padding: 24 }}>Se încarcă...</div>
@@ -226,9 +160,35 @@ export default function MyListingsPage() {
         ) : (
           <div className='grid'>
             {items.length === 0 && (
-              <div className='card' style={{ gridColumn: '1 / -1' }}>
+              <div className='card' style={{ gridColumn: '1 / -1', textAlign: 'center' }}>
                 <h3>Nu ai încă anunțuri</h3>
-                <p>Adaugă primul tău anunț.</p>
+                <Link 
+                  href="/dashboard/add-listing" 
+                  style={{
+                    color: '#D09A1E',
+                    textDecoration: 'none',
+                    fontWeight: 'bold',
+                    fontSize: '1.1em',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    padding: '12px 24px',
+                    border: '2px solid #D09A1E',
+                    borderRadius: '8px',
+                    transition: 'all 0.3s ease',
+                    marginTop: '10px'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = '#D09A1E'
+                    e.currentTarget.style.color = 'white'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = 'transparent'
+                    e.currentTarget.style.color = '#D09A1E'
+                  }}
+                >
+                  📝 Adaugă primul tău anunț
+                </Link>
               </div>
             )}
             {items.map((l) => (
