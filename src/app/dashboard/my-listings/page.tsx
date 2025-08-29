@@ -12,52 +12,56 @@ export default function MyListingsPage() {
   })
   const [deleting, setDeleting] = useState(false)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const token = localStorage.getItem('luxbid_token')
-      if (!token) return (window.location.href = '/auth/login')
-      try {
-        const base = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000'
-        const res = await fetch(`${base}/listings/me/all`, { 
-          headers: { Authorization: `Bearer ${token}` },
-          cache: 'no-store' // Force fresh data
-        })
+  const fetchAndValidateListings = async (showLoading = true) => {
+    const token = localStorage.getItem('luxbid_token')
+    if (!token) return (window.location.href = '/auth/login')
+    
+    if (showLoading) setLoading(true)
+    
+    try {
+      const base = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000'
+      const res = await fetch(`${base}/listings/me/all`, { 
+        headers: { Authorization: `Bearer ${token}` },
+        cache: 'no-store' // Force fresh data
+      })
+      
+      if (res.ok) {
+        const listings = await res.json()
+        console.log('📋 Raw listings from API:', listings)
         
-        if (res.ok) {
-          const listings = await res.json()
-          console.log('📋 Raw listings from API:', listings)
-          
-          // Validate each listing still exists by checking individual endpoints
-          const validatedListings = []
-          for (const listing of listings) {
-            try {
-              const checkRes = await fetch(`${base}/listings/${listing.id}`, {
-                cache: 'no-store'
-              })
-              if (checkRes.ok) {
-                validatedListings.push(listing)
-                console.log('✅ Listing exists:', listing.id, listing.title)
-              } else {
-                console.log('❌ Listing no longer exists:', listing.id, listing.title)
-              }
-            } catch (error) {
-              console.log('❌ Error validating listing:', listing.id, error)
+        // Validate each listing still exists by checking individual endpoints
+        const validatedListings = []
+        for (const listing of listings) {
+          try {
+            const checkRes = await fetch(`${base}/listings/${listing.id}`, {
+              cache: 'no-store'
+            })
+            if (checkRes.ok) {
+              validatedListings.push(listing)
+              console.log('✅ Listing exists:', listing.id, listing.title)
+            } else {
+              console.log('❌ Listing no longer exists:', listing.id, listing.title)
             }
+          } catch (error) {
+            console.log('❌ Error validating listing:', listing.id, error)
           }
-          
-          console.log(`📊 Validated ${validatedListings.length}/${listings.length} listings`)
-          setItems(validatedListings)
-        } else {
-          setItems([])
         }
-      } catch (e:any) {
-        setErr('Eroare la încărcare')
-        console.error('Error fetching my listings:', e)
-      } finally {
-        setLoading(false)
+        
+        console.log(`📊 Validated ${validatedListings.length}/${listings.length} listings`)
+        setItems(validatedListings)
+      } else {
+        setItems([])
       }
+    } catch (e:any) {
+      setErr('Eroare la încărcare')
+      console.error('Error fetching my listings:', e)
+    } finally {
+      if (showLoading) setLoading(false)
     }
-    fetchData()
+  }
+
+  useEffect(() => {
+    fetchAndValidateListings()
   }, [])
 
   const handleDelete = async () => {
@@ -75,9 +79,16 @@ export default function MyListingsPage() {
       })
       
       if (res.ok) {
-        // Remove from local state
+        // Remove from local state immediately
         setItems(prev => prev.filter(item => item.id !== deleteModal.listingId))
         setDeleteModal({ show: false, listingId: null, listingTitle: '' })
+        
+        // Force refresh the entire list after a delay to ensure backend consistency
+        setTimeout(() => {
+          console.log('🔄 Force refreshing listings after successful delete')
+          fetchAndValidateListings(false) // Don't show loading spinner for refresh
+        }, 500)
+        
         alert('Anunțul a fost șters cu succes!')
       } else if (res.status === 404) {
         // Anunțul nu mai există - îl eliminăm din listă fără eroare
@@ -120,7 +131,7 @@ export default function MyListingsPage() {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
           <h2>Listările mele</h2>
           <button 
-            onClick={() => window.location.reload()} 
+            onClick={() => fetchAndValidateListings()} 
             className="btn"
             style={{
               background: '#D09A1E',
