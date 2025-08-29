@@ -6,9 +6,9 @@ export default function CookieBanner() {
   const [showDetails, setShowDetails] = useState(false)
   const [preferences, setPreferences] = useState({
     necessary: true, // Always true, cannot be disabled
-    functional: false,
-    analytics: false,
-    marketing: false
+    functional: true, // Default: enabled (like Chrono24)
+    analytics: true,  // Default: enabled (like Chrono24)
+    marketing: true   // Default: enabled (like Chrono24)
   })
 
   useEffect(() => {
@@ -83,279 +83,284 @@ export default function CookieBanner() {
 
   return (
     <>
-      {/* Cookie Banner - Fixed bottom, minimal design */}
+      {/* Cookie Modal - Centered like Chrono24 */}
       <div style={{
         position: 'fixed',
-        bottom: 0,
+        top: 0,
         left: 0,
         right: 0,
-        background: '#fff',
-        border: '1px solid #e5e5e5',
-        borderBottom: 'none',
-        boxShadow: '0 -4px 12px rgba(0,0,0,0.1)',
-        padding: '16px',
+        bottom: 0,
+        background: 'rgba(0, 0, 0, 0.6)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         zIndex: 10000,
-        fontFamily: 'Inter, system-ui, sans-serif',
-        fontSize: '14px',
-        lineHeight: '1.4'
+        padding: '20px'
       }}>
         <div style={{
-          maxWidth: '1200px',
-          margin: '0 auto',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '16px',
-          flexWrap: 'wrap'
+          background: '#fff',
+          borderRadius: '12px',
+          maxWidth: '500px',
+          width: '100%',
+          padding: '32px',
+          fontFamily: 'Inter, system-ui, sans-serif',
+          fontSize: '14px',
+          lineHeight: '1.5',
+          boxShadow: '0 20px 40px rgba(0,0,0,0.15)'
         }}>
-          <div style={{ flex: 1, minWidth: '300px' }}>
-            <p style={{ margin: '0 0 8px 0', fontWeight: '600', color: '#1a1a1a' }}>
-              🍪 Utilizăm cookie-uri pentru o experiență optimă
-            </p>
-            <p style={{ margin: 0, color: '#666', fontSize: '13px' }}>
-              Acest site folosește cookie-uri necesare pentru funcționare și opționale pentru analiză. 
-              <button 
-                onClick={() => setShowDetails(true)}
-                style={{ 
-                  background: 'none', 
-                  border: 'none', 
-                  color: '#D09A1E', 
-                  textDecoration: 'underline',
-                  cursor: 'pointer',
-                  padding: 0,
-                  fontSize: '13px'
-                }}
-              >
-                Vezi detalii
-              </button>
-            </p>
-          </div>
-          
-          <div style={{ 
-            display: 'flex', 
-            gap: '8px', 
-            flexWrap: 'wrap',
-            alignItems: 'center' 
+          <h2 style={{
+            fontSize: '24px',
+            fontWeight: '600',
+            margin: '0 0 16px 0',
+            color: '#1a1a1a'
           }}>
-            <button
-              onClick={() => saveConsent('necessary')}
-              style={{
-                background: '#f5f5f5',
-                border: '1px solid #ddd',
-                borderRadius: '6px',
-                padding: '8px 16px',
-                fontSize: '13px',
-                fontWeight: '500',
-                cursor: 'pointer',
-                color: '#333'
-              }}
-            >
-              Doar necesare
-            </button>
-            <button
-              onClick={() => setShowDetails(true)}
-              style={{
-                background: 'none',
-                border: '1px solid #D09A1E',
-                borderRadius: '6px',
-                padding: '8px 16px',
-                fontSize: '13px',
-                fontWeight: '500',
-                cursor: 'pointer',
-                color: '#D09A1E'
-              }}
-            >
-              Personalizează
-            </button>
-            <button
-              onClick={() => saveConsent('all')}
-              style={{
-                background: '#D09A1E',
-                border: '1px solid #D09A1E',
-                borderRadius: '6px',
-                padding: '8px 16px',
-                fontSize: '13px',
-                fontWeight: '600',
-                cursor: 'pointer',
-                color: '#fff'
-              }}
-            >
-              Accept toate
-            </button>
-          </div>
+            Consimțământul tău pentru cea mai bună experiență LuxBid
+          </h2>
+          
+          <p style={{
+            margin: '0 0 16px 0',
+            color: '#4a4a4a',
+            lineHeight: '1.6'
+          }}>
+            Folosim cookie-uri și tehnologii similare pentru a ne asigura că serviciile noastre sunt de încredere și sigure. 
+            De asemenea, folosim datele tale pentru a-ți arăta articole de lux relevante și publicitate personalizată.
+          </p>
+          
+          <p style={{
+            margin: '0 0 24px 0',
+            color: '#666',
+            fontSize: '13px',
+            lineHeight: '1.5'
+          }}>
+            Deoarece suntem o platformă globală, anumite date personale sunt transferate în România. 
+            Există riscul ca autoritățile guvernamentale să aibă acces la aceste informații. 
+            Nu vindem informațiile tale către terți.
+          </p>
+
+          {!showDetails ? (
+            <>
+              <p style={{
+                margin: '0 0 24px 0',
+                color: '#666',
+                fontSize: '13px'
+              }}>
+                Dacă selectezi "Doar cookie-uri necesare", vom folosi doar cookie-uri strict necesare, 
+                deci din păcate nu vom putea să-ți oferim o experiență LuxBid personalizată. 
+                Poți găsi mai multe informații despre protecția datelor în <a href="/legal/cookie-policy" style={{color: '#D09A1E', textDecoration: 'underline'}}>Politica Cookie</a>.
+              </p>
+              
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '12px'
+              }}>
+                <button
+                  onClick={() => saveConsent('all')}
+                  style={{
+                    background: '#2c3e50',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '8px',
+                    padding: '14px 20px',
+                    fontSize: '15px',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    transition: 'background-color 0.2s'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.background = '#34495e'}
+                  onMouseLeave={(e) => e.currentTarget.style.background = '#2c3e50'}
+                >
+                  OK
+                </button>
+                
+                <button
+                  onClick={() => saveConsent('necessary')}
+                  style={{
+                    background: 'transparent',
+                    color: '#2c3e50',
+                    border: '2px solid #2c3e50',
+                    borderRadius: '8px',
+                    padding: '12px 20px',
+                    fontSize: '15px',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = '#2c3e50'
+                    e.currentTarget.style.color = '#fff'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'transparent'
+                    e.currentTarget.style.color = '#2c3e50'
+                  }}
+                >
+                  Doar cookie-uri necesare
+                </button>
+                
+                <button
+                  onClick={() => setShowDetails(true)}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: '#666',
+                    cursor: 'pointer',
+                    fontSize: '13px',
+                    textDecoration: 'underline',
+                    padding: '8px 0'
+                  }}
+                >
+                  Setări
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              {/* Detailed Settings */}
+              <div style={{ marginBottom: '24px' }}>
+                {[
+                  {
+                    key: 'necessary' as const,
+                    title: 'Cookie-uri necesare',
+                    description: 'Acestea sunt necesare pentru funcționarea site-ului și nu pot fi dezactivate.',
+                    disabled: true
+                  },
+                  {
+                    key: 'functional' as const,
+                    title: 'Cookie-uri funcționale',
+                    description: 'Îmbunătățesc funcționalitatea site-ului și experiența utilizatorului.',
+                    disabled: false
+                  },
+                  {
+                    key: 'analytics' as const,
+                    title: 'Cookie-uri de analiză',
+                    description: 'Ne ajută să înțelegem cum folosiți site-ul pentru a-l îmbunătăți.',
+                    disabled: false
+                  },
+                  {
+                    key: 'marketing' as const,
+                    title: 'Cookie-uri de marketing',
+                    description: 'Folosite pentru publicitate relevantă și măsurarea eficacității campaniilor.',
+                    disabled: false
+                  }
+                ].map((cookie) => (
+                  <div key={cookie.key} style={{
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    justifyContent: 'space-between',
+                    padding: '12px 0',
+                    borderBottom: '1px solid #f0f0f0'
+                  }}>
+                    <div style={{ flex: 1, marginRight: '12px' }}>
+                      <h4 style={{
+                        margin: '0 0 4px 0',
+                        fontSize: '14px',
+                        fontWeight: '600',
+                        color: '#1a1a1a'
+                      }}>
+                        {cookie.title}
+                      </h4>
+                      <p style={{
+                        margin: 0,
+                        fontSize: '12px',
+                        color: '#666',
+                        lineHeight: '1.4'
+                      }}>
+                        {cookie.description}
+                      </p>
+                    </div>
+                    <label style={{
+                      position: 'relative',
+                      display: 'inline-block',
+                      width: '44px',
+                      height: '24px',
+                      cursor: cookie.disabled ? 'not-allowed' : 'pointer'
+                    }}>
+                      <input
+                        type="checkbox"
+                        checked={preferences[cookie.key]}
+                        disabled={cookie.disabled}
+                        onChange={(e) => {
+                          if (!cookie.disabled) {
+                            setPreferences(prev => ({
+                              ...prev,
+                              [cookie.key]: e.target.checked
+                            }))
+                          }
+                        }}
+                        style={{ display: 'none' }}
+                      />
+                      <div style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        background: preferences[cookie.key] ? '#D09A1E' : '#ccc',
+                        borderRadius: '12px',
+                        transition: 'background-color 0.2s',
+                        opacity: cookie.disabled ? 0.6 : 1
+                      }}>
+                        <div style={{
+                          position: 'absolute',
+                          content: '',
+                          height: '18px',
+                          width: '18px',
+                          left: preferences[cookie.key] ? '23px' : '3px',
+                          bottom: '3px',
+                          background: '#fff',
+                          borderRadius: '50%',
+                          transition: 'left 0.2s'
+                        }} />
+                      </div>
+                    </label>
+                  </div>
+                ))}
+              </div>
+
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '12px'
+              }}>
+                <button
+                  onClick={() => saveConsent('custom')}
+                  style={{
+                    background: '#2c3e50',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '8px',
+                    padding: '14px 20px',
+                    fontSize: '15px',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    transition: 'background-color 0.2s'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.background = '#34495e'}
+                  onMouseLeave={(e) => e.currentTarget.style.background = '#2c3e50'}
+                >
+                  Salvează setările
+                </button>
+                
+                <button
+                  onClick={() => setShowDetails(false)}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: '#666',
+                    cursor: 'pointer',
+                    fontSize: '13px',
+                    textDecoration: 'underline',
+                    padding: '8px 0'
+                  }}
+                >
+                  Înapoi
+                </button>
+              </div>
+            </>
+          )}
         </div>
       </div>
-
-      {/* Cookie Preferences Modal */}
-      {showDetails && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: 'rgba(0,0,0,0.5)',
-          zIndex: 10001,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '20px'
-        }}>
-          <div style={{
-            background: '#fff',
-            borderRadius: '12px',
-            padding: '32px',
-            maxWidth: '600px',
-            width: '100%',
-            maxHeight: '80vh',
-            overflow: 'auto',
-            fontFamily: 'Inter, system-ui, sans-serif'
-          }}>
-            <h2 style={{ 
-              margin: '0 0 16px 0', 
-              fontSize: '24px', 
-              fontWeight: '700',
-              color: '#1a1a1a'
-            }}>
-              Preferințe Cookie-uri
-            </h2>
-            
-            <p style={{ margin: '0 0 24px 0', color: '#666', lineHeight: '1.5' }}>
-              Personalizează-ți experiența alegând ce tipuri de cookie-uri să fie active.
-            </p>
-
-            <div style={{ marginBottom: '24px' }}>
-              {[
-                {
-                  key: 'necessary',
-                  title: 'Cookie-uri necesare',
-                  description: 'Esențiale pentru funcționarea site-ului. Nu pot fi dezactivate.',
-                  required: true
-                },
-                {
-                  key: 'functional',
-                  title: 'Cookie-uri funcționale',
-                  description: 'Îmbunătățesc funcționalitatea și personalizarea site-ului.',
-                  required: false
-                },
-                {
-                  key: 'analytics',
-                  title: 'Cookie-uri de analiză',
-                  description: 'Ne ajută să înțelegem cum folosești site-ul pentru îmbunătățiri.',
-                  required: false
-                },
-                {
-                  key: 'marketing',
-                  title: 'Cookie-uri de marketing',
-                  description: 'Folosite pentru a personaliza anunțurile și a măsura eficacitatea campaniilor.',
-                  required: false
-                }
-              ].map((category) => (
-                <div key={category.key} style={{
-                  display: 'flex',
-                  alignItems: 'flex-start',
-                  padding: '16px',
-                  border: '1px solid #e5e5e5',
-                  borderRadius: '8px',
-                  marginBottom: '12px'
-                }}>
-                  <div style={{ flex: 1, marginRight: '16px' }}>
-                    <h4 style={{ 
-                      margin: '0 0 4px 0', 
-                      fontSize: '16px', 
-                      fontWeight: '600',
-                      color: '#1a1a1a'
-                    }}>
-                      {category.title}
-                    </h4>
-                    <p style={{ 
-                      margin: 0, 
-                      fontSize: '14px', 
-                      color: '#666',
-                      lineHeight: '1.4'
-                    }}>
-                      {category.description}
-                    </p>
-                  </div>
-                  <label style={{
-                    position: 'relative',
-                    display: 'inline-block',
-                    width: '48px',
-                    height: '24px',
-                    marginTop: '2px'
-                  }}>
-                    <input
-                      type="checkbox"
-                      checked={preferences[category.key as keyof typeof preferences]}
-                      disabled={category.required}
-                      onChange={(e) => setPreferences(prev => ({
-                        ...prev,
-                        [category.key]: e.target.checked
-                      }))}
-                      style={{ display: 'none' }}
-                    />
-                    <span style={{
-                      position: 'absolute',
-                      cursor: category.required ? 'not-allowed' : 'pointer',
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      bottom: 0,
-                      background: preferences[category.key as keyof typeof preferences] ? '#D09A1E' : '#ccc',
-                      borderRadius: '24px',
-                      transition: 'all 0.2s'
-                    }}>
-                      <span style={{
-                        position: 'absolute',
-                        content: '',
-                        height: '18px',
-                        width: '18px',
-                        left: preferences[category.key as keyof typeof preferences] ? '27px' : '3px',
-                        bottom: '3px',
-                        background: '#fff',
-                        borderRadius: '50%',
-                        transition: 'all 0.2s'
-                      }} />
-                    </span>
-                  </label>
-                </div>
-              ))}
-            </div>
-
-            <div style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end' }}>
-              <button
-                onClick={() => setShowDetails(false)}
-                style={{
-                  background: '#f5f5f5',
-                  border: '1px solid #ddd',
-                  borderRadius: '6px',
-                  padding: '10px 20px',
-                  fontSize: '14px',
-                  fontWeight: '500',
-                  cursor: 'pointer',
-                  color: '#333'
-                }}
-              >
-                Anulează
-              </button>
-              <button
-                onClick={() => saveConsent('custom')}
-                style={{
-                  background: '#D09A1E',
-                  border: '1px solid #D09A1E',
-                  borderRadius: '6px',
-                  padding: '10px 20px',
-                  fontSize: '14px',
-                  fontWeight: '600',
-                  cursor: 'pointer',
-                  color: '#fff'
-                }}
-              >
-                Salvează preferințele
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   )
 }

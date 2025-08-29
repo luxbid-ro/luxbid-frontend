@@ -10,9 +10,9 @@ interface ConditionalAuthProps {
 export default function ConditionalAuth({ children }: ConditionalAuthProps) {
   const pathname = usePathname()
   
-  // TEMPORAR: Dezactivăm Basic Auth pentru toate paginile
-  // Site-ul va fi public pentru testare și funcționalitate
-  const isPrivatePage = false // pathname.startsWith('/admin/') sau alte rute specifice private
+  // REACTIVAT: Basic Auth pentru toate paginile în development
+  // Site-ul trebuie protejat cu luxbid / luxbid2024
+  const isPrivatePage = true // Protejăm toate paginile în development
   const isLegalPage = pathname.startsWith('/legal/')
 
   console.log('🔍 ConditionalAuth checking:', { pathname, isLegalPage, isPrivatePage })
