@@ -47,11 +47,15 @@ export default function MyListingsPage() {
         // Remove from local state
         setItems(prev => prev.filter(item => item.id !== deleteModal.listingId))
         setDeleteModal({ show: false, listingId: null, listingTitle: '' })
+        alert('Anunțul a fost șters cu succes!')
       } else {
-        throw new Error('Eroare la ștergere')
+        const errorData = await res.text()
+        console.error('Delete error:', res.status, errorData)
+        throw new Error(`Eroare ${res.status}: ${errorData || 'Nu se poate șterge anunțul'}`)
       }
-    } catch (error) {
-      alert('Eroare la ștergerea anunțului')
+    } catch (error: any) {
+      console.error('Delete error:', error)
+      alert(`Eroare la ștergerea anunțului: ${error.message || 'Eroare necunoscută'}`)
     } finally {
       setDeleting(false)
     }
