@@ -15,15 +15,11 @@ export default function ConditionalAuth({ children }: ConditionalAuthProps) {
   const isPrivatePage = true // Protejăm toate paginile în development
   const isLegalPage = pathname.startsWith('/legal/')
 
-  console.log('🔍 ConditionalAuth checking:', { pathname, isLegalPage, isPrivatePage })
-
-  // Pentru orice pagină publică (toate paginile acum), redăm conținutul direct
+  // Check if page requires authentication
   if (!isPrivatePage) {
-    console.log('✅ Public page - no auth needed')
     return <>{children}</>
   }
 
-  // Pentru rutele private (dezactivate momentan), aplicăm BasicAuthGate
-  console.log('🔐 Private page - applying auth')
+  // Apply BasicAuthGate for private routes
   return <BasicAuthGate>{children}</BasicAuthGate>
 }

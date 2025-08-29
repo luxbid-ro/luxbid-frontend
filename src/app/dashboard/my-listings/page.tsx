@@ -13,24 +13,24 @@ export default function MyListingsPage() {
   const [deleting, setDeleting] = useState(false)
 
   const fetchAndValidateListings = async (showLoading = true) => {
-    console.log('🚀 fetchAndValidateListings called, showLoading:', showLoading)
+    // Fetch and validate listings
     
     const token = localStorage.getItem('luxbid_token')
-    console.log('🔑 Token exists:', !!token, token ? `${token.slice(0,20)}...` : 'NO TOKEN')
+    // Check token
     
     if (!token) {
-      console.log('❌ No token, redirecting to login')
+      // No token, redirect to login
       return (window.location.href = '/auth/login')
     }
     
     if (showLoading) {
-      console.log('⏳ Setting loading to true')
+      // Set loading state
       setLoading(true)
     }
     
     try {
       const base = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000'
-      console.log('📡 Fetching from:', `${base}/listings/me/all`)
+      // Fetching listings
       
       // Add timeout to prevent hanging
       const controller = new AbortController()
@@ -53,24 +53,24 @@ export default function MyListingsPage() {
       })
       
       clearTimeout(timeoutId)
-      console.log('📊 Response status:', res.status, res.statusText)
+      // Check response status
       
       if (res.ok) {
         const listings = await res.json()
-        console.log('📋 Raw listings from API:', listings)
-        console.log(`📊 Found ${listings.length} listings`)
+        // Process listings from API
+        // Found listings
         setItems(listings)
       } else {
-        console.log('❌ Response not ok, setting empty array')
+        // Response not ok
         setItems([])
       }
     } catch (e:any) {
-      console.error('❌ Fetch error:', e.message)
+      // Fetch error occurred
       setErr(`Eroare la încărcare: ${e.message}`)
       setItems([]) // Ensure we show something even on error
     } finally {
       if (showLoading) {
-        console.log('✅ Setting loading to false')
+        // Loading complete
         setLoading(false)
       }
     }
@@ -123,10 +123,10 @@ export default function MyListingsPage() {
         throw new Error(`Eroare ${res.status}: ${errorData || 'Nu se poate șterge anunțul'}`)
       }
     } catch (error: any) {
-      console.error('Delete error:', error)
+      // Delete error occurred
       // Pentru 404, nu afișăm eroare - doar curățăm lista
       if (error.message?.includes('404')) {
-        console.log('🧹 Cleaning up phantom listing after error:', deleteModal.listingId)
+        // Cleaning up phantom listing
         setItems(prev => prev.filter(item => item.id !== deleteModal.listingId))
         setDeleteModal({ show: false, listingId: null, listingTitle: '' })
         alert('Anunțul a fost eliminat din listă (nu mai exista în baza de date)')

@@ -24,13 +24,9 @@ export default function GoogleAnalytics({
   //   return null
   // }
   
-  // Temporar: doar verific dacă e enabled și measurementId
   if (!enabled || !measurementId) {
-    console.log('🚫 [GA4] Disabled or no measurement ID:', { enabled, measurementId })
     return null
   }
-  
-  console.log('✅ [GA4] Loading with ID:', measurementId)
 
   return (
     <>
@@ -39,10 +35,10 @@ export default function GoogleAnalytics({
         src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}
         strategy="beforeInteractive"
         onLoad={() => {
-          console.log('📊 [GA4] Script loaded successfully')
+          // GA4 script loaded
         }}
         onError={(error) => {
-          console.error('📊 [GA4] Script loading failed:', error)
+          // GA4 script failed to load
         }}
       />
       
@@ -60,7 +56,7 @@ export default function GoogleAnalytics({
               anonymize_ip: true
             });
             
-            console.log('📊 [GA4] Initialized SIMPLE for LuxBid with ID: ${measurementId}');
+            // GA4 initialized for LuxBid
           `
         }}
       />
@@ -94,76 +90,7 @@ export function GoogleAnalyticsEcommerce() {
   return null
 }
 
-/**
- * Componenta pentru debugging GA în development
- */
-export function GoogleAnalyticsDebug() {
-  const { analytics } = useAnalytics()
-
-  if (process.env.NODE_ENV !== 'development') {
-    return null
-  }
-
-  const testAnalytics = () => {
-    // Test tracking events
-    analytics.trackEvent({
-      action: 'test_event',
-      category: 'debug',
-      label: 'analytics_test',
-      value: 1
-    })
-
-    analytics.trackLuxuryEvent('test', {
-      test_parameter: 'debug_mode',
-      timestamp: new Date().toISOString()
-    })
-
-    console.log('📊 [GA4] Debug events sent')
-  }
-
-  return (
-    <div
-      style={{
-        position: 'fixed',
-        top: '60px',
-        right: '20px',
-        background: 'rgba(0,0,0,0.8)',
-        color: 'white',
-        padding: '12px',
-        borderRadius: '8px',
-        fontSize: '12px',
-        fontFamily: 'monospace',
-        zIndex: 9998,
-        maxWidth: '200px'
-      }}
-    >
-      <div style={{ marginBottom: '8px', fontWeight: '600' }}>
-        📊 GA4 Debug Panel
-      </div>
-      
-      <div style={{ fontSize: '11px', marginBottom: '8px' }}>
-        <div>Measurement ID: {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'Not set'}</div>
-        <div>Status: {typeof window !== 'undefined' && window.gtag ? '✅ Loaded' : '❌ Not loaded'}</div>
-      </div>
-      
-      <button
-        onClick={testAnalytics}
-        style={{
-          background: '#D09A1E',
-          color: 'white',
-          border: 'none',
-          padding: '4px 8px',
-          borderRadius: '4px',
-          fontSize: '11px',
-          cursor: 'pointer',
-          width: '100%'
-        }}
-      >
-        Test Events
-      </button>
-    </div>
-  )
-}
+// GoogleAnalyticsDebug removed for production
 
 /**
  * Higher-order component pentru automatic analytics tracking
