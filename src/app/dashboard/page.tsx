@@ -91,10 +91,10 @@ export default function DashboardPage() {
           <h2>Acțiuni rapide</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', marginTop: '20px' }}>
             <a href="/dashboard/add-listing" style={{ background: 'var(--gold)', color: '#fff', padding: '20px', borderRadius: '12px', textDecoration: 'none', textAlign: 'center', fontWeight: '600' }}>
-              📝 Adaugă Listare
+              📝 Adaugă Anunț
             </a>
             <a href="/dashboard/my-listings" style={{ background: 'var(--surface)', color: 'var(--dark)', padding: '20px', borderRadius: '12px', textDecoration: 'none', textAlign: 'center', fontWeight: '600' }}>
-              📋 Listările mele
+              📋 Anunțurile mele
             </a>
             <a href="/profile/edit" style={{ background: '#f8f9fa', color: '#333', padding: '20px', borderRadius: '12px', textDecoration: 'none', textAlign: 'center', fontWeight: '600', border: '2px solid #D09A1E' }}>
               ⚙️ Editează Profil

@@ -114,21 +114,17 @@ function OfertesContent() {
         const data = await response.json()
         console.log('📦 API Data received:', data.length, 'listings')
         
-        if (data.length > 0) {
-          setListings(data)
-          console.log('✅ Real data loaded from API')
-        } else {
-          console.warn('⚠️ API returned empty, using mock data')
-          setListings(mockListings)
-        }
+        // Always use real API data, even if empty
+        setListings(data)
+        console.log('✅ Real data loaded from API (including empty state)')
       } else {
-        console.warn('⚠️ API response not ok, using mock data')
-        setListings(mockListings)
+        console.warn('⚠️ API response not ok, showing empty state')
+        setListings([])
       }
     } catch (err) {
       console.error('❌ API connection failed:', err)
-      console.log('🔄 Using mock data as fallback')
-      setListings(mockListings)
+      console.log('🔄 Showing empty state - no fallback data')
+      setListings([])
     } finally {
       console.log('✅ fetchListings completed, setting loading=false')
       setLoading(false)

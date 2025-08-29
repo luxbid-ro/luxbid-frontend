@@ -185,7 +185,7 @@ export default function MyListingsPage() {
     <section className='section'>
       <div className='container'>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
-          <h2>Listările mele</h2>
+          <h2>Anunțurile mele</h2>
           <div style={{ display: 'flex', gap: 10 }}>
             <button 
               onClick={() => fetchAndValidateListings()} 
@@ -227,8 +227,8 @@ export default function MyListingsPage() {
           <div className='grid'>
             {items.length === 0 && (
               <div className='card' style={{ gridColumn: '1 / -1' }}>
-                <h3>Nu ai încă listări</h3>
-                <p>Adaugă prima ta listare.</p>
+                <h3>Nu ai încă anunțuri</h3>
+                <p>Adaugă primul tău anunț.</p>
               </div>
             )}
             {items.map((l) => (
