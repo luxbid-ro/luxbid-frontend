@@ -43,10 +43,10 @@ export default function JewelryBrandPageClient() {
     }
 
     const fetchJewelryBrandListings = async () => {
-      console.log('🚀 fetchJewelryBrandListings called for brand:', brandName)
+      // Fetch jewelry brand listings
       
       try {
-        console.log('🔄 Fetching from API...', process.env.NEXT_PUBLIC_API_BASE_URL)
+        // Fetching from API
         const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://luxbid-backend.onrender.com'
         const response = await fetch(`${apiUrl}/listings?t=${Date.now()}`, {
           method: 'GET',
@@ -57,33 +57,33 @@ export default function JewelryBrandPageClient() {
           mode: 'cors'
         })
 
-        console.log('📡 API Response status:', response.status)
+        // Check API response
 
         if (response.ok) {
           const data = await response.json()
-          console.log('📦 API Data received:', data.length, 'listings')
+          // Process API data
           
           // Filter by brand and category
           const jewelryBrandListings = data.filter((listing: Listing) => 
             listing.brand === brandName && listing.category === 'Bijuterii'
           )
           
-          console.log(`🔍 Filtered ${jewelryBrandListings.length} listings for jewelry brand: ${brandName}`)
+          // Filter by jewelry brand
           setListings(jewelryBrandListings)
           
           if (jewelryBrandListings.length === 0) {
-            console.log(`ℹ️ No jewelry listings found for brand ${brandName}, showing empty state`)
+            // No jewelry listings found
           }
         } else {
-          console.warn('⚠️ API response not ok, showing empty state for jewelry brand')
+          // API response not ok
           setListings([])
         }
       } catch (error) {
-        console.error('❌ API connection failed:', error)
-        console.log('🔄 Showing empty state for jewelry brand page')
+        // API connection failed
+        // Show empty state
         setListings([])
       } finally {
-        console.log('✅ fetchJewelryBrandListings completed, setting loading=false')
+        // Loading complete
         setLoading(false)
       }
     }

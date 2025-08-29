@@ -43,10 +43,10 @@ export default function BagBrandPageClient() {
     }
 
     const fetchBagBrandListings = async () => {
-      console.log('🚀 fetchBagBrandListings called for brand:', brandName)
+      // Fetch bag brand listings
       
       try {
-        console.log('🔄 Fetching from API...', process.env.NEXT_PUBLIC_API_BASE_URL)
+        // Fetching from API
         const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://luxbid-backend.onrender.com'
         const response = await fetch(`${apiUrl}/listings?t=${Date.now()}`, {
           method: 'GET',
@@ -57,33 +57,33 @@ export default function BagBrandPageClient() {
           mode: 'cors'
         })
 
-        console.log('📡 API Response status:', response.status)
+        // Check API response
 
         if (response.ok) {
           const data = await response.json()
-          console.log('📦 API Data received:', data.length, 'listings')
+          // Process API data
           
           // Filter by brand and category
           const bagBrandListings = data.filter((listing: Listing) => 
             listing.brand === brandName && listing.category === 'Genți'
           )
           
-          console.log(`🔍 Filtered ${bagBrandListings.length} listings for bag brand: ${brandName}`)
+          // Filter by bag brand
           setListings(bagBrandListings)
           
           if (bagBrandListings.length === 0) {
-            console.log(`ℹ️ No bag listings found for brand ${brandName}, showing empty state`)
+            // No bag listings found
           }
         } else {
-          console.warn('⚠️ API response not ok, showing empty state for bag brand')
+          // API response not ok
           setListings([])
         }
       } catch (error) {
-        console.error('❌ API connection failed:', error)
-        console.log('🔄 Showing empty state for bag brand page')
+        // API connection failed
+        // Show empty state
         setListings([])
       } finally {
-        console.log('✅ fetchBagBrandListings completed, setting loading=false')
+        // Loading complete
         setLoading(false)
       }
     }

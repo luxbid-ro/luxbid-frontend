@@ -53,13 +53,7 @@ export default function ReportModal({ isOpen, onClose, itemType, itemId, itemTit
       // Simulăm API call - în viitor va fi înlocuit cu call real
       await new Promise(resolve => setTimeout(resolve, 1000))
       
-      console.log('Report submitted:', {
-        itemType,
-        itemId,
-        reason: selectedReason,
-        description,
-        timestamp: new Date().toISOString()
-      })
+      // Submit report
 
       setSubmitSuccess(true)
       setTimeout(() => {
@@ -69,7 +63,7 @@ export default function ReportModal({ isOpen, onClose, itemType, itemId, itemTit
         setDescription('')
       }, 2000)
     } catch (error) {
-      console.error('Failed to submit report:', error)
+      // Failed to submit report
     } finally {
       setIsSubmitting(false)
     }

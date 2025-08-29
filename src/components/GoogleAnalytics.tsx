@@ -18,12 +18,6 @@ export default function GoogleAnalytics({
 }: GoogleAnalyticsProps) {
   const { hasConsent } = useAnalyticsConsent()
   
-  // TEMPORAR: Activez GA4 fără consent pentru testare
-  // Nu încărca GA dacă nu avem consent sau e disabled
-  // if (!enabled || !measurementId || (typeof window !== 'undefined' && !hasConsent())) {
-  //   return null
-  // }
-  
   if (!enabled || !measurementId) {
     return null
   }

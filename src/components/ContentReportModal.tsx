@@ -44,7 +44,7 @@ export default function ContentReportModal({
         reporterId: 'current-user-id' // Ar veni din context
       }
 
-      console.log('Content report:', report)
+      // Submit content report
       
       // Simulare delay API
       await new Promise(resolve => setTimeout(resolve, 1000))
@@ -60,7 +60,7 @@ export default function ContentReportModal({
       }, 2000)
       
     } catch (error) {
-      console.error('Error submitting report:', error)
+      // Error submitting report
       alert('A apărut o eroare. Vă rugăm să încercați din nou.')
     } finally {
       setIsSubmitting(false)
