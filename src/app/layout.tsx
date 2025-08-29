@@ -71,6 +71,23 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="LuxBid" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        
+        {/* Google Analytics 4 - Direct Integration */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-PXGXDYQDY3"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-PXGXDYQDY3', {
+                send_page_view: true,
+                anonymize_ip: true
+              });
+              console.log('📊 [GA4] DIRECT INTEGRATION - ID: G-PXGXDYQDY3');
+            `
+          }}
+        />
       </head>
       <body>
         <ErrorBoundary>
@@ -91,8 +108,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {/* Performance Monitoring */}
             <PerformanceMonitor enabled={true} />
             
-            {/* Google Analytics 4 */}
-            <GoogleAnalytics enabled={true} />
+            {/* Google Analytics 4 - Now in <head> directly */}
             <GoogleAnalyticsEcommerce />
           </ConditionalAuth>
         </ErrorBoundary>
