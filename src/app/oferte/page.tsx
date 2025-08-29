@@ -1,6 +1,7 @@
 'use client'
 import React, { useState, useEffect, useCallback, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
+import { ListingImage } from '@/components/OptimizedImage'
 
 type Listing = {
   id: string
@@ -382,17 +383,13 @@ function OfertesContent() {
               >
                 {/* Image */}
                 <div style={{ position: 'relative', height: '240px', overflow: 'hidden' }}>
-                  <img 
-                    src={listing.images && listing.images.length > 0 ? listing.images[0] : getRandomPlaceholder(listing.category)}
+                  <ListingImage
+                    src={listing.images && listing.images.length > 0 ? listing.images[0] : null}
                     alt={listing.title}
+                    category={listing.category}
+                    priority={false} // Lazy loading pentru performanță
                     style={{ 
-                      width: '100%', 
-                      height: '100%', 
-                      objectFit: 'cover',
                       transition: 'transform 0.3s ease'
-                    }}
-                    onError={(e) => {
-                      e.currentTarget.src = getRandomPlaceholder(listing.category)
                     }}
                   />
                   {/* Category Badge */}

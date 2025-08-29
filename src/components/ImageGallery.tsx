@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import ImageMagnifier from './ImageMagnifier'
+import { GalleryImage } from './OptimizedImage'
 
 interface ImageGalleryProps {
   images: Array<{

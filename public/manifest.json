@@ -1,0 +1,86 @@
+{
+  "name": "LuxBid - Oferte Premium pentru Articole de Lux",
+  "short_name": "LuxBid",
+  "description": "Platformă premium pentru listarea și vânzarea obiectelor de lux prin oferte",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#D09A1E",
+  "orientation": "portrait-primary",
+  "categories": ["shopping", "lifestyle", "business"],
+  "lang": "ro",
+  "dir": "ltr",
+  "scope": "/",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icon-512x512.png", 
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180", 
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-mobile.png",
+      "sizes": "375x812",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "LuxBid pe mobil - găsește oferte premium"
+    },
+    {
+      "src": "/screenshot-desktop.png", 
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "LuxBid pe desktop - experiență completă"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Oferte Noi",
+      "short_name": "Oferte",
+      "description": "Vezi cele mai noi oferte de lux",
+      "url": "/oferte",
+      "icons": [
+        {
+          "src": "/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Adaugă Listing",
+      "short_name": "Adaugă", 
+      "description": "Listează un obiect de lux",
+      "url": "/dashboard/add-listing",
+      "icons": [
+        {
+          "src": "/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "share_target": {
+    "action": "/dashboard/add-listing",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  }
+}

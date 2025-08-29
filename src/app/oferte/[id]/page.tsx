@@ -1,7 +1,9 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
-import ImageGallery from '@/components/ImageGallery'
+import { LazyImageGallery } from '@/components/LazyComponents'
+import { ProductSchema, BreadcrumbSchema } from '@/components/StructuredData'
+import { generateSEOMetadata } from '@/utils/seo'
 
 export default function ListingDetailPage() {
   const params = useParams()
@@ -260,7 +262,7 @@ export default function ListingDetailPage() {
         }}>
           {/* Coloana imaginilor */}
           <div>
-            <ImageGallery images={images} />
+            <LazyImageGallery images={images} />
           </div>
           
           {/* Coloana detaliilor */}
@@ -437,6 +439,38 @@ export default function ListingDetailPage() {
           </div>
         </div>
       </div>
+
+      {/* SEO Structured Data */}
+      {listing && (
+        <>
+          <ProductSchema 
+            product={{
+              id: listing.id,
+              title: listing.title,
+              description: listing.description,
+              price: listing.price,
+              currency: listing.currency || 'RON',
+              category: listing.category,
+              brand: listing.brand,
+              condition: listing.condition || 'folosit',
+              images: images.map((img: any) => img.imageUrl),
+              availability: 'in_stock',
+              seller: {
+                name: 'LuxBid',
+                type: 'Organization'
+              }
+            }}
+          />
+          <BreadcrumbSchema 
+            items={[
+              { name: 'Acasă', url: '/' },
+              { name: 'Oferte', url: '/oferte' },
+              { name: listing.category, url: `/oferte?category=${encodeURIComponent(listing.category)}` },
+              { name: listing.title, url: `/oferte/${listing.id}` }
+            ]}
+          />
+        </>
+      )}
     </section>
   )
 }

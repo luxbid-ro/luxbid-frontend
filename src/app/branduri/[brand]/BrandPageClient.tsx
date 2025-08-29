@@ -1,6 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
+import { ListingImage } from '@/components/OptimizedImage'
 import { WATCH_BRANDS } from '@/constants/watchBrands'
 
 type Listing = {
@@ -313,17 +314,13 @@ export default function BrandPageClient() {
               >
                 {/* Image */}
                 <div style={{ position: 'relative', height: '240px', overflow: 'hidden' }}>
-                  <img 
-                    src={listing.images && listing.images.length > 0 ? listing.images[0] : getRandomPlaceholder()}
+                  <ListingImage
+                    src={listing.images && listing.images.length > 0 ? listing.images[0] : null}
                     alt={listing.title}
+                    category={listing.category}
+                    priority={false}
                     style={{ 
-                      width: '100%', 
-                      height: '100%', 
-                      objectFit: 'cover',
                       transition: 'transform 0.3s ease'
-                    }}
-                    onError={(e) => {
-                      e.currentTarget.src = getRandomPlaceholder()
                     }}
                   />
                   {/* Brand Badge */}

@@ -4,15 +4,47 @@ import './globals.css'
 import NavBar from '@/components/NavBar'
 import ErrorBoundary from '@/components/ErrorBoundary'
 import ConditionalAuth from '@/components/ConditionalAuth'
-import CookieBanner from '@/components/CookieBanner'
-import AccessibilityWidget from '@/components/AccessibilityWidget'
-import AgeVerificationModal from '@/components/AgeVerificationModal'
+import { 
+  LazyCookieBanner, 
+  LazyAccessibilityWidget, 
+  LazyAgeVerificationModal 
+} from '@/components/LazyComponents'
+import UpdateNotification from '@/components/UpdateNotification'
+import { OrganizationSchema, WebsiteSchema } from '@/components/StructuredData'
+import PerformanceMonitor from '@/components/PerformanceMonitor'
 
 export const metadata: Metadata = {
-  title: 'LuxBid – Oferte Premium pentru Articole de Lux',
-  description:
-    'Platformă premium unde îți listezi obiectele de lux și primești oferte de preț. După acceptare și plata comisionului, se deblochează contactele și chatul privat.',
+  title: 'LuxBid – Oferte Premium pentru Articole de Lux | Marketplace România',
+  description: 'Platformă premium pentru vânzarea și cumpărarea obiectelor de lux în România. Ceasuri, genți, bijuterii de marcă. Oferte sigure, plăți protejate.',
+  keywords: 'obiecte de lux România, ceasuri de lux, genți designer, bijuterii premium, Rolex, Hermès, Chanel, marketplace lux',
   viewport: 'width=device-width, initial-scale=1',
+  robots: 'index, follow, max-image-preview:large',
+  openGraph: {
+    title: 'LuxBid – Marketplace Premium pentru Articole de Lux România',
+    description: 'Descoperă și vinde obiecte de lux autentice: ceasuri premium, genți designer, bijuterii de marcă. Platformă sigură cu plăți protejate.',
+    url: 'https://luxbid.ro',
+    siteName: 'LuxBid',
+    locale: 'ro_RO',
+    type: 'website',
+    images: [
+      {
+        url: '/og-homepage.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'LuxBid - Marketplace pentru articole de lux în România'
+      }
+    ]
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'LuxBid – Marketplace Premium Articole de Lux România',
+    description: 'Platformă premium pentru vânzarea obiectelor de lux. Ceasuri, genți, bijuterii de marcă.',
+    images: ['/og-homepage.jpg'],
+    creator: '@LuxBidRO'
+  },
+  alternates: {
+    canonical: 'https://luxbid.ro'
+  }
 }
 
 // Force dynamic rendering to ensure middleware runs
@@ -32,6 +64,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         />
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#D09A1E" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="LuxBid" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
       <body>
         <ErrorBoundary>
@@ -40,9 +78,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <NavBar />
               {children}
             </main>
-            <CookieBanner />
-            <AccessibilityWidget />
-            <AgeVerificationModal />
+            <LazyCookieBanner />
+            <LazyAccessibilityWidget />
+            <LazyAgeVerificationModal />
+            <UpdateNotification />
+            
+            {/* Global Structured Data */}
+            <OrganizationSchema />
+            <WebsiteSchema />
+            
+            {/* Performance Monitoring */}
+            <PerformanceMonitor enabled={true} />
           </ConditionalAuth>
         </ErrorBoundary>
       </body>

@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import ImageUpload from '@/components/ImageUpload'
+import { LazyImageUpload } from '@/components/LazyComponents'
 import { WATCH_BRANDS } from '@/constants/watchBrands'
 import { BAG_BRANDS } from '@/constants/bagBrands'
 import { JEWELRY_BRANDS } from '@/constants/jewelryBrands'
@@ -112,7 +112,7 @@ export default function AddListingPage() {
             Acum adaugă imagini de înaltă calitate pentru a atrage cumpărători serioși.
           </p>
           
-          <ImageUpload 
+          <LazyImageUpload 
             listingId={listingId} 
             onImagesUploaded={handleImagesUploaded}
             maxImages={10}
