@@ -13,33 +13,56 @@ export default function MyListingsPage() {
   const [deleting, setDeleting] = useState(false)
 
   const fetchAndValidateListings = async (showLoading = true) => {
-    const token = localStorage.getItem('luxbid_token')
-    if (!token) return (window.location.href = '/auth/login')
+    console.log('🚀 fetchAndValidateListings called, showLoading:', showLoading)
     
-    if (showLoading) setLoading(true)
+    const token = localStorage.getItem('luxbid_token')
+    console.log('🔑 Token exists:', !!token, token ? `${token.slice(0,20)}...` : 'NO TOKEN')
+    
+    if (!token) {
+      console.log('❌ No token, redirecting to login')
+      return (window.location.href = '/auth/login')
+    }
+    
+    if (showLoading) {
+      console.log('⏳ Setting loading to true')
+      setLoading(true)
+    }
     
     try {
       const base = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000'
+      console.log('📡 Fetching from:', `${base}/listings/me/all`)
+      
+      // Add timeout to prevent hanging
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 10000) // 10 second timeout
+      
       const res = await fetch(`${base}/listings/me/all`, { 
         headers: { Authorization: `Bearer ${token}` },
-        cache: 'no-store' // Force fresh data
+        cache: 'no-store',
+        signal: controller.signal
       })
+      
+      clearTimeout(timeoutId)
+      console.log('📊 Response status:', res.status, res.statusText)
       
       if (res.ok) {
         const listings = await res.json()
         console.log('📋 Raw listings from API:', listings)
-        
-        // Directly set items without individual validation to avoid infinite loading
         console.log(`📊 Found ${listings.length} listings`)
         setItems(listings)
       } else {
+        console.log('❌ Response not ok, setting empty array')
         setItems([])
       }
     } catch (e:any) {
-      setErr('Eroare la încărcare')
-      console.error('Error fetching my listings:', e)
+      console.error('❌ Fetch error:', e.message)
+      setErr(`Eroare la încărcare: ${e.message}`)
+      setItems([]) // Ensure we show something even on error
     } finally {
-      if (showLoading) setLoading(false)
+      if (showLoading) {
+        console.log('✅ Setting loading to false')
+        setLoading(false)
+      }
     }
   }
 
