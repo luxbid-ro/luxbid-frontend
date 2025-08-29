@@ -29,26 +29,9 @@ export default function MyListingsPage() {
         const listings = await res.json()
         console.log('📋 Raw listings from API:', listings)
         
-        // Validate each listing still exists by checking individual endpoints
-        const validatedListings = []
-        for (const listing of listings) {
-          try {
-            const checkRes = await fetch(`${base}/listings/${listing.id}`, {
-              cache: 'no-store'
-            })
-            if (checkRes.ok) {
-              validatedListings.push(listing)
-              console.log('✅ Listing exists:', listing.id, listing.title)
-            } else {
-              console.log('❌ Listing no longer exists:', listing.id, listing.title)
-            }
-          } catch (error) {
-            console.log('❌ Error validating listing:', listing.id, error)
-          }
-        }
-        
-        console.log(`📊 Validated ${validatedListings.length}/${listings.length} listings`)
-        setItems(validatedListings)
+        // Directly set items without individual validation to avoid infinite loading
+        console.log(`📊 Found ${listings.length} listings`)
+        setItems(listings)
       } else {
         setItems([])
       }
