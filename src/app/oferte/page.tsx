@@ -105,8 +105,24 @@ function OfertesContent() {
     
     try {
       console.log('🔄 Fetching from API...', process.env.NEXT_PUBLIC_API_BASE_URL)
-      const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://luxbid-backend.onrender.com'
-      const response = await fetch(`${apiUrl}/listings`)
+              const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://luxbid-backend.onrender.com'
+        
+        // SUPER AGGRESSIVE cache busting for empty state
+        const timestamp = Date.now()
+        const randomId = Math.random().toString(36).substring(2)
+        const cacheBusterUrl = `${apiUrl}/listings?_cb=${timestamp}&_r=${randomId}&_v=${Date.now()}`
+        
+        const response = await fetch(cacheBusterUrl, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0',
+            'Pragma': 'no-cache',
+            'Expires': '0',
+            'X-Requested-With': 'XMLHttpRequest'
+          },
+          cache: 'no-store'
+        })
       
       console.log('📡 API Response status:', response.status)
       
@@ -114,17 +130,31 @@ function OfertesContent() {
         const data = await response.json()
         console.log('📦 API Data received:', data.length, 'listings')
         
-        // Always use real API data, even if empty
-        setListings(data)
-        console.log('✅ Real data loaded from API (including empty state)')
+        // FORCE CLEAR any cached state first
+        setListings([])
+        setFilteredListings([])
+        
+        // Wait a tick to ensure state is cleared, then set real data
+        setTimeout(() => {
+          setListings(data)
+          console.log('✅ Real data loaded from API (including empty state)')
+          
+          // If empty, double-check by forcing a visual refresh
+          if (data.length === 0) {
+            console.log('🚨 Empty state confirmed - clearing any phantom data')
+            setFilteredListings([])
+          }
+        }, 10)
       } else {
         console.warn('⚠️ API response not ok, showing empty state')
         setListings([])
+        setFilteredListings([])
       }
     } catch (err) {
       console.error('❌ API connection failed:', err)
       console.log('🔄 Showing empty state - no fallback data')
       setListings([])
+      setFilteredListings([])
     } finally {
       console.log('✅ fetchListings completed, setting loading=false')
       setLoading(false)
