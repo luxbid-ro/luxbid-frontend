@@ -125,26 +125,73 @@ export default function MyListingsPage() {
     setDeleteModal({ show: false, listingId: null, listingTitle: '' })
   }
 
+  const handleConsolidateListings = async () => {
+    if (!confirm('Vrei să consolidezi anunțurile din conturile duplicate? Această operațiune va transfera toate anunțurile la contul tău actual.')) {
+      return
+    }
+
+    try {
+      const token = localStorage.getItem('luxbid_token')
+      if (!token) return (window.location.href = '/auth/login')
+      
+      const base = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000'
+      const res = await fetch(`${base}/listings/consolidate`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      
+      if (res.ok) {
+        const result = await res.json()
+        alert(`Consolidare completă! ${result.transferredCount} anunțuri transferate.`)
+        // Refresh the list to show consolidated listings
+        fetchAndValidateListings()
+      } else {
+        const errorData = await res.text()
+        alert(`Eroare la consolidare: ${errorData}`)
+      }
+    } catch (error: any) {
+      console.error('Consolidation error:', error)
+      alert(`Eroare la consolidarea anunțurilor: ${error.message || 'Eroare necunoscută'}`)
+    }
+  }
+
   return (
     <section className='section'>
       <div className='container'>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
           <h2>Listările mele</h2>
-          <button 
-            onClick={() => fetchAndValidateListings()} 
-            className="btn"
-            style={{
-              background: '#D09A1E',
-              color: 'white',
-              border: 'none',
-              padding: '8px 16px',
-              borderRadius: 8,
-              cursor: 'pointer',
-              fontSize: '0.9em'
-            }}
-          >
-            🔄 Actualizează
-          </button>
+          <div style={{ display: 'flex', gap: 10 }}>
+            <button 
+              onClick={() => fetchAndValidateListings()} 
+              className="btn"
+              style={{
+                background: '#D09A1E',
+                color: 'white',
+                border: 'none',
+                padding: '8px 16px',
+                borderRadius: 8,
+                cursor: 'pointer',
+                fontSize: '0.9em'
+              }}
+            >
+              🔄 Actualizează
+            </button>
+            <button 
+              onClick={handleConsolidateListings}
+              className="btn"
+              style={{
+                background: '#ff6b35',
+                color: 'white',
+                border: 'none',
+                padding: '8px 16px',
+                borderRadius: 8,
+                cursor: 'pointer',
+                fontSize: '0.9em'
+              }}
+            >
+              🔧 Consolidează Anunțuri
+            </button>
+          </div>
         </div>
         {loading ? (
           <div style={{ padding: 24 }}>Se încarcă...</div>
