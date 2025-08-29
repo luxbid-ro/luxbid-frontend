@@ -13,15 +13,24 @@ interface GoogleAnalyticsProps {
  * Componenta pentru integrarea Google Analytics 4 cu consent management
  */
 export default function GoogleAnalytics({ 
-  measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID,
+  measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-PXGXDYQDY3',
   enabled = true 
 }: GoogleAnalyticsProps) {
   const { hasConsent } = useAnalyticsConsent()
   
+  // TEMPORAR: Activez GA4 fără consent pentru testare
   // Nu încărca GA dacă nu avem consent sau e disabled
-  if (!enabled || !measurementId || (typeof window !== 'undefined' && !hasConsent())) {
+  // if (!enabled || !measurementId || (typeof window !== 'undefined' && !hasConsent())) {
+  //   return null
+  // }
+  
+  // Temporar: doar verific dacă e enabled și measurementId
+  if (!enabled || !measurementId) {
+    console.log('🚫 [GA4] Disabled or no measurement ID:', { enabled, measurementId })
     return null
   }
+  
+  console.log('✅ [GA4] Loading with ID:', measurementId)
 
   return (
     <>
