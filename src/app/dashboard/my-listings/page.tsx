@@ -18,10 +18,41 @@ export default function MyListingsPage() {
       if (!token) return (window.location.href = '/auth/login')
       try {
         const base = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000'
-        const res = await fetch(`${base}/listings/me/all`, { headers: { Authorization: `Bearer ${token}` } })
-        setItems(res.ok ? await res.json() : [])
+        const res = await fetch(`${base}/listings/me/all`, { 
+          headers: { Authorization: `Bearer ${token}` },
+          cache: 'no-store' // Force fresh data
+        })
+        
+        if (res.ok) {
+          const listings = await res.json()
+          console.log('📋 Raw listings from API:', listings)
+          
+          // Validate each listing still exists by checking individual endpoints
+          const validatedListings = []
+          for (const listing of listings) {
+            try {
+              const checkRes = await fetch(`${base}/listings/${listing.id}`, {
+                cache: 'no-store'
+              })
+              if (checkRes.ok) {
+                validatedListings.push(listing)
+                console.log('✅ Listing exists:', listing.id, listing.title)
+              } else {
+                console.log('❌ Listing no longer exists:', listing.id, listing.title)
+              }
+            } catch (error) {
+              console.log('❌ Error validating listing:', listing.id, error)
+            }
+          }
+          
+          console.log(`📊 Validated ${validatedListings.length}/${listings.length} listings`)
+          setItems(validatedListings)
+        } else {
+          setItems([])
+        }
       } catch (e:any) {
         setErr('Eroare la încărcare')
+        console.error('Error fetching my listings:', e)
       } finally {
         setLoading(false)
       }
@@ -48,6 +79,12 @@ export default function MyListingsPage() {
         setItems(prev => prev.filter(item => item.id !== deleteModal.listingId))
         setDeleteModal({ show: false, listingId: null, listingTitle: '' })
         alert('Anunțul a fost șters cu succes!')
+      } else if (res.status === 404) {
+        // Anunțul nu mai există - îl eliminăm din listă fără eroare
+        console.log('🧹 Cleaning up phantom listing:', deleteModal.listingId)
+        setItems(prev => prev.filter(item => item.id !== deleteModal.listingId))
+        setDeleteModal({ show: false, listingId: null, listingTitle: '' })
+        alert('Anunțul a fost eliminat din listă (nu mai exista în baza de date)')
       } else {
         const errorData = await res.text()
         console.error('Delete error:', res.status, errorData)
@@ -55,7 +92,15 @@ export default function MyListingsPage() {
       }
     } catch (error: any) {
       console.error('Delete error:', error)
-      alert(`Eroare la ștergerea anunțului: ${error.message || 'Eroare necunoscută'}`)
+      // Pentru 404, nu afișăm eroare - doar curățăm lista
+      if (error.message?.includes('404')) {
+        console.log('🧹 Cleaning up phantom listing after error:', deleteModal.listingId)
+        setItems(prev => prev.filter(item => item.id !== deleteModal.listingId))
+        setDeleteModal({ show: false, listingId: null, listingTitle: '' })
+        alert('Anunțul a fost eliminat din listă (nu mai exista în baza de date)')
+      } else {
+        alert(`Eroare la ștergerea anunțului: ${error.message || 'Eroare necunoscută'}`)
+      }
     } finally {
       setDeleting(false)
     }
@@ -72,7 +117,24 @@ export default function MyListingsPage() {
   return (
     <section className='section'>
       <div className='container'>
-        <h2>Listările mele</h2>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+          <h2>Listările mele</h2>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="btn"
+            style={{
+              background: '#D09A1E',
+              color: 'white',
+              border: 'none',
+              padding: '8px 16px',
+              borderRadius: 8,
+              cursor: 'pointer',
+              fontSize: '0.9em'
+            }}
+          >
+            🔄 Actualizează
+          </button>
+        </div>
         {loading ? (
           <div style={{ padding: 24 }}>Se încarcă...</div>
         ) : err ? (
