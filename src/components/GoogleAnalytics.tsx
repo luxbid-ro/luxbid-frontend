@@ -37,7 +37,7 @@ export default function GoogleAnalytics({
       {/* Google Analytics Global Site Tag (gtag.js) */}
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}
-        strategy="afterInteractive"
+        strategy="beforeInteractive"
         onLoad={() => {
           console.log('📊 [GA4] Script loaded successfully')
         }}
@@ -48,64 +48,19 @@ export default function GoogleAnalytics({
       
       <Script
         id="google-analytics-config"
-        strategy="afterInteractive"
+        strategy="beforeInteractive"
         dangerouslySetInnerHTML={{
           __html: `
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             
-            // Set default consent mode
-            gtag('consent', 'default', {
-              'analytics_storage': 'denied',
-              'ad_storage': 'denied',
-              'functionality_storage': 'granted',
-              'personalization_storage': 'denied'
-            });
-            
             gtag('js', new Date());
             gtag('config', '${measurementId}', {
-              // Enhanced ecommerce pentru luxury marketplace
-              allow_google_signals: true,
-              allow_ad_personalization_signals: false, // GDPR compliance
-              
-              // Performance și privacy
               send_page_view: true,
-              anonymize_ip: true,
-              respect_dnt: true,
-              
-              // Custom parameters pentru LuxBid
-              custom_map: {
-                'custom_parameter_1': 'user_type',
-                'custom_parameter_2': 'listing_category', 
-                'custom_parameter_3': 'brand_name',
-                'custom_parameter_4': 'price_range'
-              },
-              
-              // Enhanced measurement pentru luxury features
-              enhanced_measurement: {
-                scrolls: true,
-                outbound_clicks: true,
-                site_search: true,
-                video_engagement: false,
-                file_downloads: true
-              },
-              
-              // Cookie settings pentru GDPR
-              cookie_domain: 'auto',
-              cookie_expires: 63072000, // 2 years
-              cookie_update: true,
-              cookie_flags: 'SameSite=None;Secure'
+              anonymize_ip: true
             });
             
-            // Track initial page load
-            gtag('event', 'page_view', {
-              page_title: document.title,
-              page_location: window.location.href,
-              content_group1: 'LuxBid',
-              content_group2: 'Luxury Marketplace'
-            });
-            
-            console.log('📊 [GA4] Initialized for LuxBid with ID: ${measurementId}');
+            console.log('📊 [GA4] Initialized SIMPLE for LuxBid with ID: ${measurementId}');
           `
         }}
       />
