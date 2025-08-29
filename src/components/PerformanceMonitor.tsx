@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react'
 import { usePerformanceMonitoring, usePerformanceReporting } from '@/hooks/usePerformanceMonitoring'
+import { useGAPerformanceTracking } from '@/components/GoogleAnalytics'
 
 interface PerformanceMonitorProps {
   enabled?: boolean
@@ -22,6 +23,7 @@ export default function PerformanceMonitor({
   } = usePerformanceMonitoring(enabled)
   
   const { reportWebVitals } = usePerformanceReporting()
+  const { trackWebVitals } = useGAPerformanceTracking()
 
   useEffect(() => {
     if (!enabled) return
@@ -29,14 +31,19 @@ export default function PerformanceMonitor({
     // Monitorizare automată la încărcarea paginii
     console.log('🚀 [Performance Monitor] Activat pentru:', window.location.pathname)
 
-    // Raportează web vitals la Next.js
+    // Raportează web vitals la Next.js ȘI Google Analytics
     if (typeof window !== 'undefined') {
       import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
-        getCLS(reportWebVitals)
-        getFID(reportWebVitals)
-        getFCP(reportWebVitals)
-        getLCP(reportWebVitals)
-        getTTFB(reportWebVitals)
+        const handleMetric = (metric: any) => {
+          reportWebVitals(metric)
+          trackWebVitals(metric) // Trimite și la Google Analytics
+        }
+        
+        getCLS(handleMetric)
+        getFID(handleMetric)
+        getFCP(handleMetric)
+        getLCP(handleMetric)
+        getTTFB(handleMetric)
       }).catch(() => {
         // Fallback dacă web-vitals nu e disponibil
         console.log('📊 [Performance] Web Vitals library not available')

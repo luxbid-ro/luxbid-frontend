@@ -12,6 +12,7 @@ import {
 import UpdateNotification from '@/components/UpdateNotification'
 import { OrganizationSchema, WebsiteSchema } from '@/components/StructuredData'
 import PerformanceMonitor from '@/components/PerformanceMonitor'
+import GoogleAnalytics, { GoogleAnalyticsEcommerce } from '@/components/GoogleAnalytics'
 
 export const metadata: Metadata = {
   title: 'LuxBid – Oferte Premium pentru Articole de Lux | Marketplace România',
@@ -89,6 +90,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             
             {/* Performance Monitoring */}
             <PerformanceMonitor enabled={true} />
+            
+            {/* Google Analytics 4 */}
+            <GoogleAnalytics enabled={true} />
+            <GoogleAnalyticsEcommerce />
           </ConditionalAuth>
         </ErrorBoundary>
       </body>
