@@ -10,6 +10,8 @@ services:
         value: production
       - key: NEXT_PUBLIC_API_BASE_URL
         value: "https://luxbid-backend.onrender.com"
+      - key: NEXT_PUBLIC_GA_MEASUREMENT_ID
+        value: "G-PXGXDYQDY3"
       - key: PORT
         value: 3000
       - key: BASIC_AUTH_USER
