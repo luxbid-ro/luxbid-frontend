@@ -36,8 +36,18 @@ export default function MyListingsPage() {
       const controller = new AbortController()
       const timeoutId = setTimeout(() => controller.abort(), 10000) // 10 second timeout
       
-      const res = await fetch(`${base}/listings/me/all`, { 
-        headers: { Authorization: `Bearer ${token}` },
+      // Safari-specific cache busting
+      const timestamp = Date.now()
+      const randomId = Math.random().toString(36).substring(7)
+      const url = `${base}/listings/me/all?_t=${timestamp}&_r=${randomId}`
+      
+      const res = await fetch(url, { 
+        headers: { 
+          Authorization: `Bearer ${token}`,
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0'
+        },
         cache: 'no-store',
         signal: controller.signal
       })
@@ -81,7 +91,12 @@ export default function MyListingsPage() {
       const base = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000'
       const res = await fetch(`${base}/listings/${deleteModal.listingId}`, {
         method: 'DELETE',
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { 
+          Authorization: `Bearer ${token}`,
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0'
+        }
       })
       
       if (res.ok) {
@@ -143,7 +158,12 @@ export default function MyListingsPage() {
       const base = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000'
       const res = await fetch(`${base}/listings/consolidate`, {
         method: 'POST',
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { 
+          Authorization: `Bearer ${token}`,
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0'
+        }
       })
       
       if (res.ok) {
