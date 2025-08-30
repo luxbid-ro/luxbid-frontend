@@ -36,7 +36,12 @@ export default function Chat({ conversationId, otherUserName }: ChatProps) {
     // Conectare la WebSocket
     const socketConnection = io(`${process.env.NEXT_PUBLIC_API_BASE_URL || 'https://luxbid-backend.onrender.com'}/chat`, {
       auth: { token },
-      transports: ['websocket'],
+      transports: ['websocket', 'polling'],
+      timeout: 20000,
+      forceNew: true,
+      reconnection: true,
+      reconnectionAttempts: 5,
+      reconnectionDelay: 1000,
     })
 
     socketConnection.on('connect', () => {
@@ -47,9 +52,28 @@ export default function Chat({ conversationId, otherUserName }: ChatProps) {
       socketConnection.emit('joinConversation', { conversationId })
     })
 
-    socketConnection.on('disconnect', () => {
-      console.log('Disconnected from chat')
+    socketConnection.on('connected', (data) => {
+      console.log('Server confirmed connection:', data)
+    })
+
+    socketConnection.on('joinedConversation', (data) => {
+      console.log('Joined conversation:', data)
+    })
+
+    socketConnection.on('disconnect', (reason) => {
+      console.log('Disconnected from chat:', reason)
       setIsConnected(false)
+    })
+
+    socketConnection.on('connect_error', (error) => {
+      console.error('Connection error:', error)
+      setIsConnected(false)
+    })
+
+    socketConnection.on('reconnect', (attemptNumber) => {
+      console.log('Reconnected after', attemptNumber, 'attempts')
+      setIsConnected(true)
+      socketConnection.emit('joinConversation', { conversationId })
     })
 
     socketConnection.on('newMessage', (message: Message) => {
@@ -68,6 +92,11 @@ export default function Chat({ conversationId, otherUserName }: ChatProps) {
 
     socketConnection.on('error', (error: any) => {
       console.error('Chat error:', error)
+    })
+
+    socketConnection.on('messageError', (error: any) => {
+      console.error('Message error:', error)
+      // Could show user notification here
     })
 
     setSocket(socketConnection)
