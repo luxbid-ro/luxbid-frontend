@@ -28,18 +28,8 @@ export function middleware(request: NextRequest) {
     return addSecurityHeaders(request, response)
   }
 
-  // TEMPORAR: Dezactivăm Basic Auth pentru toate paginile
-  // Site-ul va fi public pentru testare și funcționalitate
-  console.log('✅ All pages public - Basic Auth disabled')
-  const response = NextResponse.next()
-  response.headers.set('x-public-page', 'true')
-  response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate')
-  response.headers.set('Pragma', 'no-cache')
-  response.headers.set('Expires', '0')
-  return addPublicPageHeaders(addSecurityHeaders(request, response))
-
-  // COMENTAT: Basic Auth code (poate fi reactivat ulterior)
-  /*
+  // ✅ BASIC AUTH ACTIVAT pentru protecția site-ului în dezvoltare
+  // Credențiale: luxbid / luxbid2024
   // Check if this is a legal page that should be public
   if (pathname.startsWith('/legal/')) {
     console.log('🌍 Legal page - allowing public access:', pathname)
@@ -116,7 +106,6 @@ export function middleware(request: NextRequest) {
       },
     }
   )
-  */
 }
 
 export const config = {

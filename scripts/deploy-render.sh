@@ -1,23 +1,45 @@
 #!/bin/bash
 
-echo "🚀 Deploying LuxBid Frontend to Render.com..."
+# 🚀 LuxBid Frontend Auto-Deploy Script
+# This script handles the deployment process for Render.com
 
-# Build the application
-echo "📦 Building application..."
-npm ci
+set -e  # Exit on any error
+
+echo "🎨 Starting LuxBid Frontend Deployment..."
+echo "========================================"
+
+# Environment setup
+export NODE_ENV=production
+export NEXT_PUBLIC_API_BASE_URL="https://luxbid-backend.onrender.com"
+export NEXT_PUBLIC_GA_MEASUREMENT_ID="G-PXGXDYQDY3"
+
+echo "📦 Installing dependencies..."
+npm ci --production=false
+
+echo "🔍 Running pre-deployment checks..."
+# Check if build dependencies are available
+if ! command -v npx &> /dev/null; then
+    echo "❌ npx not found"
+    exit 1
+fi
+
+echo "🔨 Building production frontend..."
 npm run build
 
-# Create environment file for production
-echo "🔧 Setting up environment..."
-cat > .env.production << EOF
-NEXT_PUBLIC_API_BASE_URL=https://luxbid-backend.onrender.com
-NODE_ENV=production
-EOF
+echo "🧪 Running post-build validation..."
+# Check if build was successful
+if [ ! -d ".next" ]; then
+    echo "❌ Build failed - .next directory not found"
+    exit 1
+fi
 
-echo "✅ Deployment preparation complete!"
-echo "Upload this project to Render.com and configure the web service with:"
-echo "Build Command: npm ci && npm run build"
-echo "Start Command: npm start"
-echo "Environment Variables:"
-echo "  NEXT_PUBLIC_API_BASE_URL=https://luxbid-backend.onrender.com"
-echo "  NODE_ENV=production"
+echo "📊 Build statistics:"
+du -sh .next
+echo "Total files: $(find .next -type f | wc -l)"
+
+echo "✅ Frontend deployment ready!"
+echo "🔗 Will be available at: https://luxbid.ro"
+echo "🔐 Access with: luxbid / luxbid2024"
+
+# The start command will be handled by Render
+echo "🚀 Starting production server..."
