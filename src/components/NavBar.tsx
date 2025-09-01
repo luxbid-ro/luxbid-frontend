@@ -632,19 +632,19 @@ function NavBarContent() {
           <div style={{ padding: '16px 0', borderTop: '1px solid #eee' }}>
             <h3 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '600', color: '#333' }}>Servicii</h3>
             
-            <a href="/dashboard" onClick={() => setMobileMenuOpen(false)}
-              style={{ display: 'block', width: '100%', textAlign: 'left', padding: '12px 0', textDecoration: 'none', fontSize: '16px', color: '#666' }}>
-              Colecția de ceasuri
+            <a href="/dashboard/my-listings" onClick={() => setMobileMenuOpen(false)}
+              style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%', textAlign: 'left', padding: '12px 0', textDecoration: 'none', fontSize: '16px', color: '#666' }}>
+              <span>⌚</span> Anunțurile mele
             </a>
             
-            <a href="/dashboard" onClick={() => setMobileMenuOpen(false)}
-              style={{ display: 'block', width: '100%', textAlign: 'left', padding: '12px 0', textDecoration: 'none', fontSize: '16px', color: '#666' }}>
-              LuxPulse
+            <a href="/oferte" onClick={() => setMobileMenuOpen(false)}
+              style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%', textAlign: 'left', padding: '12px 0', textDecoration: 'none', fontSize: '16px', color: '#666' }}>
+              <span>🔍</span> Explorează ofertele
             </a>
             
-            <a href="/dashboard" onClick={() => setMobileMenuOpen(false)}
-              style={{ display: 'block', width: '100%', textAlign: 'left', padding: '12px 0', textDecoration: 'none', fontSize: '16px', color: '#666' }}>
-              Magazin
+            <a href="/mesaje" onClick={() => setMobileMenuOpen(false)}
+              style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%', textAlign: 'left', padding: '12px 0', textDecoration: 'none', fontSize: '16px', color: '#666' }}>
+              <span>💬</span> Mesajele mele
             </a>
           </div>
 
@@ -665,6 +665,26 @@ function NavBarContent() {
             <a href="/contact" onClick={() => setMobileMenuOpen(false)}
               style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%', textAlign: 'left', padding: '12px 0', textDecoration: 'none', fontSize: '16px', color: '#666' }}>
               <span>✉️</span> Contact
+            </a>
+          </div>
+
+          {/* Legal */}
+          <div style={{ padding: '16px 0', borderTop: '1px solid #eee' }}>
+            <h3 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '600', color: '#333' }}>Legal</h3>
+            
+            <a href="/legal/terms-conditions" onClick={() => setMobileMenuOpen(false)}
+              style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%', textAlign: 'left', padding: '8px 0', textDecoration: 'none', fontSize: '14px', color: '#666' }}>
+              <span>📋</span> Termeni și Condiții
+            </a>
+            
+            <a href="/legal/privacy-policy" onClick={() => setMobileMenuOpen(false)}
+              style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%', textAlign: 'left', padding: '8px 0', textDecoration: 'none', fontSize: '14px', color: '#666' }}>
+              <span>🔐</span> Politica de Confidențialitate
+            </a>
+            
+            <a href="/legal/cookie-policy" onClick={() => setMobileMenuOpen(false)}
+              style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%', textAlign: 'left', padding: '8px 0', textDecoration: 'none', fontSize: '14px', color: '#666' }}>
+              <span>🍪</span> Politica Cookies
             </a>
           </div>
           
