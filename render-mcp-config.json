@@ -1,11 +1,9 @@
 {
   "mcpServers": {
     "render": {
-      "command": "npx",
-      "args": ["mcp-render"],
-      "env": {
-        "RENDER_API_KEY": "your-render-api-key-here",
-        "RENDER_SERVICE_ID": "your-service-id-here"
+      "url": "https://mcp.render.com/mcp",
+      "headers": {
+        "Authorization": "Bearer rnd_IzwDW73NYmtvBVJKPbeYBiasj2F0"
       }
     }
   }
