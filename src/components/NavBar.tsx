@@ -24,7 +24,6 @@ function NavBarContent() {
   const [isMobile, setIsMobile] = useState(true)
   const router = useRouter()
   const searchParams = useSearchParams()
-  const pathname = usePathname()
   
   // Check if we're on login or register pages
   const isAuthPage = pathname === '/auth/login' || pathname === '/auth/register'
