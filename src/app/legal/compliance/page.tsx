@@ -47,7 +47,11 @@ export default function CompliancePage() {
             margin: '0 0 16px 0',
             color: '#0369a1'
           }}>
-            📋 Angajamentul nostru pentru conformitate
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '8px' }}>
+              <path d="M9 12l2 2 4-4"></path>
+              <path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z"></path>
+            </svg>
+            Angajamentul nostru pentru conformitate
           </h2>
           <p style={{ margin: '0', fontSize: '16px', color: '#0c4a6e' }}>
             LuxBid se angajează să respecte toate reglementările legale aplicabile în România, 

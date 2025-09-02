@@ -339,7 +339,14 @@ export default function DisputeResolutionPage() {
             marginBottom: '24px'
           }}>
             <h4 style={{ margin: '0 0 12px 0', color: '#0c5460' }}>
-              📋 Documentele necesare:
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '8px' }}>
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14,2 14,8 20,8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10,9 9,9 8,9"></polyline>
+              </svg>
+              Documentele necesare:
             </h4>
             <ul style={{ margin: '0 0 16px 0', paddingLeft: '20px', color: '#0c5460' }}>
               <li>Conversațiile/mesajele relevante</li>

@@ -185,7 +185,14 @@ export default function BasicAuthGate({ children }: BasicAuthGateProps) {
             color: '#666',
             textAlign: 'center'
           }}>
-            <strong>🔐 Site protejat</strong><br />
+            <strong>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '8px' }}>
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <circle cx="12" cy="16" r="1"></circle>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              Site protejat
+            </strong><br />
             Pentru acces, contactați echipa de dezvoltare.
           </div>
         </div>

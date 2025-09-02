@@ -86,7 +86,12 @@ export default function SecurityPage() {
             marginBottom: '16px'
           }}>
             <h4 style={{ margin: '0 0 12px 0', color: '#0369a1' }}>
-              🔐 HTTPS/TLS 1.3
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '8px' }}>
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <circle cx="12" cy="16" r="1"></circle>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              HTTPS/TLS 1.3
             </h4>
             <ul style={{ margin: '0', paddingLeft: '20px', color: '#0c4a6e' }}>
               <li>Toate comunicațiile sunt criptate cu TLS 1.3</li>

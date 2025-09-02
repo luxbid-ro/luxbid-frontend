@@ -184,7 +184,7 @@ export default function DPOPage() {
           <div style={{ display: 'grid', gap: '16px', marginBottom: '24px' }}>
             {[
               {
-                title: '🔍 Dreptul de acces',
+                title: 'Dreptul de acces',
                 desc: 'Puteți solicita o copie a datelor personale pe care le deținem despre dvs.'
               },
               {

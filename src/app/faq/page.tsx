@@ -142,7 +142,13 @@ export default function FAQPage() {
           color: '#111',
           fontWeight: '800'
         }}>
-          <span style={{ color: '#D09A1E' }}>❓</span> Întrebări Frecvente
+          <span style={{ color: '#D09A1E' }}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+          </span> Întrebări Frecvente
         </h1>
         <p style={{ 
           fontSize: '18px', 
@@ -158,7 +164,7 @@ export default function FAQPage() {
       <div style={{ marginBottom: '30px' }}>
         <input
           type="text"
-          placeholder="🔍 Caută în întrebări..."
+                      placeholder="Caută în întrebări..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{

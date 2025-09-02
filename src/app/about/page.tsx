@@ -104,7 +104,12 @@ export default function AboutPage() {
         }}>
           {[
             {
-              icon: '⌚',
+              icon: (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12,6 12,12 16,14"></polyline>
+                </svg>
+              ),
               title: 'Ceasuri de Lux',
               description: 'Rolex, Patek Philippe, Audemars Piguet și multe alte branduri prestigioase'
             },
@@ -185,7 +190,13 @@ export default function AboutPage() {
             gap: '40px'
           }}>
             <div>
-              <h3 style={{ color: '#D09A1E', fontSize: '20px', marginBottom: '15px' }}>🔍 Autenticitate</h3>
+              <h3 style={{ color: '#D09A1E', fontSize: '20px', marginBottom: '15px' }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '8px' }}>
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                Autenticitate
+              </h3>
               <p style={{ color: '#666' }}>Fiecare obiect este verificat de experți</p>
             </div>
             <div>

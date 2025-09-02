@@ -103,7 +103,10 @@ export default function MesajePage() {
       <div className="container" style={{ maxWidth: '800px', margin: '0 auto', padding: '0 20px' }}>
         <div style={{ textAlign: 'center', marginBottom: '40px' }}>
           <h1 style={{ fontSize: '48px', fontWeight: '900', color: 'var(--ink)', marginBottom: '16px' }}>
-            💬 Mesajele Tale
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '12px' }}>
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+            Mesajele Tale
           </h1>
           <p style={{ fontSize: '18px', color: '#666' }}>
             Conversații din oferte acceptate
@@ -112,7 +115,11 @@ export default function MesajePage() {
 
         {conversations.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '60px 20px', background: '#fff', borderRadius: '16px', boxShadow: '0 4px 6px rgba(0,0,0,.1)' }}>
-            <div style={{ fontSize: '64px', marginBottom: '16px' }}>💬</div>
+            <div style={{ fontSize: '64px', marginBottom: '16px' }}>
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#D09A1E" strokeWidth="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+            </div>
             <h3 style={{ fontSize: '24px', marginBottom: '12px', color: 'var(--ink)' }}>Nu ai mesaje încă</h3>
             <p style={{ color: '#666', marginBottom: '24px' }}>
               Mesajele vor apărea aici când cineva acceptă o ofertă de pe listările tale
@@ -157,7 +164,13 @@ export default function MesajePage() {
                       style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                     />
                   ) : (
-                    <span style={{ color: '#999', fontSize: '24px' }}>📷</span>
+                    <span style={{ color: '#999', fontSize: '24px' }}>
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#999" strokeWidth="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                        <polyline points="21,15 16,10 5,21"></polyline>
+                      </svg>
+                    </span>
                   )}
                 </div>
 
