@@ -165,6 +165,12 @@ export default function AdminSupremeDashboard() {
   if (!isAuthenticated) {
     return (
       <div style={{ 
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 9999,
         minHeight: '100vh', 
         display: 'flex', 
         alignItems: 'center', 
@@ -239,7 +245,18 @@ export default function AdminSupremeDashboard() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#f8f9fa', fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+    <div style={{ 
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      zIndex: 9999,
+      minHeight: '100vh', 
+      background: '#f8f9fa', 
+      fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
+      overflow: 'auto'
+    }}>
       {/* Admin Header - Clean & Professional */}
       <div style={{
         background: '#ffffff',
