@@ -25,7 +25,7 @@ type Listing = {
 function OfertesContent() {
   const searchParams = useSearchParams()
   const [listings, setListings] = useState<Listing[]>([])
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('')
@@ -141,14 +141,15 @@ function OfertesContent() {
           }
         }, 10)
       } else {
-        // API response not ok - use mock data
-        console.log('⚠️ API response not ok, using mock data')
-        setListings(mockListings)
+        // API response not ok
+        setListings([])
+        setFilteredListings([])
       }
     } catch (err) {
-      // API connection failed - use mock data
-      console.log('❌ API connection failed, using mock data:', err)
-      setListings(mockListings)
+      // API connection failed
+      // Showing empty state
+      setListings([])
+      setFilteredListings([])
     } finally {
       // Loading complete
       setLoading(false)
