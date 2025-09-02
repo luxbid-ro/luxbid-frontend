@@ -251,7 +251,7 @@ export default function AdminSupremeDashboard() {
       left: 0,
       right: 0,
       bottom: 0,
-      zIndex: 9999,
+      zIndex: 999999,
       minHeight: '100vh', 
       background: '#f8f9fa', 
       fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, sans-serif',
