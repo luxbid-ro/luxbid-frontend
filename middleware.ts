@@ -28,8 +28,16 @@ export function middleware(request: NextRequest) {
     return addSecurityHeaders(request, response)
   }
 
-  // ✅ BASIC AUTH ACTIVAT pentru protecția site-ului în dezvoltare
-  // Credențiale: luxbid / luxbid2024
+  // 🌍 SITE PUBLIC - Basic Auth dezactivat pentru lansare
+  // Site-ul este acum accesibil tuturor utilizatorilor
+  console.log('🌍 Public site - Basic Auth disabled for launch')
+  const response = NextResponse.next()
+  response.headers.set('x-public-site', 'true')
+  response.headers.set('Cache-Control', 'public, max-age=3600')
+  return addSecurityHeaders(request, response)
+
+  // COMENTAT: Basic Auth code (păstrat pentru viitor dacă e nevoie)
+  /*
   // Check if this is a legal page that should be public
   if (pathname.startsWith('/legal/')) {
     console.log('🌍 Legal page - allowing public access:', pathname)
