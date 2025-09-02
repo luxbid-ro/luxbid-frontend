@@ -7,12 +7,18 @@ import { BAG_BRANDS } from '@/constants/bagBrands'
 import { JEWELRY_BRANDS } from '@/constants/jewelryBrands'
 
 function NavBarContent() {
+  const pathname = usePathname()
   const [isAuthed, setIsAuthed] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [activeCategory, setActiveCategory] = useState('')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [accountMenuOpen, setAccountMenuOpen] = useState(false)
   const [brandsMenuOpen, setBrandsMenuOpen] = useState(false)
+  
+  // Don't render NavBar on admin pages
+  if (pathname?.includes('/admin-supreme')) {
+    return null
+  }
   const [bagBrandsMenuOpen, setBagBrandsMenuOpen] = useState(false)
   const [jewelryBrandsMenuOpen, setJewelryBrandsMenuOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(true)
