@@ -16,7 +16,7 @@ function NavBarContent() {
   const [brandsMenuOpen, setBrandsMenuOpen] = useState(false)
   
   // Don't render NavBar on admin pages
-  if (pathname?.includes('/admin-supreme')) {
+  if (pathname?.includes('/admin-supreme') || pathname?.includes('/admin')) {
     return null
   }
   const [bagBrandsMenuOpen, setBagBrandsMenuOpen] = useState(false)
