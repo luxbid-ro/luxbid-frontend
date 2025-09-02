@@ -166,7 +166,11 @@ export default function NotificationBell() {
     switch (type) {
       case 'NEW_OFFER': return '💰'
       case 'OFFER_ACCEPTED': return '🎉'
-      case 'NEW_MESSAGE': return '💬'
+      case 'NEW_MESSAGE': return (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+      )
       case 'LISTING_EXPIRED': return '⏰'
       case 'SYSTEM': return '🔔'
       default: return '📢'

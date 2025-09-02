@@ -449,7 +449,12 @@ export default function DisputeResolutionPage() {
                 <strong>🕒 Program:</strong> Luni - Vineri, 09:00 - 18:00
               </div>
               <div>
-                <strong>💬 Chat live:</strong> Disponibil pe platformă în timpul programului
+                <strong>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '6px' }}>
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                  </svg>
+                  Chat live:
+                </strong> Disponibil pe platformă în timpul programului
               </div>
             </div>
           </div>

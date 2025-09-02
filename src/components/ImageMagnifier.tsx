@@ -268,7 +268,11 @@ export default function ImageMagnifier({
           backdropFilter: 'blur(4px)'
         }}
       >
-        🔍 Treci cu mouse-ul pentru zoom
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '6px' }}>
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.35-4.35"></path>
+              </svg>
+              Treci cu mouse-ul pentru zoom
       </div>
 
       <style jsx>{`
