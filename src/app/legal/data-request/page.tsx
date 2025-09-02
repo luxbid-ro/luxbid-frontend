@@ -196,7 +196,7 @@ export default function DataRequestPage() {
                   {[
                     {
                       id: 'access',
-                      title: '🔍 Dreptul de acces',
+                      title: 'Dreptul de acces',
                       desc: 'Solicit o copie a tuturor datelor personale pe care le dețineți despre mine'
                     },
                     {
