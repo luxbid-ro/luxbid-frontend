@@ -22,6 +22,8 @@ services:
         value: "luxbid"
       - key: NEXT_PUBLIC_BASIC_AUTH_PASSWORD
         value: "luxbid2024"
+      - key: NEXT_PUBLIC_ADMIN_PASSWORD
+        value: "luxbid2024supreme"
     healthCheckPath: /
     plan: starter
     autoDeploy: true
