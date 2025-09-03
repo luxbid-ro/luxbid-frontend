@@ -47,7 +47,10 @@ export default function SecurityPage() {
             margin: '0 0 16px 0',
             color: '#15803d'
           }}>
-            🛡️ Angajamentul nostru pentru securitate
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '12px', verticalAlign: 'middle' }}>
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            Angajamentul nostru pentru securitate
           </h2>
           <p style={{ margin: '0', fontSize: '16px', color: '#14532d' }}>
             LuxBid implementează măsuri de securitate de ultimă generație pentru a proteja 
@@ -199,7 +202,12 @@ export default function SecurityPage() {
             marginBottom: '16px'
           }}>
             <h4 style={{ margin: '0 0 12px 0', color: '#92400e' }}>
-              🔑 Măsuri de protecție cont
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <circle cx="12" cy="16" r="1"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              Măsuri de protecție cont
             </h4>
             <ul style={{ margin: '0', paddingLeft: '20px', color: '#92400e' }}>
               <li>Autentificare cu două factori (2FA) disponibilă</li>
@@ -301,7 +309,10 @@ export default function SecurityPage() {
             marginBottom: '16px'
           }}>
             <h4 style={{ margin: '0 0 12px 0', color: '#dc2626' }}>
-              🛡️ Web Application Firewall (WAF)
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+              Web Application Firewall (WAF)
             </h4>
             <ul style={{ margin: '0', paddingLeft: '20px', color: '#7f1d1d' }}>
               <li>SQL injection prevention</li>
@@ -351,7 +362,17 @@ export default function SecurityPage() {
             padding: '20px',
             marginBottom: '16px'
           }}>
-            <h4 style={{ margin: '0 0 12px 0' }}>🏆 Conformitate</h4>
+            <h4 style={{ margin: '0 0 12px 0' }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+                <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+                <path d="M4 22h16"/>
+                <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
+                <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
+                <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+              </svg>
+              Conformitate
+            </h4>
             <ul style={{ margin: '0', paddingLeft: '20px' }}>
               <li><strong>GDPR:</strong> General Data Protection Regulation</li>
               <li><strong>SOC 2 Type II:</strong> Security, Availability, Confidentiality</li>
@@ -440,7 +461,12 @@ export default function SecurityPage() {
             marginBottom: '16px'
           }}>
             <h4 style={{ margin: '0 0 12px 0', color: '#92400e' }}>
-              💡 Bune practici de securitate
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                <line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+              Bune practici de securitate
             </h4>
             <ul style={{ margin: '0', paddingLeft: '20px', color: '#92400e' }}>
               <li>Folosește parole puternice și unice</li>
@@ -511,7 +537,12 @@ export default function SecurityPage() {
               textAlign: 'center',
               fontWeight: '600'
             }}>
-              🔒 Securitatea este o responsabilitate comună. Împreună construim cea mai sigură 
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <circle cx="12" cy="16" r="1"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              Securitatea este o responsabilitate comună. Împreună construim cea mai sigură 
               platformă pentru tranzacții cu obiecte de lux din România.
             </p>
           </div>

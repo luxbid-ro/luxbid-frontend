@@ -50,7 +50,12 @@ export default function DisclaimerPage() {
             margin: '0 0 16px 0',
             color: '#dc2626'
           }}>
-            ⚠️ AVERTISMENT IMPORTANT
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '12px', verticalAlign: 'middle' }}>
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+              <line x1="12" y1="9" x2="12" y2="13"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+            AVERTISMENT IMPORTANT
           </h2>
           <p style={{ margin: '0', fontSize: '16px', color: '#7f1d1d' }}>
             LuxBid este o platformă de intermediere între cumpărători și vânzători. 
@@ -136,7 +141,12 @@ export default function DisclaimerPage() {
             marginBottom: '16px'
           }}>
             <p style={{ margin: '0 0 12px 0', fontWeight: '600', color: '#856404' }}>
-              🚨 DISCLAIMER AUTENTICITATE
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                <line x1="12" y1="9" x2="12" y2="13"/>
+                <line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+              DISCLAIMER AUTENTICITATE
             </p>
             <p style={{ margin: '0', color: '#856404' }}>
               LuxBid NU verifică, nu garantează și nu se pronunță asupra autenticității 
@@ -180,7 +190,12 @@ export default function DisclaimerPage() {
             marginBottom: '16px'
           }}>
             <p style={{ margin: '0 0 12px 0', fontWeight: '600', color: '#0c5460' }}>
-              💰 DISCLAIMER PREȚURI
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M16 8l-8 8"/>
+                <path d="M12 8v8"/>
+              </svg>
+              DISCLAIMER PREȚURI
             </p>
             <p style={{ margin: '0', color: '#0c5460' }}>
               Prețurile afișate sunt stabilite exclusiv de vânzători. LuxBid nu oferă 
@@ -266,7 +281,12 @@ export default function DisclaimerPage() {
             marginBottom: '24px'
           }}>
             <h4 style={{ margin: '0 0 12px 0', color: '#dc2626' }}>
-              🚫 LIMITARE MAXIMĂ DE RĂSPUNDERE
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="15" y1="9" x2="9" y2="15"/>
+                <line x1="9" y1="9" x2="15" y2="15"/>
+              </svg>
+              LIMITARE MAXIMĂ DE RĂSPUNDERE
             </h4>
             <p style={{ margin: '0', color: '#7f1d1d' }}>
               Răspunderea LuxBid pentru orice daune, pierderi sau prejudicii este limitată 
@@ -301,7 +321,12 @@ export default function DisclaimerPage() {
             marginBottom: '24px'
           }}>
             <h4 style={{ margin: '0 0 12px 0', color: '#059669' }}>
-              💡 BUNELE PRACTICI RECOMANDATE
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                <line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+              BUNELE PRACTICI RECOMANDATE
             </h4>
             <ul style={{ margin: '0', paddingLeft: '20px', color: '#064e3b' }}>
               <li>Întâlnește-te cu vânzătorul în locuri publice sigure</li>
@@ -335,7 +360,12 @@ export default function DisclaimerPage() {
             marginBottom: '16px'
           }}>
             <h4 style={{ margin: '0 0 12px 0', color: '#dc2626' }}>
-              🚫 OBIECTE INTERZISE
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="15" y1="9" x2="9" y2="15"/>
+                <line x1="9" y1="9" x2="15" y2="15"/>
+              </svg>
+              OBIECTE INTERZISE
             </h4>
             <ul style={{ margin: '0', paddingLeft: '20px', color: '#7f1d1d' }}>
               <li><strong>Obiecte false, replici sau contrafăcute</strong></li>
@@ -429,7 +459,14 @@ export default function DisclaimerPage() {
               textAlign: 'center',
               fontWeight: '600'
             }}>
-              ⚖️ Prin utilizarea platformei LuxBid, confirmi că ai citit, înțeles și accepți 
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                <line x1="16" y1="4" x2="16" y2="20"/>
+                <line x1="8" y1="4" x2="8" y2="20"/>
+                <line x1="12" y1="4" x2="12" y2="20"/>
+                <path d="M4 8l8-4 8 4"/>
+                <path d="M20 16l-8 4-8-4"/>
+              </svg>
+              Prin utilizarea platformei LuxBid, confirmi că ai citit, înțeles și accepți 
               în totalitate toate avertismentele și disclaimerele de mai sus.
             </p>
           </div>
