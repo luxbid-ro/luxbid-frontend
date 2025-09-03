@@ -388,18 +388,9 @@ export default function AccessibilityWidget() {
           {/* Toggle options */}
           <div style={{ marginBottom: '20px' }}>
             {[
-              { key: 'animations', label: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
-  <polygon points="23,7 16,12 23,17 23,7"/>
-  <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
-</svg> Animații', checked: settings.animations },
-              { key: 'underlineLinks', label: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
-  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
-  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.72"/>
-</svg> Subliniază link-urile', checked: settings.underlineLinks },
-              { key: 'readableFont', label: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
-  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-</svg> Font ușor de citit', checked: settings.readableFont }
+              { key: 'animations', label: '🎬 Animații', checked: settings.animations },
+              { key: 'underlineLinks', label: '🔗 Subliniază link-urile', checked: settings.underlineLinks },
+              { key: 'readableFont', label: '📖 Font ușor de citit', checked: settings.readableFont }
             ].map(option => (
               <label
                 key={option.key}
