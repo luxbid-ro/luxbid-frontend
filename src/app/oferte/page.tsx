@@ -236,7 +236,12 @@ function OfertesContent() {
     return (
       <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ textAlign: 'center', color: 'red' }}>
-          <h2>❌ Eroare</h2>
+                      <h2>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', color: '#dc3545' }}>
+                <path d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+              Eroare
+            </h2>
           <p>{error}</p>
           <button onClick={fetchListings} style={{ padding: '10px 20px', marginTop: '16px', background: '#D09A1E', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer' }}>
             Încearcă din nou

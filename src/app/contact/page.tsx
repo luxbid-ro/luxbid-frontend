@@ -90,7 +90,10 @@ export default function ContactPage() {
               marginBottom: '20px',
               color: '#155724'
             }}>
-              ✅ Mesajul tău a fost trimis cu succes! Îți vom răspunde în curând.
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px' }}>
+                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              Mesajul tău a fost trimis cu succes! Îți vom răspunde în curând.
             </div>
           )}
 

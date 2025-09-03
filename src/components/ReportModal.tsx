@@ -116,7 +116,11 @@ export default function ReportModal({ isOpen, onClose, itemType, itemId, itemTit
       }}>
         {submitSuccess ? (
           <div style={{ textAlign: 'center', padding: '20px' }}>
-            <div style={{ fontSize: '48px', marginBottom: '16px' }}>✅</div>
+            <div style={{ fontSize: '48px', marginBottom: '16px' }}>
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </div>
             <h3 style={{ color: '#28a745', marginBottom: '8px' }}>
               Raport trimis cu succes!
             </h3>

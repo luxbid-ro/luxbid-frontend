@@ -60,7 +60,7 @@ export default function AdminSupremeDashboard() {
       setError('')
       loadDashboardData()
     } else {
-      setError('❌ Parola incorectă pentru Admin Suprem!')
+              setError('Parola incorectă pentru Admin Suprem!')
     }
   }
 
@@ -137,7 +137,7 @@ export default function AdminSupremeDashboard() {
 
       if (response.ok) {
         setListings(listings.filter(l => l.id !== listingId))
-        alert('✅ Anunț șters cu succes!')
+        alert('Anunț șters cu succes!')
       } else {
         // Fallback - remove from UI only
         setListings(listings.filter(l => l.id !== listingId))
@@ -145,7 +145,7 @@ export default function AdminSupremeDashboard() {
       }
     } catch (err) {
       console.error('Error deleting listing:', err)
-      alert('❌ Eroare la ștergerea anunțului')
+              alert('Eroare la ștergerea anunțului')
     }
   }
 
@@ -155,10 +155,10 @@ export default function AdminSupremeDashboard() {
     try {
       setUsers(users.filter(u => u.id !== userId))
       setListings(listings.filter(l => l.user.id !== userId))
-      alert('✅ Utilizator și anunțurile sale au fost eliminate!')
+              alert('Utilizator și anunțurile sale au fost eliminate!')
     } catch (err) {
       console.error('Error deleting user:', err)
-      alert('❌ Eroare la ștergerea utilizatorului')
+              alert('Eroare la ștergerea utilizatorului')
     }
   }
 
@@ -511,7 +511,12 @@ export default function AdminSupremeDashboard() {
             </div>
 
             <div style={{ background: '#fff', padding: '25px', borderRadius: '10px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
-              <h3 style={{ margin: '0 0 20px 0', color: '#D09A1E' }}>🎯 Status Platformă</h3>
+              <h3 style={{ margin: '0 0 20px 0', color: '#D09A1E' }}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px' }}>
+                <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+              </svg>
+              Status Platformă
+            </h3>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px' }}>
                 <div style={{ padding: '15px', background: '#f8f9fa', borderRadius: '8px', textAlign: 'center' }}>
                   <div style={{ fontWeight: 'bold', color: '#28a745' }}>🟢 Online</div>
@@ -522,11 +527,21 @@ export default function AdminSupremeDashboard() {
                   <div style={{ fontSize: '14px', color: '#666' }}>SSL + Headers</div>
                 </div>
                 <div style={{ padding: '15px', background: '#f8f9fa', borderRadius: '8px', textAlign: 'center' }}>
-                  <div style={{ fontWeight: 'bold', color: '#28a745' }}>🚀 Deploy Auto</div>
+                  <div style={{ fontWeight: 'bold', color: '#28a745' }}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '4px' }}>
+                      <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                    Deploy Auto
+                  </div>
                   <div style={{ fontSize: '14px', color: '#666' }}>GitHub Actions</div>
                 </div>
                 <div style={{ padding: '15px', background: '#f8f9fa', borderRadius: '8px', textAlign: 'center' }}>
-                  <div style={{ fontWeight: 'bold', color: '#17a2b8' }}>📊 Monitorizat</div>
+                  <div style={{ fontWeight: 'bold', color: '#17a2b8' }}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '4px' }}>
+                      <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                    </svg>
+                    Monitorizat
+                  </div>
                   <div style={{ fontSize: '14px', color: '#666' }}>Real-time</div>
                 </div>
               </div>
@@ -746,7 +761,12 @@ export default function AdminSupremeDashboard() {
             
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
               <div style={{ background: '#fff', padding: '25px', borderRadius: '10px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
-                <h3 style={{ margin: '0 0 15px 0', color: '#333' }}>📊 Distribuția Categoriilor</h3>
+                <h3 style={{ margin: '0 0 15px 0', color: '#333' }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px' }}>
+                <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+              </svg>
+              Distribuția Categoriilor
+            </h3>
                 {listings.length > 0 ? (
                   <div>
                     {Array.from(new Set(listings.map(l => l.category))).map(category => {
@@ -822,17 +842,26 @@ export default function AdminSupremeDashboard() {
                 <h3 style={{ margin: '0 0 15px 0', color: '#333' }}>⏰ Activitate Recentă</h3>
                 <div style={{ color: '#666' }}>
                   <div style={{ marginBottom: '10px' }}>
-                    📅 Anunțuri astăzi: {listings.filter(l => 
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '4px' }}>
+                      <path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2z"/>
+                    </svg>
+                    Anunțuri astăzi: {listings.filter(l => 
                       new Date(l.createdAt).toDateString() === new Date().toDateString()
                     ).length}
                   </div>
                   <div style={{ marginBottom: '10px' }}>
-                    📅 Anunțuri în ultima săptămână: {listings.filter(l => 
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '4px' }}>
+                      <path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2z"/>
+                    </svg>
+                    Anunțuri în ultima săptămână: {listings.filter(l => 
                       new Date(l.createdAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
                     ).length}
                   </div>
                   <div style={{ marginBottom: '10px' }}>
-                    📅 Anunțuri în ultima lună: {listings.filter(l => 
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '4px' }}>
+                      <path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2z"/>
+                    </svg>
+                    Anunțuri în ultima lună: {listings.filter(l => 
                       new Date(l.createdAt) > new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
                     ).length}
                   </div>
