@@ -151,29 +151,57 @@ export default function NotificationBell() {
   const formatTimeAgo = (dateString: string) => {
     const date = new Date(dateString)
     const now = new Date()
-    const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60))
+    const diffInMs = now.getTime() - date.getTime()
+    const diffInMinutes = Math.floor(diffInMs / (1000 * 60))
+    const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60))
+    const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24))
     
-    if (diffInHours < 1) return 'Acum câteva minute'
+    if (diffInMinutes < 1) return 'Acum câteva secunde'
+    if (diffInMinutes < 60) return `Acum ${diffInMinutes} minute`
     if (diffInHours < 24) return `Acum ${diffInHours} ore`
-    const diffInDays = Math.floor(diffInHours / 24)
     if (diffInDays === 1) return 'Ieri'
     if (diffInDays < 7) return `Acum ${diffInDays} zile`
-    return date.toLocaleDateString('ro-RO')
+    if (diffInDays < 30) return `Acum ${Math.floor(diffInDays / 7)} săptămâni`
+    if (diffInDays < 365) return `Acum ${Math.floor(diffInDays / 30)} luni`
+    return `Acum ${Math.floor(diffInDays / 365)} ani`
   }
 
   // Get icon for notification type
   const getNotificationIcon = (type: string) => {
     switch (type) {
-      case 'NEW_OFFER': return '💰'
-      case 'OFFER_ACCEPTED': return '🎉'
+      case 'NEW_OFFER': return (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+      )
+      case 'OFFER_ACCEPTED': return (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+      )
       case 'NEW_MESSAGE': return (
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
         </svg>
       )
-      case 'LISTING_EXPIRED': return '⏰'
-      case 'SYSTEM': return '🔔'
-      default: return '📢'
+      case 'LISTING_EXPIRED': return (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12,6 12,12 16,14"/>
+        </svg>
+      )
+      case 'SYSTEM': return (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/>
+          <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>
+        </svg>
+      )
+      default: return (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+        </svg>
+      )
     }
   }
 
