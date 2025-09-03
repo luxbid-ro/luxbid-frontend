@@ -199,7 +199,12 @@ export default function JewelryBrandPageClient() {
               fontSize: '64px', 
               marginBottom: '24px',
               opacity: 0.3
-            }}>💎</div>
+            }}>
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M6.5 17.5l-3-3L12 3l8.5 11.5-3 3L12 14l-5.5 3.5z"/>
+                <path d="M12 3v11"/>
+              </svg>
+            </div>
             <h3 style={{ 
               fontSize: '24px', 
               fontWeight: '700', 
@@ -241,7 +246,11 @@ export default function JewelryBrandPageClient() {
                   e.currentTarget.style.boxShadow = '0 4px 12px rgba(208, 154, 30, 0.3)'
                 }}
               >
-                💎 Publică o bijuterie {brandName}
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                  <path d="M6.5 17.5l-3-3L12 3l8.5 11.5-3 3L12 14l-5.5 3.5z"/>
+                  <path d="M12 3v11"/>
+                </svg>
+                Publică o bijuterie {brandName}
               </button>
               <button
                 onClick={() => router.push('/oferte')}

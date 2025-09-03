@@ -64,7 +64,16 @@ export default function LegalNoticesPage() {
               margin: '0 0 16px 0',
               color: '#D09A1E'
             }}>
-              🏢 LuxBid SRL
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                <path d="M3 21h18"/>
+                <path d="M5 21V7l8-4v18"/>
+                <path d="M19 21V11l-6-4"/>
+                <path d="M9 9v.01"/>
+                <path d="M9 12v.01"/>
+                <path d="M9 15v.01"/>
+                <path d="M9 18v.01"/>
+              </svg>
+              LuxBid SRL
             </h3>
             <div style={{ fontSize: '16px' }}>
               <p style={{ margin: '0 0 12px 0' }}>
@@ -113,7 +122,11 @@ export default function LegalNoticesPage() {
               padding: '20px'
             }}>
               <h4 style={{ margin: '0 0 16px 0', color: '#0369a1', fontSize: '18px' }}>
-                📧 Contact General
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+                Contact General
               </h4>
               <p style={{ margin: '0 0 8px 0' }}>
                 <strong>Email principal:</strong><br />

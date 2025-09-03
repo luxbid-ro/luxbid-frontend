@@ -60,27 +60,59 @@ export default function DisputeResolutionPage() {
           <div style={{ display: 'grid', gap: '16px', marginBottom: '24px' }}>
             {[
               {
-                icon: '💰',
+                icon: (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M16 8l-8 8"/>
+                    <path d="M12 8v8"/>
+                  </svg>
+                ),
                 title: 'Dispute financiare',
                 desc: 'Probleme legate de prețuri, plăți sau rambursări'
               },
               {
-                icon: '📦',
+                icon: (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                    <polyline points="7.5,4.27 16.5,9.42"/>
+                    <polyline points="7.5,9.42 16.5,4.27"/>
+                    <polyline points="12,9.42 12,14.58"/>
+                  </svg>
+                ),
                 title: 'Dispute privind produsele',
                 desc: 'Calitate, autenticitate sau conformitate cu descrierea'
               },
               {
-                icon: '🚚',
+                icon: (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <rect x="1" y="3" width="15" height="13"/>
+                    <polygon points="16,8 20,8 23,11 23,16 16,16"/>
+                    <circle cx="5.5" cy="18.5" r="2.5"/>
+                    <circle cx="18.5" cy="18.5" r="2.5"/>
+                  </svg>
+                ),
                 title: 'Dispute de livrare',
                 desc: 'Întârzieri, deteriorări sau probleme de transport'
               },
               {
-                icon: '🤝',
+                icon: (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M7 4v16l13-8L7 4z"/>
+                  </svg>
+                ),
                 title: 'Dispute contractuale',
                 desc: 'Nerespectarea termenilor acordați între părți'
               },
               {
-                icon: '⚖️',
+                icon: (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <line x1="16" y1="4" x2="16" y2="20"/>
+                    <line x1="8" y1="4" x2="8" y2="20"/>
+                    <line x1="12" y1="4" x2="12" y2="20"/>
+                    <path d="M4 8l8-4 8 4"/>
+                    <path d="M20 16l-8 4-8-4"/>
+                  </svg>
+                ),
                 title: 'Dispute de conduită',
                 desc: 'Comportament inadecvat sau încălcarea regulilor'
               }
@@ -164,7 +196,14 @@ export default function DisputeResolutionPage() {
               fontSize: '14px',
               color: '#856404'
             }}>
-              <strong>💡 Consiliu:</strong> Majoritatea disputelor se rezolvă în această etapă prin dialog constructiv și bună-credință.
+              <strong>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                  <line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+                Consiliu:
+              </strong> Majoritatea disputelor se rezolvă în această etapă prin dialog constructiv și bună-credință.
             </div>
           </div>
 
@@ -266,7 +305,16 @@ export default function DisputeResolutionPage() {
               fontSize: '14px',
               color: '#856404'
             }}>
-              <strong>⚖️ Important:</strong> Decizia arbitrajului intern este obligatorie pentru utilizarea continuă a platformei.
+              <strong>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                  <line x1="16" y1="4" x2="16" y2="20"/>
+                  <line x1="8" y1="4" x2="8" y2="20"/>
+                  <line x1="12" y1="4" x2="12" y2="20"/>
+                  <path d="M4 8l8-4 8 4"/>
+                  <path d="M20 16l-8 4-8-4"/>
+                </svg>
+                Important:
+              </strong> Decizia arbitrajului intern este obligatorie pentru utilizarea continuă a platformei.
             </div>
           </div>
 
@@ -317,7 +365,18 @@ export default function DisputeResolutionPage() {
               fontSize: '14px',
               color: '#721c24'
             }}>
-              <strong>🏛️ Arbitraj extern:</strong> Camera de Arbitraj Comercial București | Curtea de Arbitraj Comercial Internațional
+              <strong>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                  <path d="M3 21h18"/>
+                  <path d="M5 21V7l8-4v18"/>
+                  <path d="M19 21V11l-6-4"/>
+                  <path d="M9 9v.01"/>
+                  <path d="M9 12v.01"/>
+                  <path d="M9 15v.01"/>
+                  <path d="M9 18v.01"/>
+                </svg>
+                Arbitraj extern:
+              </strong> Camera de Arbitraj Comercial București | Curtea de Arbitraj Comercial Internațional
             </div>
           </div>
 
@@ -356,7 +415,13 @@ export default function DisputeResolutionPage() {
               <li>Alte documente suport</li>
             </ul>
             <p style={{ margin: '0', color: '#0c5460' }}>
-              <strong>📧 Email:</strong> <a href="mailto:disputes@luxbid.ro" style={{ color: '#D09A1E' }}>disputes@luxbid.ro</a>
+              <strong>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+                Email:
+              </strong> <a href="mailto:disputes@luxbid.ro" style={{ color: '#D09A1E' }}>disputes@luxbid.ro</a>
             </p>
           </div>
 
@@ -388,7 +453,9 @@ export default function DisputeResolutionPage() {
                 alignItems: 'center',
                 gap: '8px'
               }}>
-                <span style={{ color: '#28a745', fontWeight: 'bold' }}>✓</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: '#28a745', verticalAlign: 'middle' }}>
+                  <path d="M9 12l2 2 4-4"/>
+                </svg>
                 <span>{right}</span>
               </div>
             ))}
@@ -412,7 +479,12 @@ export default function DisputeResolutionPage() {
             marginBottom: '24px'
           }}>
             <h4 style={{ margin: '0 0 12px 0', color: '#155724' }}>
-              💰 Structura de costuri
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M16 8l-8 8"/>
+                <path d="M12 8v8"/>
+              </svg>
+              Structura de costuri
             </h4>
             <ul style={{ margin: '0', paddingLeft: '20px', color: '#155724' }}>
               <li><strong>Etapele 1-2:</strong> Gratuit pentru toți utilizatorii</li>
@@ -440,13 +512,25 @@ export default function DisputeResolutionPage() {
           }}>
             <div style={{ display: 'grid', gap: '12px' }}>
               <div>
-                <strong>📧 Departamentul Dispute:</strong> <a href="mailto:disputes@luxbid.ro" style={{ color: '#D09A1E' }}>disputes@luxbid.ro</a>
+                <strong>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                    <polyline points="22,6 12,13 2,6"/>
+                  </svg>
+                  Departamentul Dispute:
+                </strong> <a href="mailto:disputes@luxbid.ro" style={{ color: '#D09A1E' }}>disputes@luxbid.ro</a>
               </div>
               <div>
                 <strong><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg> Telefon urgențe:</strong> +40 21 XXX XXXX
               </div>
               <div>
-                <strong>🕒 Program:</strong> Luni - Vineri, 09:00 - 18:00
+                <strong>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12,6 12,12 16,14"/>
+                  </svg>
+                  Program:
+                </strong> Luni - Vineri, 09:00 - 18:00
               </div>
               <div>
                 <strong>
@@ -468,7 +552,12 @@ export default function DisputeResolutionPage() {
             marginTop: '32px'
           }}>
             <p style={{ margin: '0', fontSize: '14px', color: '#856404' }}>
-              <strong>🤝 Angajamentul nostru:</strong> LuxBid se angajează să faciliteze 
+              <strong>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                  <path d="M7 4v16l13-8L7 4z"/>
+                </svg>
+                Angajamentul nostru:
+              </strong> LuxBid se angajează să faciliteze 
               rezolvarea rapidă și echitabilă a tuturor disputelor, menținând în același timp 
               un mediu sigur și de încredere pentru toți utilizatorii noștri.
             </p>

@@ -69,7 +69,11 @@ export default function DMCAPage() {
               margin: '0 0 16px 0',
               color: '#D09A1E'
             }}>
-              📧 Agent DMCA Desemnat
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+              Agent DMCA Desemnat
             </h3>
             <div style={{ fontSize: '16px' }}>
               <p style={{ margin: '0 0 12px 0' }}>
@@ -259,7 +263,12 @@ export default function DMCAPage() {
             marginBottom: '24px'
           }}>
             <h4 style={{ margin: '0 0 12px 0', color: '#0c5460' }}>
-              💡 Consiliere pentru utilizatori
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                <line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+              Consiliere pentru utilizatori
             </h4>
             <ul style={{ margin: '0', paddingLeft: '20px', color: '#0c5460' }}>
               <li>Nu încărca imagini de pe internet fără permisiune</li>
@@ -315,7 +324,14 @@ export default function DMCAPage() {
               fontSize: '14px',
               color: '#856404'
             }}>
-              <strong>⚠️ Atenție:</strong> Depunerea unei notificări DMCA false poate avea consecințe legale. 
+              <strong>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                  <line x1="12" y1="9" x2="12" y2="13"/>
+                  <line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+                Atenție:
+              </strong> Depunerea unei notificări DMCA false poate avea consecințe legale. 
               Asigură-te că ai drepturile asupra conținutului înainte de a face o reclamație.
             </p>
           </div>

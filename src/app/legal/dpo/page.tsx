@@ -65,7 +65,11 @@ export default function DPOPage() {
               margin: '0 0 16px 0',
               color: '#D09A1E'
             }}>
-              📧 Contact DPO
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+              Contact DPO
             </h3>
             <div style={{ fontSize: '16px' }}>
               <p style={{ margin: '0 0 12px 0' }}>
@@ -188,23 +192,65 @@ export default function DPOPage() {
                 desc: 'Puteți solicita o copie a datelor personale pe care le deținem despre dvs.'
               },
               {
-                title: '✏️ Dreptul la rectificare',
+                title: (
+                  <span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                    </svg>
+                    Dreptul la rectificare
+                  </span>
+                ),
                 desc: 'Puteți cere corectarea datelor inexacte sau completarea celor incomplete.'
               },
               {
-                title: '🗑️ Dreptul la ștergere',
+                title: (
+                  <span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                      <path d="M3 6h18"/>
+                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                      <line x1="10" y1="11" x2="10" y2="17"/>
+                      <line x1="14" y1="11" x2="14" y2="17"/>
+                    </svg>
+                    Dreptul la ștergere
+                  </span>
+                ),
                 desc: 'Puteți solicita ștergerea datelor personale în anumite circumstanțe.'
               },
               {
-                title: '⏸️ Dreptul la restricționare',
+                title: (
+                  <span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                      <rect x="6" y="4" width="4" height="16"/>
+                      <rect x="14" y="4" width="4" height="16"/>
+                    </svg>
+                    Dreptul la restricționare
+                  </span>
+                ),
                 desc: 'Puteți cere limitarea prelucrării datelor în situații specifice.'
               },
               {
-                title: '📤 Dreptul la portabilitate',
+                title: (
+                  <span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                    Dreptul la portabilitate
+                  </span>
+                ),
                 desc: 'Puteți primi datele în format structurat pentru transfer către alt furnizor.'
               },
               {
-                title: '🚫 Dreptul de opoziție',
+                title: (
+                  <span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                      <circle cx="12" cy="12" r="10"/>
+                      <line x1="15" y1="9" x2="9" y2="15"/>
+                      <line x1="9" y1="9" x2="15" y2="15"/>
+                    </svg>
+                    Dreptul de opoziție
+                  </span>
+                ),
                 desc: 'Puteți vă opune prelucrării bazate pe interesul legitim.'
               }
             ].map((right, index) => (
@@ -288,7 +334,16 @@ export default function DPOPage() {
             marginBottom: '32px'
           }}>
             <h4 style={{ margin: '0 0 12px 0' }}>
-              🏛️ Autoritatea Națională (ANSPDCP)
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                <path d="M3 21h18"/>
+                <path d="M5 21V7l8-4v18"/>
+                <path d="M19 21V11l-6-4"/>
+                <path d="M9 9v.01"/>
+                <path d="M9 12v.01"/>
+                <path d="M9 15v.01"/>
+                <path d="M9 18v.01"/>
+              </svg>
+              Autoritatea Națională (ANSPDCP)
             </h4>
             <p style={{ margin: '0 0 8px 0' }}>
               <strong>Site:</strong> <a href="https://dataprotection.ro" target="_blank" style={{ color: '#D09A1E' }}>dataprotection.ro</a>
@@ -310,7 +365,14 @@ export default function DPOPage() {
             marginTop: '32px'
           }}>
             <p style={{ margin: '0', fontSize: '14px', color: '#155724' }}>
-              <strong>💡 Notă importantă:</strong> DPO-ul nostru este independent și 
+              <strong>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                  <line x1="12" y1="17" x2="12.01" y2="17"/>
+                </svg>
+                Notă importantă:
+              </strong> DPO-ul nostru este independent și 
               poate fi contactat direct, fără a trece prin alte departamente. 
               Confidențialitatea comunicării cu DPO este garantată.
             </p>

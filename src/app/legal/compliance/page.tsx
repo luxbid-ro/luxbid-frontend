@@ -121,7 +121,10 @@ export default function CompliancePage() {
             marginBottom: '16px'
           }}>
             <h4 style={{ margin: '0 0 12px 0', color: '#0369a1' }}>
-              🛡️ Implementare DSA Completă
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+              Implementare DSA Completă
             </h4>
             <ul style={{ margin: '0', paddingLeft: '20px', color: '#0c4a6e' }}>
               <li>Sistem de moderare conținut automat și manual</li>
@@ -210,7 +213,12 @@ export default function CompliancePage() {
             marginBottom: '16px'
           }}>
             <h4 style={{ margin: '0 0 12px 0', color: '#92400e' }}>
-              🔄 În curs de implementare
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                <polyline points="23,4 23,10 17,10"/>
+                <polyline points="1,20 1,14 7,14"/>
+                <path d="M20.49,9A9,9,0,0,0,5.64,5.64L1,10m22,4l-4.64,4.36A9,9,0,0,1,3.51,15"/>
+              </svg>
+              În curs de implementare
             </h4>
             <ul style={{ margin: '0', paddingLeft: '20px', color: '#92400e' }}>
               <li>Evaluarea riscurilor de securitate</li>
@@ -408,7 +416,12 @@ export default function CompliancePage() {
             marginBottom: '16px'
           }}>
             <h4 style={{ margin: '0 0 12px 0', color: '#059669' }}>
-              🔄 Ciclul de îmbunătățire
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                <polyline points="23,4 23,10 17,10"/>
+                <polyline points="1,20 1,14 7,14"/>
+                <path d="M20.49,9A9,9,0,0,0,5.64,5.64L1,10m22,4l-4.64,4.36A9,9,0,0,1,3.51,15"/>
+              </svg>
+              Ciclul de îmbunătățire
             </h4>
             <ul style={{ margin: '0', paddingLeft: '20px', color: '#064e3b' }}>
               <li>Colectare feedback utilizatori și autorități</li>

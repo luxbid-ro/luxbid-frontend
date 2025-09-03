@@ -58,7 +58,14 @@ export default function ChatPage() {
     return (
       <section className="section">
         <div className="container" style={{ textAlign: 'center' }}>
-          <h2>🚫 Acces restricționat</h2>
+          <h2>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="15" y1="9" x2="9" y2="15"/>
+              <line x1="9" y1="9" x2="15" y2="15"/>
+            </svg>
+            Acces restricționat
+          </h2>
           <p style={{ color: '#666', marginBottom: 20 }}>{error}</p>
           <p style={{ fontSize: '0.9em', color: '#999' }}>
             Chat-ul privat devine disponibil doar după acceptarea ofertei.
@@ -157,7 +164,10 @@ export default function ChatPage() {
               <strong>Chat privat securizat</strong> - Mesajele sunt criptate și vizibile doar pentru voi doi.
             </p>
             <p style={{ margin: 0 }}>
-              🤝 Folosiți acest chat pentru a finaliza detaliile tranzacției în siguranță.
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                <path d="M7 4v16l13-8L7 4z"/>
+              </svg>
+              Folosiți acest chat pentru a finaliza detaliile tranzacției în siguranță.
             </p>
           </div>
         </div>

@@ -50,7 +50,16 @@ export default function DataRetentionPage() {
             margin: '0 0 16px 0',
             color: '#0369a1'
           }}>
-            🗄️ Principii generale
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+              <path d="M3 21h18"/>
+              <path d="M5 21V7l8-4v18"/>
+              <path d="M19 21V11l-6-4"/>
+              <path d="M9 9v.01"/>
+              <path d="M9 12v.01"/>
+              <path d="M9 15v.01"/>
+              <path d="M9 18v.01"/>
+            </svg>
+            Principii generale
           </h2>
           <p style={{ margin: '0', fontSize: '16px', color: '#0c4a6e' }}>
             LuxBid respectă principiile GDPR de minimizare și limitare în timp a datelor. 
@@ -257,7 +266,12 @@ export default function DataRetentionPage() {
             marginBottom: '16px'
           }}>
             <h4 style={{ margin: '0 0 12px 0', color: '#059669' }}>
-              🤖 Job automated - 02:00 AM zilnic
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                <circle cx="9" cy="9" r="2"/>
+                <path d="M21 15l-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+              </svg>
+              Job automated - 02:00 AM zilnic
             </h4>
             <ul style={{ margin: '0', paddingLeft: '20px', color: '#064e3b' }}>
               <li>Sesiuni expirate (peste 30 zile)</li>
@@ -310,7 +324,13 @@ export default function DataRetentionPage() {
             marginBottom: '16px'
           }}>
             <h4 style={{ margin: '0 0 12px 0', color: '#ca8a04' }}>
-              🗓️ Job automated - 1 luna, 04:00 AM
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/>
+                <line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/>
+              </svg>
+              Job automated - 1 luna, 04:00 AM
             </h4>
             <ul style={{ margin: '0', paddingLeft: '20px', color: '#92400e' }}>
               <li>Imagini orfane (fără listări asociate)</li>
@@ -364,7 +384,12 @@ export default function DataRetentionPage() {
             marginBottom: '16px'
           }}>
             <h4 style={{ margin: '0 0 12px 0', color: '#dc2626' }}>
-              ⚠️ Excepții legale
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                <line x1="12" y1="9" x2="12" y2="13"/>
+                <line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+              Excepții legale
             </h4>
             <p style={{ margin: '0 0 12px 0', color: '#7f1d1d' }}>
               Nu putem șterge datele când păstrarea este necesară pentru:
@@ -518,7 +543,11 @@ export default function DataRetentionPage() {
               margin: '0 0 16px 0',
               color: '#D09A1E'
             }}>
-              📧 Pentru cereri de ștergere date
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+              Pentru cereri de ștergere date
             </h3>
             <div style={{ fontSize: '16px' }}>
               <p style={{ margin: '0 0 12px 0' }}>

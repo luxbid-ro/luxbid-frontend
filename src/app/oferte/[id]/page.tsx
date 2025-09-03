@@ -301,7 +301,11 @@ export default function ListingDetailPage() {
                     marginRight: 15
                   }}
                 >
-                  ✏️ Editează listarea
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '4px' }}>
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                  </svg>
+                  Editează listarea
                 </a>
                 <span style={{ color: '#666', fontSize: '0.9em' }}>
                   Modifică titlul, descrierea, categoria sau prețul
@@ -358,7 +362,12 @@ export default function ListingDetailPage() {
                   </p>
                 ) : (
                   <p style={{ margin: 0, color: 'orange', fontSize: '0.9em' }}>
-                    💡 Oferta ta este sub prețul dorit ({((parseFloat(amount) / listing.desiredPrice) * 100).toFixed(0)}% din prețul dorit)
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '4px' }}>
+                      <circle cx="12" cy="12" r="10"/>
+                      <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                      <line x1="12" y1="17" x2="12.01" y2="17"/>
+                    </svg>
+                    Oferta ta este sub prețul dorit ({((parseFloat(amount) / listing.desiredPrice) * 100).toFixed(0)}% din prețul dorit)
                   </p>
                 )}
               </div>
@@ -401,13 +410,31 @@ export default function ListingDetailPage() {
                           display: 'block',
                           marginBottom: 8
                         }}>
-                          {offer.status === 'ACCEPTED' ? '✓ Acceptată' : '✗ Refuzată'}
+                          {offer.status === 'ACCEPTED' ? (
+                            <span>
+                              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '4px', color: 'green' }}>
+                                <path d="M9 12l2 2 4-4"/>
+                              </svg>
+                              Acceptată
+                            </span>
+                          ) : (
+                            <span>
+                              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '4px', color: 'red' }}>
+                                <line x1="18" y1="6" x2="6" y2="18"/>
+                                <line x1="6" y1="6" x2="18" y2="18"/>
+                              </svg>
+                              Refuzată
+                            </span>
+                          )}
                         </span>
                         
                         {offer.status === 'ACCEPTED' && (
                           <div style={{ marginTop: '12px', padding: '12px', background: '#e8f5e8', borderRadius: '8px', border: '1px solid #4CAF50' }}>
                             <p style={{ margin: '0 0 8px 0', fontSize: '14px', color: '#2E7D32', fontWeight: '600' }}>
-                              🎉 Oferta acceptată! Contactele sunt acum disponibile.
+                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '4px' }}>
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                              </svg>
+                              Oferta acceptată! Contactele sunt acum disponibile.
                             </p>
                             <a 
                               href={`/chat/${offer.id}`}
@@ -426,7 +453,11 @@ export default function ListingDetailPage() {
                               Deschide Chat Privat
                             </a>
                             <span style={{ fontSize: '12px', color: '#666' }}>
-                              📧 Email: {offer.user?.email || 'Se încarcă...'}
+                              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '4px' }}>
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                <polyline points="22,6 12,13 2,6"/>
+                              </svg>
+                              Email: {offer.user?.email || 'Se încarcă...'}
                             </span>
                           </div>
                         )}

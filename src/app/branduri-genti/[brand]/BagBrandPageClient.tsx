@@ -199,7 +199,13 @@ export default function BagBrandPageClient() {
               fontSize: '64px', 
               marginBottom: '24px',
               opacity: 0.3
-            }}>👜</div>
+            }}>
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <path d="M16 10a4 4 0 0 1-8 0"/>
+              </svg>
+            </div>
             <h3 style={{ 
               fontSize: '24px', 
               fontWeight: '700', 
@@ -241,7 +247,12 @@ export default function BagBrandPageClient() {
                   e.currentTarget.style.boxShadow = '0 4px 12px rgba(208, 154, 30, 0.3)'
                 }}
               >
-                👜 Publică o geantă {brandName}
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                  <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                  <line x1="3" y1="6" x2="21" y2="6"/>
+                  <path d="M16 10a4 4 0 0 1-8 0"/>
+                </svg>
+                Publică o geantă {brandName}
               </button>
               <button
                 onClick={() => router.push('/oferte')}

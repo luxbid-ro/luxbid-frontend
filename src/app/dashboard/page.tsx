@@ -91,7 +91,12 @@ export default function DashboardPage() {
           <h2>Acțiuni rapide</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', marginTop: '20px' }}>
             <a href="/dashboard/add-listing" style={{ background: 'var(--gold)', color: '#fff', padding: '20px', borderRadius: '12px', textDecoration: 'none', textAlign: 'center', fontWeight: '600' }}>
-              📝 Adaugă Anunț
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                <path d="M12 19l7-7 3 3-7-7-3 3 7 7-3 3z"/>
+                <path d="M11 5H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9"/>
+                <line x1="9" y1="12" x2="15" y2="12"/>
+              </svg>
+              Adaugă Anunț
             </a>
             <a href="/dashboard/my-listings" style={{ background: 'var(--surface)', color: 'var(--dark)', padding: '20px', borderRadius: '12px', textDecoration: 'none', textAlign: 'center', fontWeight: '600' }}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '8px' }}>
