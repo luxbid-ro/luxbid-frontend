@@ -133,27 +133,27 @@ export default function SecurityPage() {
                 <tr style={{ borderBottom: '1px solid #e9ecef' }}>
                   <td style={{ padding: '12px' }}><strong>HSTS</strong></td>
                   <td style={{ padding: '12px' }}>Forțează HTTPS</td>
-                  <td style={{ padding: '12px', color: '#22c55e' }}>✅ Activ</td>
+                  <td style={{ padding: '12px', color: '#22c55e' }}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Activ</td>
                 </tr>
                 <tr style={{ borderBottom: '1px solid #e9ecef' }}>
                   <td style={{ padding: '12px' }}><strong>CSP</strong></td>
                   <td style={{ padding: '12px' }}>Previne XSS</td>
-                  <td style={{ padding: '12px', color: '#22c55e' }}>✅ Activ</td>
+                  <td style={{ padding: '12px', color: '#22c55e' }}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Activ</td>
                 </tr>
                 <tr style={{ borderBottom: '1px solid #e9ecef' }}>
                   <td style={{ padding: '12px' }}><strong>X-Frame-Options</strong></td>
                   <td style={{ padding: '12px' }}>Anti-clickjacking</td>
-                  <td style={{ padding: '12px', color: '#22c55e' }}>✅ Activ</td>
+                  <td style={{ padding: '12px', color: '#22c55e' }}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Activ</td>
                 </tr>
                 <tr style={{ borderBottom: '1px solid #e9ecef' }}>
                   <td style={{ padding: '12px' }}><strong>X-Content-Type-Options</strong></td>
                   <td style={{ padding: '12px' }}>Anti-MIME sniffing</td>
-                  <td style={{ padding: '12px', color: '#22c55e' }}>✅ Activ</td>
+                  <td style={{ padding: '12px', color: '#22c55e' }}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Activ</td>
                 </tr>
                 <tr>
                   <td style={{ padding: '12px' }}><strong>Referrer-Policy</strong></td>
                   <td style={{ padding: '12px' }}>Control informații referrer</td>
-                  <td style={{ padding: '12px', color: '#22c55e' }}>✅ Activ</td>
+                  <td style={{ padding: '12px', color: '#22c55e' }}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Activ</td>
                 </tr>
               </tbody>
             </table>
@@ -250,7 +250,7 @@ export default function SecurityPage() {
             marginBottom: '16px'
           }}>
             <h4 style={{ margin: '0 0 12px 0', color: '#059669' }}>
-              📊 Monitorizare 24/7
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg> Monitorizare 24/7
             </h4>
             <ul style={{ margin: '0', paddingLeft: '20px', color: '#064e3b' }}>
               <li>Real-time security event monitoring</li>
@@ -385,7 +385,7 @@ export default function SecurityPage() {
             marginBottom: '16px'
           }}>
             <h4 style={{ margin: '0 0 12px 0', color: '#0369a1' }}>
-              🎯 Responsible disclosure
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg> Responsible disclosure
             </h4>
             <p style={{ margin: '0 0 12px 0', color: '#0c4a6e' }}>
               Încurajăm cercetătorii în securitate să raporteze vulnerabilitățile responsabil:
@@ -480,7 +480,7 @@ export default function SecurityPage() {
               margin: '0 0 16px 0',
               color: '#D09A1E'
             }}>
-              📞 Contact securitate
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg> Contact securitate
             </h3>
             <div style={{ fontSize: '16px' }}>
               <p style={{ margin: '0 0 8px 0' }}>

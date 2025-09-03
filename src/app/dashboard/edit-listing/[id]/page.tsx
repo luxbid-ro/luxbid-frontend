@@ -130,7 +130,7 @@ export default function EditListingPage() {
     return (
       <div style={{ minHeight: '100vh', background: 'var(--surface)', padding: '40px 20px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <div style={{ textAlign: 'center', background: '#fff', padding: 40, borderRadius: 16, maxWidth: 500 }}>
-          <h2 style={{ color: 'red', marginTop: 0 }}>❌ Eroare</h2>
+          <h2 style={{ color: 'red', marginTop: 0 }}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 18L18 6M6 6l12 12"/></svg> Eroare</h2>
           <p style={{ color: '#666', marginBottom: 20 }}>{error}</p>
           <button 
             onClick={() => router.push('/dashboard')}

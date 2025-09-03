@@ -238,7 +238,10 @@ export default function AdminSupremeDashboard() {
               cursor: 'pointer'
             }}
           >
-            🚀 Acces Dashboard
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px' }}>
+              <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+            Acces Dashboard
           </button>
           
           <div style={{ marginTop: '30px', fontSize: '12px', opacity: 0.6 }}>

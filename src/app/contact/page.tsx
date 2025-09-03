@@ -265,7 +265,10 @@ export default function ContactPage() {
               marginBottom: '20px',
               fontWeight: '600'
             }}>
-              📞 Contact rapid
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px' }}>
+                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+              </svg>
+              Contact rapid
             </h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
               <div>
@@ -347,7 +350,13 @@ export default function ContactPage() {
               color: '#111',
               fontWeight: '600'
             }}>
-              🌐 Urmărește-ne
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px' }}>
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                <line x1="9" y1="9" x2="9.01" y2="9"/>
+                <line x1="15" y1="9" x2="15.01" y2="9"/>
+              </svg>
+              Urmărește-ne
             </h3>
             <p style={{ 
               fontSize: '16px', 

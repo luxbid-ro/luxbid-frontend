@@ -37,7 +37,11 @@ export default function UpdateNotification() {
           alignItems: 'center',
           gap: '8px'
         }}>
-          <span>🚀</span>
+                          <span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                  </svg>
+                </span>
           Actualizare Disponibilă
         </h4>
         <p style={{ 
@@ -162,9 +166,27 @@ function ServiceWorkerStatus() {
 
   return (
     <div style={{ fontSize: '11px' }}>
-      <div>Supported: {isSupported ? '✅' : '❌'}</div>
-      <div>Registered: {isRegistered ? '✅' : '❌'}</div>
-      <div>Controlling: {isControlling ? '✅' : '❌'}</div>
+                      <div>Supported: {isSupported ? 
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: '#22c55e' }}>
+                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg> : 
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: '#dc3545' }}>
+                    <path d="M6 18L18 6M6 6l12 12"/>
+                  </svg>}</div>
+                      <div>Registered: {isRegistered ? 
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: '#22c55e' }}>
+                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg> : 
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: '#dc3545' }}>
+                    <path d="M6 18L18 6M6 6l12 12"/>
+                  </svg>}</div>
+                      <div>Controlling: {isControlling ? 
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: '#22c55e' }}>
+                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg> : 
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: '#dc3545' }}>
+                    <path d="M6 18L18 6M6 6l12 12"/>
+                  </svg>}</div>
       {error && <div style={{ color: '#ff4444' }}>Error: {error}</div>}
     </div>
   )

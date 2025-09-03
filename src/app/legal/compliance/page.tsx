@@ -90,7 +90,10 @@ export default function CompliancePage() {
             marginBottom: '16px'
           }}>
             <h4 style={{ margin: '0 0 12px 0', color: '#059669' }}>
-              ✅ Conformitate GDPR 100%
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '4px' }}>
+                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              Conformitate GDPR 100%
             </h4>
             <ul style={{ margin: '0', paddingLeft: '20px', color: '#064e3b' }}>
               <li>Politică de confidențialitate detaliată și transparentă</li>
@@ -272,27 +275,27 @@ export default function CompliancePage() {
                 <tr style={{ borderBottom: '1px solid #e9ecef' }}>
                   <td style={{ padding: '12px' }}><strong>GDPR Compliance</strong></td>
                   <td style={{ padding: '12px' }}>Zilnic</td>
-                  <td style={{ padding: '12px', color: '#22c55e' }}>✅ Activ</td>
+                  <td style={{ padding: '12px', color: '#22c55e' }}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Activ</td>
                 </tr>
                 <tr style={{ borderBottom: '1px solid #e9ecef' }}>
                   <td style={{ padding: '12px' }}><strong>Security Headers</strong></td>
                   <td style={{ padding: '12px' }}>Zilnic</td>
-                  <td style={{ padding: '12px', color: '#22c55e' }}>✅ Activ</td>
+                  <td style={{ padding: '12px', color: '#22c55e' }}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Activ</td>
                 </tr>
                 <tr style={{ borderBottom: '1px solid #e9ecef' }}>
                   <td style={{ padding: '12px' }}><strong>Content Moderation</strong></td>
                   <td style={{ padding: '12px' }}>În timp real</td>
-                  <td style={{ padding: '12px', color: '#22c55e' }}>✅ Activ</td>
+                  <td style={{ padding: '12px', color: '#22c55e' }}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Activ</td>
                 </tr>
                 <tr style={{ borderBottom: '1px solid #e9ecef' }}>
                   <td style={{ padding: '12px' }}><strong>Data Retention</strong></td>
                   <td style={{ padding: '12px' }}>Săptămânal</td>
-                  <td style={{ padding: '12px', color: '#22c55e' }}>✅ Activ</td>
+                  <td style={{ padding: '12px', color: '#22c55e' }}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Activ</td>
                 </tr>
                 <tr>
                   <td style={{ padding: '12px' }}><strong>Legal Updates</strong></td>
                   <td style={{ padding: '12px' }}>Lunar</td>
-                  <td style={{ padding: '12px', color: '#22c55e' }}>✅ Activ</td>
+                  <td style={{ padding: '12px', color: '#22c55e' }}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Activ</td>
                 </tr>
               </tbody>
             </table>
@@ -338,7 +341,7 @@ export default function CompliancePage() {
             marginBottom: '16px'
           }}>
             <h4 style={{ margin: '0 0 12px 0', color: '#0369a1' }}>
-              📊 Rapoarte de transparență
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg> Rapoarte de transparență
             </h4>
             <ul style={{ margin: '0', paddingLeft: '20px', color: '#0c4a6e' }}>
               <li><strong>Trimestrial:</strong> Raport activități moderare conținut</li>
@@ -430,7 +433,7 @@ export default function CompliancePage() {
               margin: '0 0 16px 0',
               color: '#D09A1E'
             }}>
-              📞 Contact conformitate
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg> Contact conformitate
             </h3>
             <div style={{ fontSize: '16px' }}>
               <p style={{ margin: '0 0 8px 0' }}>
@@ -465,7 +468,7 @@ export default function CompliancePage() {
               textAlign: 'center',
               fontWeight: '600'
             }}>
-              📋 Conformitatea este o prioritate constantă. Documentația este actualizată 
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 12H1l6-6m0 0l6 6m-6-6v18"/></svg> Conformitatea este o prioritate constantă. Documentația este actualizată 
               regulat pentru a reflecta cele mai recente cerințe legale și beste practici.
             </p>
           </div>

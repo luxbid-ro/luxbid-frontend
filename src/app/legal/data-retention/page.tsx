@@ -284,7 +284,7 @@ export default function DataRetentionPage() {
             marginBottom: '16px'
           }}>
             <h4 style={{ margin: '0 0 12px 0', color: '#0369a1' }}>
-              📅 Job automated - Duminica, 03:00 AM
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2z"/></svg> Job automated - Duminica, 03:00 AM
             </h4>
             <ul style={{ margin: '0', paddingLeft: '20px', color: '#0c4a6e' }}>
               <li>Conturi marcate pentru ștergere (peste 30 zile)</li>
@@ -393,7 +393,7 @@ export default function DataRetentionPage() {
             padding: '20px',
             marginBottom: '16px'
           }}>
-            <h4 style={{ margin: '0 0 12px 0' }}>📋 Timeline procesare cerere</h4>
+            <h4 style={{ margin: '0 0 12px 0' }}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 12H1l6-6m0 0l6 6m-6-6v18"/></svg> Timeline procesare cerere</h4>
             <ol style={{ margin: '0', paddingLeft: '20px' }}>
               <li><strong>Ziua 0:</strong> Primirea cererii prin email/formular</li>
               <li><strong>Ziua 1:</strong> Confirmare primire și verificare identitate</li>
@@ -470,7 +470,7 @@ export default function DataRetentionPage() {
             marginBottom: '16px'
           }}>
             <h4 style={{ margin: '0 0 12px 0', color: '#0369a1' }}>
-              📊 Raport automatizat lunar
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg> Raport automatizat lunar
             </h4>
             <ul style={{ margin: '0', paddingLeft: '20px', color: '#0c4a6e' }}>
               <li>Volume de date șterse automat</li>

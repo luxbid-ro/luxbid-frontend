@@ -47,7 +47,7 @@ function OfertesContent() {
 
   // Fetch listings from real API  
   const fetchListings = async () => {
-    console.log('🚀 fetchListings called, setting loading=true')
+    console.log('<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg> fetchListings called, setting loading=true')
     setLoading(true)
     setError('')
     

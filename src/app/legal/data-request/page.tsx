@@ -312,7 +312,7 @@ export default function DataRequestPage() {
                   marginBottom: '16px'
                 }}>
                   <p style={{ margin: '0', fontSize: '14px', color: '#856404' }}>
-                    <strong>📋 Documente necesare:</strong> Pentru verificarea identității, va trebui să atașați 
+                    <strong><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 12H1l6-6m0 0l6 6m-6-6v18"/></svg> Documente necesare:</strong> Pentru verificarea identității, va trebui să atașați 
                     o copie a unui document de identitate valid (CI, pașaport) la cererea trimisă pe email.
                   </p>
                 </div>
@@ -423,7 +423,7 @@ export default function DataRequestPage() {
               margin: '0 0 16px 0',
               color: '#1a1a1a'
             }}>
-              📞 Contact alternativ
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg> Contact alternativ
             </h2>
 
             <div style={{
@@ -437,7 +437,7 @@ export default function DataRequestPage() {
                   <strong>📧 Email DPO:</strong> <a href="mailto:dpo@luxbid.ro" style={{ color: '#D09A1E' }}>dpo@luxbid.ro</a>
                 </div>
                 <div>
-                  <strong>📞 Telefon:</strong> +40 21 XXX XXXX
+                  <strong><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg> Telefon:</strong> +40 21 XXX XXXX
                 </div>
                 <div>
                   <strong>🕒 Program:</strong> Luni - Vineri, 09:00 - 17:00

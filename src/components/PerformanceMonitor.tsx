@@ -29,7 +29,7 @@ export default function PerformanceMonitor({
     if (!enabled) return
 
     // Monitorizare automată la încărcarea paginii
-    console.log('🚀 [Performance Monitor] Activat pentru:', window.location.pathname)
+    console.log('<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg> [Performance Monitor] Activat pentru:', window.location.pathname)
 
     // Raportează web vitals la Next.js ȘI Google Analytics
     if (typeof window !== 'undefined') {
@@ -46,7 +46,7 @@ export default function PerformanceMonitor({
         getTTFB(handleMetric)
       }).catch(() => {
         // Fallback dacă web-vitals nu e disponibil
-        console.log('📊 [Performance] Web Vitals library not available')
+        console.log('<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg> [Performance] Web Vitals library not available')
       })
     }
 
@@ -115,7 +115,7 @@ export function PerformanceDebugPanel() {
       }}
     >
       <div style={{ fontWeight: '600', marginBottom: '4px' }}>
-        ⚡ Performance Debug
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg> Performance Debug
       </div>
       
       <button
