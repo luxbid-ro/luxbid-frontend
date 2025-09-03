@@ -80,7 +80,11 @@ export default function NotificationsPage() {
               background: '#f8f9fa'
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <span style={{ fontSize: '20px' }}>🎉</span>
+                <span style={{ fontSize: '20px' }}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                </span>
                 <div style={{ flex: 1 }}>
                   <h3 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '600' }}>
                     Bun venit la LuxBid!
@@ -102,7 +106,12 @@ export default function NotificationsPage() {
               background: '#fff'
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <span style={{ fontSize: '20px' }}>📢</span>
+                <span style={{ fontSize: '20px' }}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                  </svg>
+                </span>
                 <div style={{ flex: 1 }}>
                   <h3 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '600' }}>
                     Sistem de notificări activat
@@ -124,7 +133,13 @@ export default function NotificationsPage() {
               color: '#666',
               fontStyle: 'italic'
             }}>
-              <span style={{ fontSize: '48px', display: 'block', marginBottom: '16px' }}>🔕</span>
+              <span style={{ fontSize: '48px', display: 'block', marginBottom: '16px' }}>
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                  <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                  <line x1="1" y1="1" x2="23" y2="23"/>
+                </svg>
+              </span>
               <p>Nu ai notificări noi în acest moment.</p>
               <p style={{ fontSize: '14px', marginTop: '8px' }}>
                 Vei fi notificat despre oferte noi, mesaje și actualizări importante.

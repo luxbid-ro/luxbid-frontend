@@ -46,7 +46,12 @@ export default function ContactPage() {
           color: '#111',
           fontWeight: '800'
         }}>
-          <span style={{ color: '#D09A1E' }}>📧</span> Contactează-ne
+          <span style={{ color: '#D09A1E' }}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+          </span> Contactează-ne
         </h1>
         <p style={{ 
           fontSize: '18px', 
@@ -246,7 +251,23 @@ export default function ContactPage() {
                 transition: 'background 0.2s ease'
               }}
             >
-              {isSubmitting ? '📤 Se trimite...' : '📧 Trimite mesajul'}
+              {isSubmitting ? (
+                <span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                    <line x1="22" y1="2" x2="11" y2="13"/>
+                    <polygon points="22,2 15,22 11,13 2,9"/>
+                  </svg>
+                  Se trimite...
+                </span>
+              ) : (
+                <span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                    <polyline points="22,6 12,13 2,6"/>
+                  </svg>
+                  Trimite mesajul
+                </span>
+              )}
             </button>
           </form>
         </div>
@@ -272,13 +293,24 @@ export default function ContactPage() {
             </h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
               <div>
-                <strong>📧 Email:</strong><br />
+                <strong>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                    <polyline points="22,6 12,13 2,6"/>
+                  </svg>
+                  Email:
+                </strong><br />
                 <a href="mailto:contact@luxbid.ro" style={{ color: 'white', opacity: '0.9' }}>
                   contact@luxbid.ro
                 </a>
               </div>
               <div>
-                <strong>📱 Telefon:</strong><br />
+                <strong>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                  </svg>
+                  Telefon:
+                </strong><br />
                 <a href="tel:+40755123456" style={{ color: 'white', opacity: '0.9' }}>
                   +40 755 123 456
                 </a>
@@ -376,7 +408,10 @@ export default function ContactPage() {
                 fontSize: '14px',
                 fontWeight: '600'
               }}>
-                📘 Facebook
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                </svg>
+                Facebook
               </a>
               <a href="#" style={{
                 background: '#1da1f2',
@@ -387,7 +422,10 @@ export default function ContactPage() {
                 fontSize: '14px',
                 fontWeight: '600'
               }}>
-                🐦 Twitter
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+                </svg>
+                Twitter
               </a>
               <a href="#" style={{
                 background: '#e4405f',
@@ -398,7 +436,12 @@ export default function ContactPage() {
                 fontSize: '14px',
                 fontWeight: '600'
               }}>
-                📸 Instagram
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                </svg>
+                Instagram
               </a>
             </div>
           </div>
@@ -416,7 +459,12 @@ export default function ContactPage() {
               color: '#856404',
               fontWeight: '600'
             }}>
-              🚨 Suport urgent
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                <line x1="12" y1="9" x2="12" y2="13"/>
+                <line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+              Suport urgent
             </h3>
             <p style={{ 
               fontSize: '14px', 

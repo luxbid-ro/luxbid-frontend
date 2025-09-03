@@ -147,7 +147,13 @@ export default function EditListingPage() {
     <div style={{ minHeight: '100vh', background: 'var(--surface)', padding: '40px 20px', display: 'flex', justifyContent: 'center' }}>
       <form onSubmit={updateListing} style={{ background: '#fff', padding: 24, maxWidth: 560, width: '100%', borderRadius: 16 }}>
         <div style={{ marginBottom: 30 }}>
-          <h2 style={{ marginTop: 0, color: '#9a7b0f' }}>📝 Editează Listarea</h2>
+          <h2 style={{ marginTop: 0, color: '#9a7b0f' }}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+            </svg>
+            Editează Listarea
+          </h2>
           <p style={{ color: '#666', marginBottom: 0 }}>
             Modifică detaliile listării tale. Schimbările vor fi vizibile imediat.
           </p>

@@ -187,7 +187,12 @@ export default function MyListingsPage() {
                     e.currentTarget.style.color = '#D09A1E'
                   }}
                 >
-                  📝 Adaugă primul tău anunț
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                    <path d="M12 19l7-7 3 3-7-7-3 3 7 7-3 3z"/>
+                    <path d="M11 5H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9"/>
+                    <line x1="9" y1="12" x2="15" y2="12"/>
+                  </svg>
+                  Adaugă primul tău anunț
                 </Link>
               </div>
             )}
@@ -227,7 +232,11 @@ export default function MyListingsPage() {
                       padding: '8px 12px'
                     }}
                   >
-                    👁️ Vezi
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '4px' }}>
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                      <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                    Vezi
                   </a>
                   <a 
                     href={`/dashboard/edit-listing/${l.id}`}
@@ -243,7 +252,11 @@ export default function MyListingsPage() {
                       padding: '8px 12px'
                     }}
                   >
-                    ✏️ Editează
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '4px' }}>
+                      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                    </svg>
+                    Editează
                   </a>
                   <button 
                     onClick={() => openDeleteModal(l.id, l.title)}
@@ -262,7 +275,13 @@ export default function MyListingsPage() {
                     onMouseEnter={(e) => e.currentTarget.style.background = '#c82333'}
                     onMouseLeave={(e) => e.currentTarget.style.background = '#dc3545'}
                   >
-                    🗑️ Șterge
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '4px' }}>
+                      <path d="M3 6h18"/>
+                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                      <line x1="10" y1="11" x2="10" y2="17"/>
+                      <line x1="14" y1="11" x2="14" y2="17"/>
+                    </svg>
+                    Șterge
                   </button>
                 </div>
               </div>
@@ -292,7 +311,15 @@ export default function MyListingsPage() {
               width: '90%',
               textAlign: 'center'
             }}>
-              <h3 style={{ marginTop: 0, color: '#dc3545' }}>🗑️ Șterge anunțul</h3>
+              <h3 style={{ marginTop: 0, color: '#dc3545' }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                  <path d="M3 6h18"/>
+                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                  <line x1="10" y1="11" x2="10" y2="17"/>
+                  <line x1="14" y1="11" x2="14" y2="17"/>
+                </svg>
+                Șterge anunțul
+              </h3>
               <p style={{ marginBottom: '24px', color: '#666' }}>
                 Ești sigur că vrei să ștergi anunțul <strong>"{deleteModal.listingTitle}"</strong>?
               </p>
