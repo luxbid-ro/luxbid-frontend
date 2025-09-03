@@ -649,10 +649,10 @@ function NavBarContent() {
             </a>
           </div>
           
-          {/* Services */}
+          {/* Activități */}
           <div style={{ padding: '16px 0', borderTop: '1px solid #eee' }}>
-            <h3 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '600', color: '#333' }}>Servicii</h3>
-            
+            <h3 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '600', color: '#333' }}>Activități</h3>
+
             <a href="/dashboard/my-listings" onClick={() => setMobileMenuOpen(false)}
               style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%', textAlign: 'left', padding: '12px 0', textDecoration: 'none', fontSize: '16px', color: '#666' }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -661,16 +661,7 @@ function NavBarContent() {
               </svg>
               Anunțurile mele
             </a>
-            
-            <a href="/oferte" onClick={() => setMobileMenuOpen(false)}
-              style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%', textAlign: 'left', padding: '12px 0', textDecoration: 'none', fontSize: '16px', color: '#666' }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="11" cy="11" r="8"></circle>
-                <path d="m21 21-4.35-4.35"></path>
-              </svg>
-              Explorează ofertele
-            </a>
-            
+
             <a href="/mesaje" onClick={() => setMobileMenuOpen(false)}
               style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%', textAlign: 'left', padding: '12px 0', textDecoration: 'none', fontSize: '16px', color: '#666' }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -917,76 +908,7 @@ function NavBarContent() {
             Vinde
           </a>
           
-          <a href="/dashboard" onClick={() => setAccountMenuOpen(false)} style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '12px',
-            padding: '12px 16px',
-            textDecoration: 'none',
-            color: '#333',
-            borderRadius: '6px',
-            transition: 'background-color 0.2s ease',
-            fontSize: '16px'
-          }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-            </svg>
-            Lista de dorințe
-          </a>
-          
-          <a href="/dashboard" onClick={() => setAccountMenuOpen(false)} style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '12px',
-            padding: '12px 16px',
-            textDecoration: 'none',
-            color: '#333',
-            borderRadius: '6px',
-            transition: 'background-color 0.2s ease',
-            fontSize: '16px'
-          }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="11" cy="11" r="8"/>
-              <path d="M21 21l-4.35-4.35"/>
-            </svg>
-            Căutări salvate
-          </a>
-          
-          <a href="/dashboard" onClick={() => setAccountMenuOpen(false)} style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '12px',
-            padding: '12px 16px',
-            textDecoration: 'none',
-            color: '#333',
-            borderRadius: '6px',
-            transition: 'background-color 0.2s ease',
-            fontSize: '16px'
-          }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="12" cy="12" r="10"/>
-              <polyline points="12,6 12,12 16,14"/>
-            </svg>
-            Colecția de ceasuri
-          </a>
 
-          <a href="/dashboard" onClick={() => setAccountMenuOpen(false)} style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '12px',
-            padding: '12px 16px',
-            textDecoration: 'none',
-            color: '#333',
-            borderRadius: '6px',
-            transition: 'background-color 0.2s ease',
-            fontSize: '16px'
-          }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M12 2L2 7v10c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7l-10-5z"/>
-              <path d="M22 7l-10 5L2 7"/>
-            </svg>
-            Cronografia
-          </a>
 
           <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #eee' }} />
           
