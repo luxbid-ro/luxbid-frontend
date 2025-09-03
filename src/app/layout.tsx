@@ -6,8 +6,7 @@ import ErrorBoundary from '@/components/ErrorBoundary'
 import ConditionalAuth from '@/components/ConditionalAuth'
 import { 
   LazyCookieBanner, 
-  LazyAccessibilityWidget, 
-  LazyAgeVerificationModal 
+  LazyAccessibilityWidget
 } from '@/components/LazyComponents'
 import UpdateNotification from '@/components/UpdateNotification'
 import { OrganizationSchema, WebsiteSchema } from '@/components/StructuredData'
@@ -98,7 +97,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </main>
             <LazyCookieBanner />
             <LazyAccessibilityWidget />
-            <LazyAgeVerificationModal />
+            {/* Age verification removed */}
             <UpdateNotification />
             
             {/* Global Structured Data */}

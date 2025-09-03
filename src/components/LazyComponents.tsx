@@ -135,13 +135,7 @@ export const LazyCookieBanner = dynamic(
   }
 )
 
-export const LazyAgeVerificationModal = dynamic(
-  () => import('./AgeVerificationModal'),
-  {
-    loading: () => null,
-    ssr: false
-  }
-)
+// Age verification removed - no longer needed
 
 export const LazyAccessibilityWidget = dynamic(
   () => import('./AccessibilityWidget'),
