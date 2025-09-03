@@ -907,9 +907,6 @@ function NavBarContent() {
             </svg>
             Vinde
           </a>
-          
-
-
           <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #eee' }} />
           
           <a href="/profile/edit" onClick={() => setAccountMenuOpen(false)} style={{
