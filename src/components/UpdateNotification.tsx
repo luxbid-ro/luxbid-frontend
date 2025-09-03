@@ -149,7 +149,12 @@ export function CacheDebugPanel() {
       }}
     >
       <div style={{ marginBottom: '8px', fontWeight: '600' }}>
-        📦 Service Worker Status
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+  <polyline points="7.5,4.27 16.5,9.42"/>
+  <polyline points="7.5,9.42 16.5,4.27"/>
+  <polyline points="12,9.42 12,14.58"/>
+</svg> Service Worker Status
       </div>
       <ServiceWorkerStatus />
     </div>

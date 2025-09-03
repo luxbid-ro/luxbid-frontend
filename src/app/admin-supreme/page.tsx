@@ -522,11 +522,18 @@ export default function AdminSupremeDashboard() {
             </h3>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px' }}>
                 <div style={{ padding: '15px', background: '#f8f9fa', borderRadius: '8px', textAlign: 'center' }}>
-                  <div style={{ fontWeight: 'bold', color: '#28a745' }}>🟢 Online</div>
+                  <div style={{ fontWeight: 'bold', color: '#28a745' }}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '4px', color: '#28a745' }}>
+  <circle cx="12" cy="12" r="10"/>
+  <path d="M9 12l2 2 4-4"/>
+</svg> Online</div>
                   <div style={{ fontSize: '14px', color: '#666' }}>Frontend & Backend</div>
                 </div>
                 <div style={{ padding: '15px', background: '#f8f9fa', borderRadius: '8px', textAlign: 'center' }}>
-                  <div style={{ fontWeight: 'bold', color: '#28a745' }}>🔒 Securizat</div>
+                  <div style={{ fontWeight: 'bold', color: '#28a745' }}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '4px', color: '#28a745' }}>
+  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+  <circle cx="12" cy="16" r="1"/>
+  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+</svg> Securizat</div>
                   <div style={{ fontSize: '14px', color: '#666' }}>SSL + Headers</div>
                 </div>
                 <div style={{ padding: '15px', background: '#f8f9fa', borderRadius: '8px', textAlign: 'center' }}>
@@ -578,14 +585,21 @@ export default function AdminSupremeDashboard() {
                   fontWeight: 'bold'
                 }}
               >
-                🔄 Reîmprospătează
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px' }}>
+  <polyline points="23,4 23,10 17,10"/>
+  <polyline points="1,20 1,14 7,14"/>
+  <path d="M20.49,9A9,9,0,0,0,5.64,5.64L1,10m22,4l-4.64,4.36A9,9,0,0,1,3.51,15"/>
+</svg> Reîmprospătează
               </button>
             </div>
 
             <div style={{ background: '#fff', borderRadius: '10px', overflow: 'hidden', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
               {listings.length === 0 ? (
                 <div style={{ padding: '50px', textAlign: 'center', color: '#666' }}>
-                  📭 Nu există anunțuri în platformă
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px' }}>
+  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+  <polyline points="22,6 12,13 2,6"/>
+</svg> Nu există anunțuri în platformă
                 </div>
               ) : (
                 <div style={{ overflowX: 'auto' }}>
@@ -646,7 +660,12 @@ export default function AdminSupremeDashboard() {
                                 fontSize: '12px'
                               }}
                             >
-                              🗑️ Șterge
+                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '4px' }}>
+  <path d="M3 6h18"/>
+  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+  <line x1="10" y1="11" x2="10" y2="17"/>
+  <line x1="14" y1="11" x2="14" y2="17"/>
+</svg> Șterge
                             </button>
                           </td>
                         </tr>
@@ -663,7 +682,12 @@ export default function AdminSupremeDashboard() {
         {activeTab === 'users' && (
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '25px' }}>
-              <h2 style={{ margin: 0, color: '#D09A1E' }}>👥 Gestionare Utilizatori</h2>
+              <h2 style={{ margin: 0, color: '#D09A1E' }}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px' }}>
+  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+  <circle cx="9" cy="7" r="4"/>
+  <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+</svg> Gestionare Utilizatori</h2>
               <button
                 onClick={loadDashboardData}
                 style={{
@@ -676,14 +700,21 @@ export default function AdminSupremeDashboard() {
                   fontWeight: 'bold'
                 }}
               >
-                🔄 Reîmprospătează
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px' }}>
+  <polyline points="23,4 23,10 17,10"/>
+  <polyline points="1,20 1,14 7,14"/>
+  <path d="M20.49,9A9,9,0,0,0,5.64,5.64L1,10m22,4l-4.64,4.36A9,9,0,0,1,3.51,15"/>
+</svg> Reîmprospătează
               </button>
             </div>
 
             <div style={{ background: '#fff', borderRadius: '10px', overflow: 'hidden', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
               {users.length === 0 ? (
                 <div style={{ padding: '50px', textAlign: 'center', color: '#666' }}>
-                  👤 Nu există utilizatori înregistrați
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px' }}>
+  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+  <circle cx="12" cy="7" r="4"/>
+</svg> Nu există utilizatori înregistrați
                 </div>
               ) : (
                 <div style={{ overflowX: 'auto' }}>
@@ -742,7 +773,12 @@ export default function AdminSupremeDashboard() {
                                     fontSize: '12px'
                                   }}
                                 >
-                                  🗑️ Șterge
+                                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '4px' }}>
+  <path d="M3 6h18"/>
+  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+  <line x1="10" y1="11" x2="10" y2="17"/>
+  <line x1="14" y1="11" x2="14" y2="17"/>
+</svg> Șterge
                                 </button>
                               )}
                             </td>
@@ -760,7 +796,12 @@ export default function AdminSupremeDashboard() {
         {/* Analytics Tab */}
         {activeTab === 'analytics' && (
           <div>
-            <h2 style={{ margin: '0 0 25px 0', color: '#D09A1E' }}>📈 Analiză Detaliată</h2>
+            <h2 style={{ margin: '0 0 25px 0', color: '#D09A1E' }}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px' }}>
+  <line x1="18" y1="20" x2="18" y2="10"/>
+  <line x1="12" y1="20" x2="12" y2="4"/>
+  <line x1="6" y1="20" x2="6" y2="14"/>
+  <polyline points="20,16 18,12 12,8 6,18"/>
+</svg> Analiză Detaliată</h2>
             
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
               <div style={{ background: '#fff', padding: '25px', borderRadius: '10px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
@@ -806,7 +847,11 @@ export default function AdminSupremeDashboard() {
               </div>
 
               <div style={{ background: '#fff', padding: '25px', borderRadius: '10px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
-                <h3 style={{ margin: '0 0 15px 0', color: '#333' }}>💰 Analiza Prețurilor</h3>
+                <h3 style={{ margin: '0 0 15px 0', color: '#333' }}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px' }}>
+  <circle cx="12" cy="12" r="10"/>
+  <path d="M16 8l-8 8"/>
+  <path d="M12 8v8"/>
+</svg> Analiza Prețurilor</h3>
                 {listings.length > 0 ? (
                   <div>
                     <div style={{ marginBottom: '15px' }}>
@@ -884,7 +929,9 @@ export default function AdminSupremeDashboard() {
         marginTop: '50px'
       }}>
         <div style={{ fontSize: '14px', opacity: 0.8 }}>
-          👑 LuxBid Admin Supreme Dashboard | Acces Exclusiv Administratori | 
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px' }}>
+  <path d="M5 3l14 9-14 9V3z"/>
+</svg> LuxBid Admin Supreme Dashboard | Acces Exclusiv Administratori | 
           <span style={{ color: '#D09A1E' }}> Monitorizare în Timp Real</span>
         </div>
       </div>

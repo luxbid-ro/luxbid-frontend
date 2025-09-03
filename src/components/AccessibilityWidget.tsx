@@ -221,7 +221,10 @@ export default function AccessibilityWidget() {
         onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
         onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
       >
-        ♿
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+  <circle cx="12" cy="12" r="10"/>
+  <path d="M9 10h6m-6 4h6m4-11h-1a2 2 0 0 0-2 2v1m4 0h1a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1m-4 0H9a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h1"/>
+</svg>
       </button>
 
       {/* Accessibility panel */}
@@ -252,7 +255,10 @@ export default function AccessibilityWidget() {
             marginBottom: '20px'
           }}>
             <h3 style={{ margin: '0', color: '#1a1a1a', fontSize: '18px' }}>
-              ♿ Accesibilitate
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+  <circle cx="12" cy="12" r="10"/>
+  <path d="M9 10h6m-6 4h6m4-11h-1a2 2 0 0 0-2 2v1m4 0h1a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1m-4 0H9a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h1"/>
+</svg> Accesibilitate
             </h3>
             <button
               onClick={() => setIsOpen(false)}
@@ -277,7 +283,11 @@ export default function AccessibilityWidget() {
               marginBottom: '8px',
               color: '#333'
             }}>
-              📝 Mărimea textului:
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+  <path d="M12 19l7-7 3 3-7-7-3 3 7 7-3 3z"/>
+  <path d="M11 5H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9"/>
+  <line x1="9" y1="12" x2="15" y2="12"/>
+</svg> Mărimea textului:
             </label>
             <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
               {[
@@ -314,7 +324,10 @@ export default function AccessibilityWidget() {
               marginBottom: '8px',
               color: '#333'
             }}>
-              🎨 Contrast:
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+  <circle cx="12" cy="12" r="3"/>
+  <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1m16.24-3.76l-4.24 4.24m-6-6L3.76 7.76"/>
+</svg> Contrast:
             </label>
             <div style={{ display: 'flex', gap: '8px' }}>
               {[
@@ -349,7 +362,10 @@ export default function AccessibilityWidget() {
               marginBottom: '8px',
               color: '#333'
             }}>
-              👁️ Suport daltonism:
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+  <circle cx="12" cy="12" r="3"/>
+</svg> Suport daltonism:
             </label>
             <select
               value={settings.colorBlind}
@@ -372,9 +388,18 @@ export default function AccessibilityWidget() {
           {/* Toggle options */}
           <div style={{ marginBottom: '20px' }}>
             {[
-              { key: 'animations', label: '🎬 Animații', checked: settings.animations },
-              { key: 'underlineLinks', label: '🔗 Subliniază link-urile', checked: settings.underlineLinks },
-              { key: 'readableFont', label: '📖 Font ușor de citit', checked: settings.readableFont }
+              { key: 'animations', label: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+  <polygon points="23,7 16,12 23,17 23,7"/>
+  <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+</svg> Animații', checked: settings.animations },
+              { key: 'underlineLinks', label: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.72"/>
+</svg> Subliniază link-urile', checked: settings.underlineLinks },
+              { key: 'readableFont', label: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+</svg> Font ușor de citit', checked: settings.readableFont }
             ].map(option => (
               <label
                 key={option.key}
@@ -411,7 +436,11 @@ export default function AccessibilityWidget() {
               fontWeight: '500'
             }}
           >
-            🔄 Resetează setările
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+  <polyline points="23,4 23,10 17,10"/>
+  <polyline points="1,20 1,14 7,14"/>
+  <path d="M20.49,9A9,9,0,0,0,5.64,5.64L1,10m22,4l-4.64,4.36A9,9,0,0,1,3.51,15"/>
+</svg> Resetează setările
           </button>
 
           {/* Info */}
@@ -424,7 +453,14 @@ export default function AccessibilityWidget() {
             fontSize: '12px',
             color: '#0c5460'
           }}>
-            <strong>💡 Info:</strong> Setările sunt salvate automat și vor fi aplicate la viitoarele vizite.
+            <strong>
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+    <circle cx="12" cy="12" r="10"/>
+    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+    <line x1="12" y1="17" x2="12.01" y2="17"/>
+  </svg>
+  Info:
+</strong> Setările sunt salvate automat și vor fi aplicate la viitoarele vizite.
           </div>
         </div>
       )}

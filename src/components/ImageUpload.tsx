@@ -136,7 +136,9 @@ export default function ImageUpload({ listingId, onImagesUploaded, maxImages = 1
         }}
         onClick={() => inputRef.current?.click()}
       >
-        <div style={{ fontSize: '2em', marginBottom: 10 }}>📸</div>
+        <div style={{ fontSize: '2em', marginBottom: 10 }}><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+  <path d="M14.828 14.828a4 4 0 0 1-5.656 0M9 10h6m-6 4h6m4-11h-1a2 2 0 0 0-2 2v1m4 0h1a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1m-4 0H9a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h1"/>
+</svg></div>
         <p>Trage imaginile aici sau <strong>click pentru a selecta</strong></p>
         <p style={{ fontSize: '0.8em', color: '#999' }}>
           JPG, PNG, WebP - max 15MB per imagine

@@ -26,7 +26,11 @@ export default class ErrorBoundary extends React.Component<ErrorBoundaryProps, E
     this.setState({ error, errorInfo })
     
     // Log error to monitoring service (add your service here)
-    console.error('🚨 Error Boundary caught an error:', error)
+    console.error('<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+  <line x1="12" y1="9" x2="12" y2="13"/>
+  <line x1="12" y1="17" x2="12.01" y2="17"/>
+</svg> Error Boundary caught an error:', error)
     console.error('📍 Error Info:', errorInfo)
     
     // TODO: Send to error tracking service like Sentry
@@ -59,7 +63,11 @@ export default class ErrorBoundary extends React.Component<ErrorBoundaryProps, E
           borderRadius: '12px',
           border: '1px solid #eee'
         }}>
-          <div style={{ fontSize: '48px', marginBottom: '16px' }}>🚨</div>
+          <div style={{ fontSize: '48px', marginBottom: '16px' }}><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+  <line x1="12" y1="9" x2="12" y2="13"/>
+  <line x1="12" y1="17" x2="12.01" y2="17"/>
+</svg></div>
           <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#333', marginBottom: '12px' }}>
             Oops! Ceva nu a mers bine
           </h2>
@@ -141,7 +149,11 @@ export function ApiErrorFallback({ error, reset }: { error?: Error; reset: () =>
       borderRadius: '12px',
       margin: '20px 0'
     }}>
-      <div style={{ fontSize: '32px', marginBottom: '16px' }}>⚠️</div>
+      <div style={{ fontSize: '32px', marginBottom: '16px' }}><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+  <line x1="12" y1="9" x2="12" y2="13"/>
+  <line x1="12" y1="17" x2="12.01" y2="17"/>
+</svg></div>
       <h3 style={{ fontSize: '18px', fontWeight: '600', color: '#e53e3e', marginBottom: '8px' }}>
         Eroare de conectare
       </h3>

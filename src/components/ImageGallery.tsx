@@ -45,7 +45,9 @@ export default function ImageGallery({ images, className = '' }: ImageGalleryPro
         justifyContent: 'center',
         alignItems: 'center'
       }}>
-        <div style={{ fontSize: '3em', marginBottom: 15, opacity: 0.5 }}>📷</div>
+        <div style={{ fontSize: '3em', marginBottom: 15, opacity: 0.5 }}><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+  <path d="M14.828 14.828a4 4 0 0 1-5.656 0M9 10h6m-6 4h6m4-11h-1a2 2 0 0 0-2 2v1m4 0h1a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1m-4 0H9a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h1"/>
+</svg></div>
         <p style={{ color: '#999', margin: 0 }}>Nu sunt disponibile imagini</p>
       </div>
     )
@@ -121,7 +123,9 @@ export default function ImageGallery({ images, className = '' }: ImageGalleryPro
               backdropFilter: 'blur(4px)',
               zIndex: 10
             }}>
-              ✨ PRINCIPALĂ
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '4px' }}>
+  <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
+</svg> PRINCIPALĂ
             </div>
           )}
           
