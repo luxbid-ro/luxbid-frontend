@@ -37,19 +37,15 @@ export default function MyListingsPage() {
       const controller = new AbortController()
       const timeoutId = setTimeout(() => controller.abort(), 10000) // 10 second timeout
       
-      // Safari-specific cache busting
-      const timestamp = Date.now()
-      const randomId = Math.random().toString(36).substring(7)
-      const url = `${base}/listings/me/all?_t=${timestamp}&_r=${randomId}`
+      // Optimized fetch with smart caching for user listings
+      const url = `${base}/listings/me/all`
       
       const res = await fetch(url, { 
         headers: { 
           Authorization: `Bearer ${token}`,
-          'Cache-Control': 'no-cache, no-store, must-revalidate',
-          'Pragma': 'no-cache',
-          'Expires': '0'
+          'Cache-Control': 'public, max-age=120', // 2 minute cache for user data
         },
-        cache: 'no-store',
+        next: { revalidate: 120 }, // Next.js cache for 2 minutes
         signal: controller.signal
       })
       

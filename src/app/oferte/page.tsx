@@ -107,16 +107,13 @@ function OfertesContent() {
       // Fetching from API
               const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://luxbid-backend.onrender.com'
         
-        // Simple cache busting
-        const cacheBusterUrl = `${apiUrl}/listings?_t=${Date.now()}`
-        
-        const response = await fetch(cacheBusterUrl, {
+        // Optimized fetch with smart caching
+        const response = await fetch(`${apiUrl}/listings`, {
           method: 'GET',
           headers: {
-            'Cache-Control': 'no-cache, no-store',
-            'Pragma': 'no-cache'
+            'Cache-Control': 'public, max-age=300', // 5 minute cache
           },
-          cache: 'no-store'
+          next: { revalidate: 300 } // Next.js cache for 5 minutes
         })
       
       // Check API response
@@ -125,21 +122,9 @@ function OfertesContent() {
         const data = await response.json()
         // Process API data
         
-        // FORCE CLEAR any cached state first
-        setListings([])
-        setFilteredListings([])
-        
-        // Wait a tick to ensure state is cleared, then set real data
-        setTimeout(() => {
-          setListings(data)
-          // Real data loaded
-          
-          // If empty, double-check by forcing a visual refresh
-          if (data.length === 0) {
-            // Empty state confirmed
-            setFilteredListings([])
-          }
-        }, 10)
+        // Set data immediately for better performance
+        setListings(data)
+        // Real data loaded
       } else {
         // API response not ok
         setListings([])

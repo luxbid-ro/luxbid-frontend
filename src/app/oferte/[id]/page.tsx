@@ -34,14 +34,14 @@ export default function ListingDetailPage() {
       try {
         console.log(`🔗 Fetching listing from: ${base}/listings/${id}`)
         
-        // Fetch listing details with timeout and cache busting
-        const listingRes = await fetch(`${base}/listings/${id}?t=${Date.now()}`, {
+        // Optimized listing fetch with smart caching
+        const listingRes = await fetch(`${base}/listings/${id}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            'Cache-Control': 'no-cache, no-store, must-revalidate',
-            'Pragma': 'no-cache'
+            'Cache-Control': 'public, max-age=300', // 5 minute cache
           },
+          next: { revalidate: 300 }, // Next.js cache
           mode: 'cors',
           credentials: 'omit'
         })
@@ -111,11 +111,12 @@ export default function ListingDetailPage() {
           if (token) {
             headers.Authorization = `Bearer ${token}`
           }
-          const imagesRes = await fetch(`${base}/upload/images/${id}?t=${Date.now()}`, { 
+          const imagesRes = await fetch(`${base}/upload/images/${id}`, { 
             headers: {
               ...headers,
-              'Cache-Control': 'no-cache'
+              'Cache-Control': 'public, max-age=600' // 10 minute cache for images
             },
+            next: { revalidate: 600 },
             mode: 'cors'
           })
           if (imagesRes.ok) {
@@ -136,11 +137,12 @@ export default function ListingDetailPage() {
       // Fetch offers if user is owner
       if (token && listingData) {
         try {
-          const offersRes = await fetch(`${base}/offers/listing/${id}?t=${Date.now()}`, {
+          const offersRes = await fetch(`${base}/offers/listing/${id}`, {
             headers: { 
               Authorization: `Bearer ${token}`,
-              'Cache-Control': 'no-cache'
+              'Cache-Control': 'public, max-age=60' // 1 minute cache for offers (more dynamic)
             },
+            next: { revalidate: 60 },
             mode: 'cors'
           })
           if (offersRes.ok) {
