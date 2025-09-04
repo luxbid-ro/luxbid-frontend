@@ -122,6 +122,11 @@ export default function NotificationBell() {
       const token = localStorage.getItem('luxbid_token')
       if (!token) return
 
+      // Marchează și welcome message-ul ca citit
+      if (isNewUser() && !welcomeMessageRead) {
+        setWelcomeMessageRead(true)
+      }
+
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || 'https://luxbid-backend.onrender.com'}/notifications/mark-all-read`, {
         method: 'PATCH',
         headers: {
@@ -142,7 +147,13 @@ export default function NotificationBell() {
   const handleNotificationClick = (notification: Notification) => {
     // Mark as read if unread
     if (!notification.isRead) {
-      markAsRead([notification.id])
+      // Pentru welcome message (notificare de sistem), marchează local
+      if (notification.id === 'welcome' && isNewUser()) {
+        setWelcomeMessageRead(true)
+      } else {
+        // Pentru notificări reale din backend
+        markAsRead([notification.id])
+      }
     }
 
     // Navigate based on notification type
@@ -178,6 +189,23 @@ export default function NotificationBell() {
     return diffInHours < 24
   }
 
+  // State pentru a urmări dacă welcome message-ul a fost citit
+  const [welcomeMessageRead, setWelcomeMessageRead] = useState(false)
+
+  // Calculează numărul real de notificări necitite
+  const getRealUnreadCount = () => {
+    if (notifications.length > 0) {
+      return unreadCount // Notificări reale din backend
+    }
+    
+    // Pentru utilizatori noi cu welcome message
+    if (isNewUser() && !welcomeMessageRead) {
+      return 1 // Welcome message necitit
+    }
+    
+    return 0 // Nu sunt notificări necitite
+  }
+
   // Generate notifications for display
   const getDisplayNotifications = () => {
     if (notifications.length > 0) {
@@ -191,7 +219,7 @@ export default function NotificationBell() {
         type: 'SYSTEM',
         title: 'Bun venit la LuxBid!',
         message: 'Contul tău a fost creat cu succes. Începe să explorezi ofertele premium.',
-        isRead: false,
+        isRead: welcomeMessageRead, // Folosește state local
         createdAt: userCreatedAt || new Date().toISOString()
       }]
     } else {
@@ -299,7 +327,13 @@ export default function NotificationBell() {
       <button
         onClick={() => {
           setIsOpen(!isOpen)
-          if (!isOpen) fetchNotifications()
+          if (!isOpen) {
+            fetchNotifications()
+            // Marchează welcome message-ul ca citit pentru utilizatorii noi
+            if (isNewUser() && !welcomeMessageRead) {
+              setWelcomeMessageRead(true)
+            }
+          }
         }}
         style={{
           background: 'none',
@@ -319,7 +353,7 @@ export default function NotificationBell() {
           <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
           <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
         </svg>
-        {(unreadCount > 0 || (isNewUser() && notifications.length === 0)) && (
+        {getRealUnreadCount() > 0 && (
           <span style={{
             position: 'absolute',
             top: 2,
@@ -335,7 +369,7 @@ export default function NotificationBell() {
             justifyContent: 'center',
             fontWeight: 'bold'
           }}>
-            {unreadCount > 0 ? (unreadCount > 99 ? '99+' : unreadCount) : '1'}
+            {getRealUnreadCount() > 99 ? '99+' : getRealUnreadCount()}
           </span>
         )}
       </button>
@@ -365,9 +399,9 @@ export default function NotificationBell() {
             background: '#f8fafc'
           }}>
             <h3 style={{ margin: 0, fontSize: '1em', fontWeight: 600 }}>
-              Notificări ({unreadCount} necitite)
+              Notificări ({getRealUnreadCount()} necitite)
             </h3>
-            {unreadCount > 0 && (
+            {getRealUnreadCount() > 0 && (
               <button
                 onClick={markAllAsRead}
                 style={{
