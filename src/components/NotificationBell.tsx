@@ -415,8 +415,8 @@ export default function NotificationBell() {
       {/* Dropdown */}
       {isOpen && (
         <div style={{
-          position: 'fixed',
-          top: 'calc(100% + 5px)',
+          position: 'absolute',
+          top: '100%',
           right: 0,
           background: 'white',
           boxShadow: '0 4px 20px rgba(0,0,0,0.15)',

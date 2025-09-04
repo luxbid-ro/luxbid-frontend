@@ -1,7 +1,5 @@
-'use client'
-
 import type { Metadata } from 'next'
-import React, { useEffect } from 'react'
+import React from 'react'
 import './globals.css'
 import NavBar from '@/components/NavBar'
 import ErrorBoundary from '@/components/ErrorBoundary'
@@ -55,15 +53,6 @@ export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const version = window.location.search.includes('v=') 
-        ? window.location.search.split('v=')[1] 
-        : '2.0'
-      localStorage.setItem('luxbid_cache_version', version)
-    }
-  }, [])
-
   return (
     <html lang="ro">
       <head>

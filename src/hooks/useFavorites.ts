@@ -19,7 +19,10 @@ export const useFavorites = () => {
   const [loading, setLoading] = useState(true)
 
   const getStorageKey = (suffix: string) => {
-    const userId = typeof window !== 'undefined' ? localStorage.getItem('luxbid_user_id') || 'guest' : 'server'
+    if (typeof window === 'undefined') return `luxbid_${suffix}_server`
+    
+    const token = localStorage.getItem('luxbid_token')
+    const userId = token ? token.substring(0, 8) : 'guest'
     return `luxbid_${suffix}_${userId}`
   }
 
