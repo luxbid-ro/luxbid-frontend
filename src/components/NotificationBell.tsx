@@ -22,6 +22,7 @@ export default function NotificationBell() {
   // Fetch user profile to get creation date
   const fetchUserProfile = async () => {
     try {
+      if (typeof window === 'undefined') return
       const token = localStorage.getItem('luxbid_token')
       if (!token) return
 
@@ -43,6 +44,7 @@ export default function NotificationBell() {
   // Fetch unread count
   const fetchUnreadCount = async () => {
     try {
+      if (typeof window === 'undefined') return
       const token = localStorage.getItem('luxbid_token')
       if (!token) return
 
@@ -65,6 +67,7 @@ export default function NotificationBell() {
   const fetchNotifications = async () => {
     try {
       setLoading(true)
+      if (typeof window === 'undefined') return
       const token = localStorage.getItem('luxbid_token')
       if (!token) return
 
@@ -88,6 +91,7 @@ export default function NotificationBell() {
   // Mark notifications as read
   const markAsRead = async (notificationIds: string[]) => {
     try {
+      if (typeof window === 'undefined') return
       const token = localStorage.getItem('luxbid_token')
       if (!token) return
 
@@ -119,6 +123,7 @@ export default function NotificationBell() {
   // Mark all as read
   const markAllAsRead = async () => {
     try {
+      if (typeof window === 'undefined') return
       const token = localStorage.getItem('luxbid_token')
       if (!token) return
 
@@ -306,6 +311,7 @@ export default function NotificationBell() {
 
   // Fetch unread count on mount and set up interval
   useEffect(() => {
+    if (typeof window === 'undefined') return
     const token = localStorage.getItem('luxbid_token')
     if (!token) return
 
@@ -317,8 +323,16 @@ export default function NotificationBell() {
     return () => clearInterval(interval)
   }, [])
 
-  // Don't render if not logged in
-  const token = localStorage.getItem('luxbid_token')
+  // Don't render if not logged in (SSR safe)
+  const [token, setToken] = useState<string | null>(null)
+  
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storedToken = localStorage.getItem('luxbid_token')
+      setToken(storedToken)
+    }
+  }, [])
+  
   if (!token) return null
 
   return (
