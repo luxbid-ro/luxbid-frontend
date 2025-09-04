@@ -19,19 +19,46 @@ interface FavoriteListing {
 export default function FavoritesPage() {
   const router = useRouter()
   const { favorites, loading, removeFromFavorites } = useFavorites()
+  const [error, setError] = React.useState<string | null>(null)
+
+  // State for authentication
+  const [isAuthenticated, setIsAuthenticated] = React.useState<boolean | null>(null)
 
   // Check if user is authenticated (SSR safe)
   React.useEffect(() => {
     if (typeof window === 'undefined') return
     
-    const token = localStorage.getItem('luxbid_token')
-    if (!token) {
-      router.push('/auth/login')
-      return
+    const checkAuth = () => {
+      const token = localStorage.getItem('luxbid_token')
+      console.log('Favorites auth check - token:', token ? 'EXISTS' : 'MISSING')
+      
+      if (!token) {
+        console.log('No token found, redirecting to login')
+        setError('Pentru a vedea favoritele, trebuie să te conectezi.')
+        setTimeout(() => router.push('/auth/login'), 2000)
+        setIsAuthenticated(false)
+        return
+      }
+      
+      setIsAuthenticated(true)
+      setError(null)
     }
+
+    checkAuth()
+    
+    // Listen for storage changes (login/logout in other tabs)
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'luxbid_token') {
+        checkAuth()
+      }
+    }
+    
+    window.addEventListener('storage', handleStorageChange)
+    return () => window.removeEventListener('storage', handleStorageChange)
   }, [router])
 
-  if (loading) {
+  // Show loading while checking authentication
+  if (isAuthenticated === null || loading) {
     return (
       <div style={{ minHeight: '100vh', background: '#f8f9fa' }}>
         <div style={{
@@ -50,7 +77,9 @@ export default function FavoritesPage() {
             animation: 'spin 1s linear infinite',
             marginBottom: '20px'
           }}></div>
-          <p style={{ color: '#666', fontSize: '16px' }}>Se încarcă favoritele...</p>
+          <p style={{ color: '#666', fontSize: '16px' }}>
+            {isAuthenticated === null ? 'Verificare autentificare...' : 'Se încarcă favoritele...'}
+          </p>
         </div>
         <style jsx>{`
           @keyframes spin {
@@ -60,6 +89,11 @@ export default function FavoritesPage() {
         `}</style>
       </div>
     )
+  }
+
+  // Don't render content if not authenticated
+  if (isAuthenticated === false) {
+    return null // Will redirect automatically
   }
 
   return (
