@@ -20,8 +20,10 @@ export default function FavoritesPage() {
   const router = useRouter()
   const { favorites, loading, removeFromFavorites } = useFavorites()
 
-  // Check if user is authenticated
+  // Check if user is authenticated (SSR safe)
   React.useEffect(() => {
+    if (typeof window === 'undefined') return
+    
     const token = localStorage.getItem('luxbid_token')
     if (!token) {
       router.push('/auth/login')

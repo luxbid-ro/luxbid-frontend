@@ -18,10 +18,15 @@ export const useFavorites = () => {
   const [favoriteIds, setFavoriteIds] = useState<Set<string>>(new Set())
   const [loading, setLoading] = useState(true)
 
-  // Load favorites from localStorage
+  // Load favorites from localStorage (SSR safe)
   useEffect(() => {
     const loadFavorites = () => {
       try {
+        if (typeof window === 'undefined') {
+          setLoading(false)
+          return
+        }
+
         const savedFavorites = localStorage.getItem('luxbid_favorites')
         const savedFavoriteIds = localStorage.getItem('luxbid_favorite_ids')
 
@@ -46,9 +51,11 @@ export const useFavorites = () => {
     loadFavorites()
   }, [])
 
-  // Save favorites to localStorage
+  // Save favorites to localStorage (SSR safe)
   const saveFavorites = useCallback((newFavorites: FavoriteListing[], newFavoriteIds: Set<string>) => {
     try {
+      if (typeof window === 'undefined') return
+
       localStorage.setItem('luxbid_favorites', JSON.stringify(newFavorites))
       localStorage.setItem('luxbid_favorite_ids', JSON.stringify(Array.from(newFavoriteIds)))
       setFavorites(newFavorites)
