@@ -2,6 +2,8 @@
 import React, { useState, useEffect, useCallback, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { ListingImage } from '@/components/OptimizedImage'
+import { useFavorites } from '@/hooks/useFavorites'
+import NavBar from '@/components/NavBar'
 
 type Listing = {
   id: string
@@ -32,6 +34,7 @@ function OfertesContent() {
   const [selectedBrand, setSelectedBrand] = useState('')
   const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'price-low' | 'price-high' | 'name'>('newest')
   const [filteredListings, setFilteredListings] = useState<Listing[]>([])
+  const { isFavorite, toggleFavorite } = useFavorites()
 
   // Initialize from URL params
   useEffect(() => {
@@ -42,6 +45,11 @@ function OfertesContent() {
     setSelectedCategory(category)
     setSelectedBrand(brand)
   }, [searchParams])
+
+  // Fetch listings on component mount
+  useEffect(() => {
+    fetchListings()
+  }, [])
 
   // Mock data will be defined locally in fetchListings to avoid dependency issues
 
@@ -237,7 +245,9 @@ function OfertesContent() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--surface)', padding: '20px 0' }}>
+    <>
+      <NavBar />
+      <div style={{ minHeight: '100vh', background: 'var(--surface)', padding: '20px 0' }}>
       <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px' }}>
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: '40px' }}>
@@ -417,6 +427,55 @@ function OfertesContent() {
                   }}>
                     {listing.category}
                   </div>
+                  
+                  {/* Favorite Button */}
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault()
+                      e.stopPropagation()
+                      toggleFavorite({
+                        id: listing.id,
+                        title: listing.title,
+                        price: listing.price,
+                        currency: listing.currency,
+                        images: listing.images || [],
+                        location: listing.location || '',
+                        createdAt: listing.createdAt,
+                        category: listing.category,
+                        condition: listing.condition,
+                        brand: listing.brand
+                      })
+                    }}
+                    style={{
+                      position: 'absolute',
+                      top: '16px',
+                      right: '16px',
+                      background: isFavorite(listing.id) ? '#e53e3e' : 'rgba(255,255,255,0.9)',
+                      color: isFavorite(listing.id) ? '#fff' : '#e53e3e',
+                      border: 'none',
+                      borderRadius: '50%',
+                      width: '40px',
+                      height: '40px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      cursor: 'pointer',
+                      fontSize: '18px',
+                      transition: 'all 0.2s ease',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                      zIndex: 10
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'scale(1.1)'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'scale(1)'
+                    }}
+                  >
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill={isFavorite(listing.id) ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2">
+                      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    </svg>
+                  </button>
                 </div>
 
                 {/* Content */}
@@ -544,6 +603,7 @@ function OfertesContent() {
         )}
       </div>
     </div>
+    </>
   )
 }
 
