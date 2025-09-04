@@ -328,25 +328,49 @@ export default function NotificationBell() {
   const updateDropdownPosition = () => {
     if (buttonRef.current) {
       const rect = buttonRef.current.getBoundingClientRect()
-      setDropdownPosition({
-        top: rect.bottom + window.scrollY,
+      const newPosition = {
+        top: rect.bottom + window.scrollY + 5, // Extra 5px spacing
         right: window.innerWidth - rect.right
+      }
+      
+      console.log('🔔 NotificationBell positioning:', {
+        buttonRect: rect,
+        scrollY: window.scrollY,
+        windowWidth: window.innerWidth,
+        finalPosition: newPosition,
+        page: window.location.pathname
       })
+      
+      setDropdownPosition(newPosition)
     }
   }
 
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node) &&
-          buttonRef.current && !buttonRef.current.contains(event.target as Node)) {
-        setIsOpen(false)
+      const target = event.target as Node
+      
+      // Don't close if clicking on dropdown or button
+      if (dropdownRef.current && dropdownRef.current.contains(target)) {
+        console.log('🔔 Click inside dropdown - staying open')
+        return
       }
+      
+      if (buttonRef.current && buttonRef.current.contains(target)) {
+        console.log('🔔 Click on button - handled by onClick')
+        return
+      }
+      
+      // Close dropdown for outside clicks
+      console.log('🔔 Click outside - closing dropdown')
+      setIsOpen(false)
     }
 
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [])
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+      return () => document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isOpen])
 
   // Fetch unread count on mount and set up interval
   useEffect(() => {
@@ -383,8 +407,8 @@ export default function NotificationBell() {
         ref={dropdownRef}
         style={{
           position: 'fixed',
-          top: dropdownPosition.top,
-          right: dropdownPosition.right,
+          top: Math.max(dropdownPosition.top, 60), // Minimum 60px from top
+          right: Math.max(dropdownPosition.right, 10), // Minimum 10px from right
           background: 'white',
           boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
           borderRadius: 12,
