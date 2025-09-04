@@ -345,7 +345,7 @@ export default function NotificationBell() {
     }
   }
 
-  // Close dropdown when clicking outside
+  // Close dropdown when clicking outside or scrolling
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Node
@@ -366,9 +366,19 @@ export default function NotificationBell() {
       setIsOpen(false)
     }
 
+    // Close dropdown on scroll
+    const handleScroll = () => {
+      console.log('🔔 Scroll detected - closing dropdown')
+      setIsOpen(false)
+    }
+
     if (isOpen) {
       document.addEventListener('mousedown', handleClickOutside)
-      return () => document.removeEventListener('mousedown', handleClickOutside)
+      window.addEventListener('scroll', handleScroll, true) // true = capture all scroll events
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside)
+        window.removeEventListener('scroll', handleScroll, true)
+      }
     }
   }, [isOpen])
 
@@ -571,7 +581,10 @@ export default function NotificationBell() {
           borderRadius: '50%',
           transition: 'background-color 0.2s',
           color: '#333',
-          outline: 'none'  // Elimină cercul galben la focus
+          outline: 'none',        // Elimină cercul galben
+          boxShadow: 'none',      // Elimină shadow
+          WebkitTapHighlightColor: 'transparent', // Safari/iOS
+          WebkitAppearance: 'none' // WebKit browsers
         }}
         onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f5f5f5'}
         onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
