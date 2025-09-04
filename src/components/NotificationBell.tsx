@@ -1,5 +1,6 @@
 'use client'
 import React, { useState, useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 
 type Notification = {
   id: string
@@ -18,6 +19,8 @@ export default function NotificationBell() {
   const [loading, setLoading] = useState(false)
   const [userCreatedAt, setUserCreatedAt] = useState<string | null>(null)
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const buttonRef = useRef<HTMLButtonElement>(null)
+  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, right: 0 })
 
   // Fetch user profile to get creation date
   const fetchUserProfile = async () => {
@@ -321,10 +324,22 @@ export default function NotificationBell() {
     }
   }
 
+  // Calculate dropdown position when opening
+  const updateDropdownPosition = () => {
+    if (buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect()
+      setDropdownPosition({
+        top: rect.bottom + window.scrollY,
+        right: window.innerWidth - rect.right
+      })
+    }
+  }
+
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node) &&
+          buttonRef.current && !buttonRef.current.contains(event.target as Node)) {
         setIsOpen(false)
       }
     }
@@ -359,19 +374,168 @@ export default function NotificationBell() {
   
   if (!token) return null
 
+  // Render dropdown content
+  const renderDropdown = () => {
+    if (!isOpen || typeof window === 'undefined') return null
+
+    return createPortal(
+      <div 
+        ref={dropdownRef}
+        style={{
+          position: 'fixed',
+          top: dropdownPosition.top,
+          right: dropdownPosition.right,
+          background: 'white',
+          boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
+          borderRadius: 12,
+          width: 350,
+          maxHeight: 400,
+          overflow: 'hidden',
+          zIndex: 999999,
+          border: '1px solid #e2e8f0'
+        }}
+      >
+        {/* Header */}
+        <div style={{
+          padding: '15px 20px',
+          borderBottom: '1px solid #e2e8f0',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          background: '#f8fafc'
+        }}>
+          <h3 style={{ margin: 0, fontSize: '1em', fontWeight: 600 }}>
+            Notificări ({getRealUnreadCount()} necitite)
+          </h3>
+          {getRealUnreadCount() > 0 && (
+            <button
+              onClick={markAllAsRead}
+              style={{
+                background: 'none',
+                border: 'none',
+                color: '#9a7b0f',
+                fontSize: '0.8em',
+                cursor: 'pointer',
+                textDecoration: 'underline'
+              }}
+            >
+              Marchează toate
+            </button>
+          )}
+        </div>
+
+        {/* Notifications List */}
+        <div style={{ maxHeight: 320, overflowY: 'auto' }}>
+          {loading ? (
+            <div style={{ padding: 40, textAlign: 'center', color: '#666' }}>
+              Se încarcă...
+            </div>
+          ) : (
+            getDisplayNotifications().map((notification) => (
+              <div
+                key={notification.id}
+                onClick={() => handleNotificationClick(notification)}
+                style={{
+                  padding: '12px 20px',
+                  borderBottom: '1px solid #f1f5f9',
+                  cursor: 'pointer',
+                  background: notification.isRead ? 'transparent' : '#fef7e3',
+                  transition: 'background-color 0.2s',
+                  display: 'flex',
+                  gap: 12
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = notification.isRead ? '#f8fafc' : '#fef3c7'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = notification.isRead ? 'transparent' : '#fef7e3'
+                }}
+              >
+                <div style={{ fontSize: '1.2em', flexShrink: 0 }}>
+                  {getNotificationIcon(notification.type)}
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{
+                    fontWeight: notification.isRead ? 400 : 600,
+                    fontSize: '0.9em',
+                    marginBottom: 4,
+                    color: '#1a202c'
+                  }}>
+                    {notification.title}
+                  </div>
+                  <div style={{
+                    fontSize: '0.8em',
+                    color: '#4a5568',
+                    lineHeight: 1.4,
+                    marginBottom: 4,
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    display: '-webkit-box',
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: 'vertical'
+                  }}>
+                    {notification.message}
+                  </div>
+                  <div style={{ fontSize: '0.7em', color: '#718096' }}>
+                    {formatTimeAgo(notification.createdAt)}
+                  </div>
+                </div>
+                {!notification.isRead && (
+                  <div style={{
+                    width: 8,
+                    height: 8,
+                    background: '#9a7b0f',
+                    borderRadius: '50%',
+                    flexShrink: 0,
+                    marginTop: 6
+                  }} />
+                )}
+              </div>
+            ))
+          )}
+        </div>
+
+        {/* Footer */}
+        {notifications.length > 0 && (
+          <div style={{
+            padding: '10px 20px',
+            borderTop: '1px solid #e2e8f0',
+            background: '#f8fafc',
+            textAlign: 'center'
+          }}>
+            <a
+              href="/dashboard/notifications"
+              style={{
+                color: '#9a7b0f',
+                textDecoration: 'none',
+                fontSize: '0.8em',
+                fontWeight: 500
+              }}
+            >
+              Vezi toate notificările →
+            </a>
+          </div>
+        )}
+      </div>,
+      document.body
+    )
+  }
+
   return (
-    <div style={{ position: 'relative' }} ref={dropdownRef}>
+    <div style={{ position: 'relative' }}>
       {/* Bell Icon */}
       <button
+        ref={buttonRef}
         onClick={() => {
-          setIsOpen(!isOpen)
           if (!isOpen) {
+            updateDropdownPosition()
             fetchNotifications()
             // Marchează welcome message-ul ca citit pentru utilizatorii noi
             if (isNewUser() && !welcomeMessageRead) {
               markWelcomeAsRead()
             }
           }
+          setIsOpen(!isOpen)
         }}
         style={{
           background: 'none',
@@ -412,144 +576,8 @@ export default function NotificationBell() {
         )}
       </button>
 
-      {/* Dropdown */}
-      {isOpen && (
-        <div style={{
-          position: 'absolute',
-          top: '100%',
-          right: 0,
-          background: 'white',
-          boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
-          borderRadius: 12,
-          width: 350,
-          maxHeight: 400,
-          overflow: 'hidden',
-          zIndex: 99999,
-          border: '1px solid #e2e8f0'
-        }}>
-          {/* Header */}
-          <div style={{
-            padding: '15px 20px',
-            borderBottom: '1px solid #e2e8f0',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            background: '#f8fafc'
-          }}>
-            <h3 style={{ margin: 0, fontSize: '1em', fontWeight: 600 }}>
-              Notificări ({getRealUnreadCount()} necitite)
-            </h3>
-            {getRealUnreadCount() > 0 && (
-              <button
-                onClick={markAllAsRead}
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  color: '#9a7b0f',
-                  fontSize: '0.8em',
-                  cursor: 'pointer',
-                  textDecoration: 'underline'
-                }}
-              >
-                Marchează toate
-              </button>
-            )}
-          </div>
-
-          {/* Notifications List */}
-          <div style={{ maxHeight: 320, overflowY: 'auto' }}>
-            {loading ? (
-              <div style={{ padding: 40, textAlign: 'center', color: '#666' }}>
-                Se încarcă...
-              </div>
-            ) : (
-              getDisplayNotifications().map((notification) => (
-                <div
-                  key={notification.id}
-                  onClick={() => handleNotificationClick(notification)}
-                  style={{
-                    padding: '12px 20px',
-                    borderBottom: '1px solid #f1f5f9',
-                    cursor: 'pointer',
-                    background: notification.isRead ? 'transparent' : '#fef7e3',
-                    transition: 'background-color 0.2s',
-                    display: 'flex',
-                    gap: 12
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = notification.isRead ? '#f8fafc' : '#fef3c7'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = notification.isRead ? 'transparent' : '#fef7e3'
-                  }}
-                >
-                  <div style={{ fontSize: '1.2em', flexShrink: 0 }}>
-                    {getNotificationIcon(notification.type)}
-                  </div>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{
-                      fontWeight: notification.isRead ? 400 : 600,
-                      fontSize: '0.9em',
-                      marginBottom: 4,
-                      color: '#1a202c'
-                    }}>
-                      {notification.title}
-                    </div>
-                    <div style={{
-                      fontSize: '0.8em',
-                      color: '#4a5568',
-                      lineHeight: 1.4,
-                      marginBottom: 4,
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      display: '-webkit-box',
-                      WebkitLineClamp: 2,
-                      WebkitBoxOrient: 'vertical'
-                    }}>
-                      {notification.message}
-                    </div>
-                    <div style={{ fontSize: '0.7em', color: '#718096' }}>
-                      {formatTimeAgo(notification.createdAt)}
-                    </div>
-                  </div>
-                  {!notification.isRead && (
-                    <div style={{
-                      width: 8,
-                      height: 8,
-                      background: '#9a7b0f',
-                      borderRadius: '50%',
-                      flexShrink: 0,
-                      marginTop: 6
-                    }} />
-                  )}
-                </div>
-              ))
-            )}
-          </div>
-
-          {/* Footer */}
-          {notifications.length > 0 && (
-            <div style={{
-              padding: '10px 20px',
-              borderTop: '1px solid #e2e8f0',
-              background: '#f8fafc',
-              textAlign: 'center'
-            }}>
-              <a
-                href="/dashboard/notifications"
-                style={{
-                  color: '#9a7b0f',
-                  textDecoration: 'none',
-                  fontSize: '0.8em',
-                  fontWeight: 500
-                }}
-              >
-                Vezi toate notificările →
-              </a>
-            </div>
-          )}
-        </div>
-      )}
+      {/* Render dropdown using portal */}
+      {renderDropdown()}
     </div>
   )
 }
