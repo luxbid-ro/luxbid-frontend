@@ -546,7 +546,8 @@ export default function NotificationBell() {
           padding: '8px 12px',
           borderRadius: '50%',
           transition: 'background-color 0.2s',
-          color: '#333'
+          color: '#333',
+          outline: 'none'  // Elimină cercul galben la focus
         }}
         onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f5f5f5'}
         onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}

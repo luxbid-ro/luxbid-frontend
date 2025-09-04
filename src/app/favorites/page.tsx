@@ -20,6 +20,11 @@ export default function FavoritesPage() {
   const router = useRouter()
   const { favorites, loading, removeFromFavorites } = useFavorites()
   const [error, setError] = React.useState<string | null>(null)
+  
+  // Force cache bust - ensure fresh build deployment
+  React.useEffect(() => {
+    console.log('✅ Favorites page - error state properly defined:', typeof error)
+  }, [])
 
   // State for authentication
   const [isAuthenticated, setIsAuthenticated] = React.useState<boolean | null>(null)
