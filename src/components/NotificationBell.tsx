@@ -16,7 +16,29 @@ export default function NotificationBell() {
   const [notifications, setNotifications] = useState<Notification[]>([])
   const [unreadCount, setUnreadCount] = useState(0)
   const [loading, setLoading] = useState(false)
+  const [userCreatedAt, setUserCreatedAt] = useState<string | null>(null)
   const dropdownRef = useRef<HTMLDivElement>(null)
+
+  // Fetch user profile to get creation date
+  const fetchUserProfile = async () => {
+    try {
+      const token = localStorage.getItem('luxbid_token')
+      if (!token) return
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || 'https://luxbid-backend.onrender.com'}/users/profile`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+
+      if (response.ok) {
+        const data = await response.json()
+        setUserCreatedAt(data.createdAt)
+      }
+    } catch (error) {
+      console.error('Error fetching user profile:', error)
+    }
+  }
 
   // Fetch unread count
   const fetchUnreadCount = async () => {
@@ -147,6 +169,43 @@ export default function NotificationBell() {
     setIsOpen(false)
   }
 
+  // Check if user is new (< 24 hours)
+  const isNewUser = () => {
+    if (!userCreatedAt) return false
+    const createdDate = new Date(userCreatedAt)
+    const now = new Date()
+    const diffInHours = (now.getTime() - createdDate.getTime()) / (1000 * 60 * 60)
+    return diffInHours < 24
+  }
+
+  // Generate notifications for display
+  const getDisplayNotifications = () => {
+    if (notifications.length > 0) {
+      return notifications
+    }
+
+    // If no real notifications, show appropriate message based on user age
+    if (isNewUser()) {
+      return [{
+        id: 'welcome',
+        type: 'SYSTEM',
+        title: 'Bun venit la LuxBid!',
+        message: 'Contul tău a fost creat cu succes. Începe să explorezi ofertele premium.',
+        isRead: false,
+        createdAt: userCreatedAt || new Date().toISOString()
+      }]
+    } else {
+      return [{
+        id: 'no-notifications',
+        type: 'SYSTEM', 
+        title: 'Nu ai notificări noi în acest moment',
+        message: 'Vei fi notificat despre oferte noi, mesaje și actualizări importante.',
+        isRead: true,
+        createdAt: new Date().toISOString()
+      }]
+    }
+  }
+
   // Format time ago
   const formatTimeAgo = (dateString: string) => {
     const date = new Date(dateString)
@@ -222,6 +281,7 @@ export default function NotificationBell() {
     const token = localStorage.getItem('luxbid_token')
     if (!token) return
 
+    fetchUserProfile()
     fetchUnreadCount()
     
     // Refresh unread count every 30 seconds
@@ -259,7 +319,7 @@ export default function NotificationBell() {
           <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
           <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
         </svg>
-        {unreadCount > 0 && (
+        {(unreadCount > 0 || (isNewUser() && notifications.length === 0)) && (
           <span style={{
             position: 'absolute',
             top: 2,
@@ -275,7 +335,7 @@ export default function NotificationBell() {
             justifyContent: 'center',
             fontWeight: 'bold'
           }}>
-            {unreadCount > 99 ? '99+' : unreadCount}
+            {unreadCount > 0 ? (unreadCount > 99 ? '99+' : unreadCount) : '1'}
           </span>
         )}
       </button>
@@ -330,12 +390,8 @@ export default function NotificationBell() {
               <div style={{ padding: 40, textAlign: 'center', color: '#666' }}>
                 Se încarcă...
               </div>
-            ) : notifications.length === 0 ? (
-              <div style={{ padding: 40, textAlign: 'center', color: '#666' }}>
-                Nu ai notificări
-              </div>
             ) : (
-              notifications.map((notification) => (
+              getDisplayNotifications().map((notification) => (
                 <div
                   key={notification.id}
                   onClick={() => handleNotificationClick(notification)}
