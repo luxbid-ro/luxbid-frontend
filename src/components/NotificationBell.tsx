@@ -400,7 +400,7 @@ export default function NotificationBell() {
           width: 350,
           maxHeight: 400,
           overflow: 'hidden',
-          zIndex: 1000,
+          zIndex: 10001,
           border: '1px solid #e2e8f0'
         }}>
           {/* Header */}
