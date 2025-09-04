@@ -18,6 +18,11 @@ export const useFavorites = () => {
   const [favoriteIds, setFavoriteIds] = useState<Set<string>>(new Set())
   const [loading, setLoading] = useState(true)
 
+  const getStorageKey = (suffix: string) => {
+    const userId = typeof window !== 'undefined' ? localStorage.getItem('luxbid_user_id') || 'guest' : 'server'
+    return `luxbid_${suffix}_${userId}`
+  }
+
   // Load favorites from localStorage (SSR safe)
   useEffect(() => {
     const loadFavorites = () => {
@@ -27,8 +32,8 @@ export const useFavorites = () => {
           return
         }
 
-        const savedFavorites = localStorage.getItem('luxbid_favorites')
-        const savedFavoriteIds = localStorage.getItem('luxbid_favorite_ids')
+        const savedFavorites = localStorage.getItem(getStorageKey('favorites'))
+        const savedFavoriteIds = localStorage.getItem(getStorageKey('favorite_ids'))
 
         if (savedFavorites) {
           const parsedFavorites = JSON.parse(savedFavorites)
@@ -56,8 +61,8 @@ export const useFavorites = () => {
     try {
       if (typeof window === 'undefined') return
 
-      localStorage.setItem('luxbid_favorites', JSON.stringify(newFavorites))
-      localStorage.setItem('luxbid_favorite_ids', JSON.stringify(Array.from(newFavoriteIds)))
+      localStorage.setItem(getStorageKey('favorites'), JSON.stringify(newFavorites))
+      localStorage.setItem(getStorageKey('favorite_ids'), JSON.stringify(Array.from(newFavoriteIds)))
       setFavorites(newFavorites)
       setFavoriteIds(newFavoriteIds)
     } catch (error) {
