@@ -33,7 +33,25 @@ export function middleware(request: NextRequest) {
   console.log('✅ Public site - allowing all access')
   const response = NextResponse.next()
   response.headers.set('x-public-site', 'true')
-  response.headers.set('Cache-Control', 'public, max-age=3600')
+  
+  // 🍎 APPLE CACHE FIX - Headers speciali pentru Apple devices
+  const userAgent = request.headers.get('user-agent') || ''
+  const isAppleDevice = userAgent.includes('iPhone') || 
+                       userAgent.includes('iPad') || 
+                       userAgent.includes('Safari')
+  
+  if (isAppleDevice) {
+    // Headers agresive pentru Apple devices
+    response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0')
+    response.headers.set('Pragma', 'no-cache')
+    response.headers.set('Expires', '0')
+    response.headers.set('Last-Modified', new Date().toUTCString())
+    response.headers.set('ETag', `"apple-${Date.now()}"`)
+  } else {
+    // Cache scurt pentru alte devices
+    response.headers.set('Cache-Control', 'public, max-age=300') // 5 minute
+  }
+  
   return addSecurityHeaders(request, response)
 }
 

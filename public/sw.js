@@ -1,9 +1,12 @@
 // Service Worker pentru LuxBid - Optimizare Performance și Caching
 
-const CACHE_NAME = 'luxbid-cache-v1'
-const STATIC_CACHE_NAME = 'luxbid-static-v1'
-const DYNAMIC_CACHE_NAME = 'luxbid-dynamic-v1'
-const IMAGE_CACHE_NAME = 'luxbid-images-v1'
+// Auto-update cache version based on deploy timestamp
+const DEPLOY_TIMESTAMP = new Date().getTime()
+const CACHE_VERSION = `v${DEPLOY_TIMESTAMP}`
+const CACHE_NAME = `luxbid-cache-${CACHE_VERSION}`
+const STATIC_CACHE_NAME = `luxbid-static-${CACHE_VERSION}`
+const DYNAMIC_CACHE_NAME = `luxbid-dynamic-${CACHE_VERSION}`
+const IMAGE_CACHE_NAME = `luxbid-images-${CACHE_VERSION}`
 
 // Resurse pentru cache static
 const STATIC_ASSETS = [
@@ -20,12 +23,12 @@ const IMAGE_DOMAINS = [
   'luxbid-backend.onrender.com'
 ]
 
-// Cache timp de viață (în secunde)
+// Cache timp de viață (în secunde) - REDUS pentru auto-refresh
 const CACHE_DURATIONS = {
-  static: 30 * 24 * 60 * 60, // 30 zile
-  dynamic: 7 * 24 * 60 * 60, // 7 zile  
-  images: 14 * 24 * 60 * 60, // 14 zile
-  api: 5 * 60 // 5 minute
+  static: 2 * 60 * 60, // 2 ore (reduced from 30 days)
+  dynamic: 30 * 60, // 30 minute (reduced from 7 days)  
+  images: 6 * 60 * 60, // 6 ore (reduced from 14 days)
+  api: 2 * 60 // 2 minute (reduced from 5 minutes)
 }
 
 // Install Event - Pre-cache static assets
@@ -354,3 +357,72 @@ async function getCacheSize() {
   
   return totalSize
 }
+
+// 🚀 AUTO-UPDATE MECHANISM pentru deploy-uri noi
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'CHECK_FOR_UPDATE') {
+    checkForUpdate()
+  }
+  
+  if (event.data && event.data.type === 'FORCE_UPDATE') {
+    forceUpdate()
+  }
+})
+
+// Check pentru versiuni noi 
+async function checkForUpdate() {
+  try {
+    // Verifică dacă există o versiune nouă pe server
+    const response = await fetch('/sw.js', {
+      cache: 'no-cache',
+      headers: {
+        'Cache-Control': 'no-cache, no-store, must-revalidate'
+      }
+    })
+    
+    if (response.ok) {
+      const swText = await response.text()
+      const currentTimestamp = swText.match(/DEPLOY_TIMESTAMP = (\d+)/)
+      
+      if (currentTimestamp && parseInt(currentTimestamp[1]) > DEPLOY_TIMESTAMP) {
+        // Notifică clients despre update disponibil
+        const clients = await self.clients.matchAll()
+        clients.forEach(client => {
+          client.postMessage({
+            type: 'UPDATE_AVAILABLE',
+            timestamp: currentTimestamp[1]
+          })
+        })
+      }
+    }
+  } catch (error) {
+    console.error('[SW] Check for update failed:', error)
+  }
+}
+
+// Forțează actualizarea completă
+async function forceUpdate() {
+  try {
+    // Șterge toate cache-urile
+    const cacheNames = await caches.keys()
+    await Promise.all(cacheNames.map(name => caches.delete(name)))
+    
+    // Notifică clients să se reîmprospăteze
+    const clients = await self.clients.matchAll()
+    clients.forEach(client => {
+      client.postMessage({
+        type: 'FORCE_RELOAD'
+      })
+    })
+    
+    // Actualizează service worker-ul
+    self.skipWaiting()
+  } catch (error) {
+    console.error('[SW] Force update failed:', error)
+  }
+}
+
+// Check automat pentru update-uri la fiecare 5 minute
+setInterval(() => {
+  checkForUpdate()
+}, 5 * 60 * 1000) // 5 minute

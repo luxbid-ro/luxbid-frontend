@@ -9,6 +9,7 @@ import {
   LazyAccessibilityWidget
 } from '@/components/LazyComponents'
 import UpdateNotification from '@/components/UpdateNotification'
+import UpdateNotifier from '@/components/UpdateNotifier'
 import { OrganizationSchema, WebsiteSchema } from '@/components/StructuredData'
 import PerformanceMonitor from '@/components/PerformanceMonitor'
 import GoogleAnalytics, { GoogleAnalyticsEcommerce } from '@/components/GoogleAnalytics'
@@ -89,6 +90,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
+        <UpdateNotifier />
         <ErrorBoundary>
           <ConditionalAuth>
             <main id="main-content">
