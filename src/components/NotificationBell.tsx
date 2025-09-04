@@ -129,7 +129,7 @@ export default function NotificationBell() {
 
       // Marchează și welcome message-ul ca citit
       if (isNewUser() && !welcomeMessageRead) {
-        setWelcomeMessageRead(true)
+        markWelcomeAsRead()
       }
 
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || 'https://luxbid-backend.onrender.com'}/notifications/mark-all-read`, {
@@ -154,7 +154,7 @@ export default function NotificationBell() {
     if (!notification.isRead) {
       // Pentru welcome message (notificare de sistem), marchează local
       if (notification.id === 'welcome' && isNewUser()) {
-        setWelcomeMessageRead(true)
+        markWelcomeAsRead()
       } else {
         // Pentru notificări reale din backend
         markAsRead([notification.id])
@@ -196,6 +196,30 @@ export default function NotificationBell() {
 
   // State pentru a urmări dacă welcome message-ul a fost citit
   const [welcomeMessageRead, setWelcomeMessageRead] = useState(false)
+
+  // Load welcome message read status din localStorage
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem('luxbid_token')
+      if (token) {
+        const saved = localStorage.getItem(`luxbid_welcome_read_${token}`)
+        if (saved === 'true') {
+          setWelcomeMessageRead(true)
+        }
+      }
+    }
+  }, [])
+
+  // Save welcome message read status în localStorage
+  const markWelcomeAsRead = () => {
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem('luxbid_token')
+      if (token) {
+        localStorage.setItem(`luxbid_welcome_read_${token}`, 'true')
+        setWelcomeMessageRead(true)
+      }
+    }
+  }
 
   // Calculează numărul real de notificări necitite
   const getRealUnreadCount = () => {
@@ -345,7 +369,7 @@ export default function NotificationBell() {
             fetchNotifications()
             // Marchează welcome message-ul ca citit pentru utilizatorii noi
             if (isNewUser() && !welcomeMessageRead) {
-              setWelcomeMessageRead(true)
+              markWelcomeAsRead()
             }
           }
         }}

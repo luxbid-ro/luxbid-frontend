@@ -3,7 +3,6 @@ import React, { useState, useEffect, useCallback, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { ListingImage } from '@/components/OptimizedImage'
 import { useFavorites } from '@/hooks/useFavorites'
-import NavBar from '@/components/NavBar'
 
 type Listing = {
   id: string
@@ -245,9 +244,7 @@ function OfertesContent() {
   }
 
   return (
-    <>
-      <NavBar />
-      <div style={{ minHeight: '100vh', background: 'var(--surface)', padding: '20px 0' }}>
+    <div style={{ minHeight: '100vh', background: 'var(--surface)', padding: '20px 0' }}>
       <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px' }}>
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: '40px' }}>
@@ -603,7 +600,6 @@ function OfertesContent() {
         )}
       </div>
     </div>
-    </>
   )
 }
 

@@ -128,12 +128,13 @@ export default function FAQPage() {
   }
 
   return (
-    <div style={{ 
-      maxWidth: '1000px', 
-      margin: '0 auto', 
-      padding: '40px 20px',
-      fontFamily: 'Inter, sans-serif'
-    }}>
+    <div style={{ minHeight: '100vh', background: '#f8f9fa' }}>
+      <div style={{ 
+        maxWidth: '1000px', 
+        margin: '0 auto', 
+        padding: '40px 20px',
+        fontFamily: 'Inter, sans-serif'
+      }}>
       {/* Header */}
       <div style={{ textAlign: 'center', marginBottom: '50px' }}>
         <h1 style={{ 
@@ -184,17 +185,18 @@ export default function FAQPage() {
       {/* Category Filter */}
       <div style={{ 
         marginBottom: '40px',
-        display: 'flex',
-        gap: '10px',
-        flexWrap: 'wrap',
-        justifyContent: 'center'
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
+        gap: '12px',
+        maxWidth: '600px',
+        margin: '0 auto 40px auto'
       }}>
         {categories.map(category => (
           <button
             key={category}
             onClick={() => setSelectedCategory(category)}
             style={{
-              padding: '10px 20px',
+              padding: '12px 16px',
               border: '2px solid #D09A1E',
               borderRadius: '25px',
               background: selectedCategory === category ? '#D09A1E' : 'transparent',
@@ -202,7 +204,11 @@ export default function FAQPage() {
               fontSize: '14px',
               fontWeight: '600',
               cursor: 'pointer',
-              transition: 'all 0.2s ease'
+              transition: 'all 0.2s ease',
+              textAlign: 'center',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis'
             }}
           >
             {category}
@@ -338,6 +344,7 @@ export default function FAQPage() {
           </svg>
           Contactează-ne
         </a>
+      </div>
       </div>
     </div>
   )

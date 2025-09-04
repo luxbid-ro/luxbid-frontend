@@ -1,7 +1,6 @@
 'use client'
 import React from 'react'
 import { useRouter } from 'next/navigation'
-import NavBar from '@/components/NavBar'
 import { useFavorites } from '@/hooks/useFavorites'
 
 interface FavoriteListing {
@@ -33,7 +32,6 @@ export default function FavoritesPage() {
   if (loading) {
     return (
       <div style={{ minHeight: '100vh', background: '#f8f9fa' }}>
-        <NavBar />
         <div style={{
           display: 'flex',
           justifyContent: 'center',
@@ -64,7 +62,6 @@ export default function FavoritesPage() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#f8f9fa' }}>
-      <NavBar />
 
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px' }}>
         <div style={{ marginBottom: '30px' }}>
