@@ -210,11 +210,12 @@ function NavBarContent() {
 
           {/* Heart Icon for Favorites */}
           <button
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault()
               if (isAuthed) {
-                router.push('/favorites')
+                window.location.href = '/favorites'
               } else {
-                router.push('/auth/login')
+                window.location.href = '/auth/login'
               }
             }}
             style={{
