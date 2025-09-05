@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
+import { useCacheInvalidation } from './useCacheInvalidation'
 
 export interface FavoriteListing {
   id: string
@@ -17,6 +18,9 @@ export const useFavorites = () => {
   const [favorites, setFavorites] = useState<FavoriteListing[]>([])
   const [favoriteIds, setFavoriteIds] = useState<Set<string>>(new Set())
   const [loading, setLoading] = useState(true)
+  
+  // Cache invalidation pentru favorites
+  const { invalidateAPICache } = useCacheInvalidation()
 
   const getStorageKey = (suffix: string) => {
     if (typeof window === 'undefined') return `luxbid_${suffix}_server`
@@ -68,10 +72,13 @@ export const useFavorites = () => {
       localStorage.setItem(getStorageKey('favorite_ids'), JSON.stringify(Array.from(newFavoriteIds)))
       setFavorites(newFavorites)
       setFavoriteIds(newFavoriteIds)
+      
+      // 🚀 PROFESSIONAL: Invalidare cache pentru favorites
+      invalidateAPICache('/favorites')
     } catch (error) {
       console.error('Error saving favorites:', error)
     }
-  }, [])
+  }, [invalidateAPICache])
 
   // Add to favorites
   const addToFavorites = useCallback((listing: FavoriteListing) => {

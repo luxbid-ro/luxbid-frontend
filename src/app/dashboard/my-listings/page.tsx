@@ -1,6 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { useCacheInvalidation } from '@/hooks/useCacheInvalidation'
 
 export default function MyListingsPage() {
   const [items, setItems] = useState<any[]>([])
@@ -12,6 +13,9 @@ export default function MyListingsPage() {
     listingTitle: ''
   })
   const [deleting, setDeleting] = useState(false)
+  
+  // Cache invalidation hook
+  const { invalidateListingsCache, forceRefreshListings } = useCacheInvalidation()
 
   const fetchAndValidateListings = async (showLoading = true) => {
     // Fetch and validate listings
@@ -101,11 +105,14 @@ export default function MyListingsPage() {
         setItems(prev => prev.filter(item => item.id !== deleteModal.listingId))
         setDeleteModal({ show: false, listingId: null, listingTitle: '' })
         
-        // Force refresh the entire list after a delay to ensure backend consistency
+        // 🚀 PROFESSIONAL: Invalidare cache automată + refetch
+        console.log('🔄 Auto-invalidating cache after DELETE operation')
+        await invalidateListingsCache()
+        
+        // Refresh data imediat fără loading spinner
         setTimeout(() => {
-          console.log('🔄 Force refreshing listings after successful delete')
-          fetchAndValidateListings(false) // Don't show loading spinner for refresh
-        }, 500)
+          fetchAndValidateListings(false)
+        }, 200) // Mică întârziere pentru cache invalidation
         
         alert('Anunțul a fost șters cu succes!')
       } else if (res.status === 404) {

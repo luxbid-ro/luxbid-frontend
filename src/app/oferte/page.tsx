@@ -3,6 +3,7 @@ import React, { useState, useEffect, useCallback, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { ListingImage } from '@/components/OptimizedImage'
 import { useFavorites } from '@/hooks/useFavorites'
+import { useCacheInvalidation } from '@/hooks/useCacheInvalidation'
 
 type Listing = {
   id: string
@@ -34,6 +35,7 @@ function OfertesContent() {
   const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'price-low' | 'price-high' | 'name'>('newest')
   const [filteredListings, setFilteredListings] = useState<Listing[]>([])
   const { isFavorite, toggleFavorite } = useFavorites()
+  const { setupCacheInvalidationListener } = useCacheInvalidation()
 
   // Initialize from URL params
   useEffect(() => {
@@ -151,6 +153,28 @@ function OfertesContent() {
   useEffect(() => {
     // Initialize listings fetch
     fetchListings()
+    
+    // Setup cache invalidation listener pentru auto-refresh
+    setupCacheInvalidationListener()
+    
+    // Listen pentru force refresh events
+    const handleForceRefresh = () => {
+      console.log('🔄 [Cache] Force refreshing listings from event')
+      fetchListings()
+    }
+    
+    window.addEventListener('forceListingsRefresh', handleForceRefresh)
+    window.addEventListener('cacheInvalidated', (event: any) => {
+      if (event.detail?.category === 'listings') {
+        console.log('✅ [Cache] Auto-refreshing listings after cache invalidation')
+        fetchListings()
+      }
+    })
+    
+    return () => {
+      window.removeEventListener('forceListingsRefresh', handleForceRefresh)
+      window.removeEventListener('cacheInvalidated', handleForceRefresh)
+    }
   }, []) // Remove fetchListings dependency to prevent infinite re-renders
 
   // Filter and sort listings based on search, category, and sort option

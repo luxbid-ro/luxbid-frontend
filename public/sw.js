@@ -320,6 +320,14 @@ self.addEventListener('message', (event) => {
       clearCache(payload?.cacheName)
       break
       
+    case 'INVALIDATE_LISTINGS_CACHE':
+      invalidateListingsCache()
+      break
+      
+    case 'INVALIDATE_API_CACHE':
+      invalidateAPICache(payload?.pattern)
+      break
+      
     case 'GET_CACHE_SIZE':
       getCacheSize().then(size => {
         event.ports[0].postMessage({ type: 'CACHE_SIZE', size })
@@ -426,3 +434,68 @@ async function forceUpdate() {
 setInterval(() => {
   checkForUpdate()
 }, 5 * 60 * 1000) // 5 minute
+
+// 🚀 CACHE INVALIDATION FUNCTIONS pentru CRUD operations
+async function invalidateListingsCache() {
+  console.log('[SW] 🔄 Invalidating listings cache...')
+  
+  try {
+    const cache = await caches.open(DYNAMIC_CACHE_NAME)
+    const keys = await cache.keys()
+    
+    // Șterge toate cache-urile pentru listings
+    const deletionPromises = keys
+      .filter(request => {
+        const url = new URL(request.url)
+        return url.pathname.includes('/listings') || 
+               url.pathname.includes('/oferte') ||
+               url.pathname === '/' // Homepage care afișează listings
+      })
+      .map(request => {
+        console.log('[SW] 🗑️ Deleting cached request:', request.url)
+        return cache.delete(request)
+      })
+    
+    await Promise.all(deletionPromises)
+    console.log('[SW] ✅ Listings cache invalidated successfully')
+    
+    // Notifică toate tab-urile că cache-ul a fost invalidat
+    const clients = await self.clients.matchAll()
+    clients.forEach(client => {
+      client.postMessage({
+        type: 'CACHE_INVALIDATED',
+        category: 'listings'
+      })
+    })
+  } catch (error) {
+    console.error('[SW] ❌ Failed to invalidate listings cache:', error)
+  }
+}
+
+async function invalidateAPICache(pattern) {
+  console.log('[SW] 🔄 Invalidating API cache for pattern:', pattern)
+  
+  try {
+    const cache = await caches.open(DYNAMIC_CACHE_NAME)
+    const keys = await cache.keys()
+    
+    const deletionPromises = keys
+      .filter(request => {
+        const url = new URL(request.url)
+        if (pattern) {
+          return url.pathname.includes(pattern)
+        }
+        // Default: invalidează toate API-urile
+        return isAPIRequest(url)
+      })
+      .map(request => {
+        console.log('[SW] 🗑️ Deleting cached API request:', request.url)
+        return cache.delete(request)
+      })
+    
+    await Promise.all(deletionPromises)
+    console.log('[SW] ✅ API cache invalidated successfully')
+  } catch (error) {
+    console.error('[SW] ❌ Failed to invalidate API cache:', error)
+  }
+}
