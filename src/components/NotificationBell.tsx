@@ -543,24 +543,29 @@ export default function NotificationBell() {
             style={{
               width: '100%',
               padding: '10px 16px',
-              background: '#9a7b0f',
+              background: 'linear-gradient(90deg, #B07410 0%, #C28414 48%, #A66B0A 100%)',
               color: 'white',
               border: 'none',
               borderRadius: '8px',
               fontSize: '0.9em',
-              fontWeight: 500,
+              fontWeight: 600,
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               gap: '8px',
-              transition: 'background-color 0.2s ease'
+              transition: 'all 0.2s ease',
+              boxShadow: '0 2px 8px rgba(176, 116, 16, 0.3)'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = '#7d6608'
+              e.currentTarget.style.background = 'linear-gradient(90deg, #9F6A0F 0%, #B17813 48%, #95600A 100%)'
+              e.currentTarget.style.transform = 'translateY(-1px)'
+              e.currentTarget.style.boxShadow = '0 4px 12px rgba(176, 116, 16, 0.4)'
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = '#9a7b0f'
+              e.currentTarget.style.background = 'linear-gradient(90deg, #B07410 0%, #C28414 48%, #A66B0A 100%)'
+              e.currentTarget.style.transform = 'translateY(0)'
+              e.currentTarget.style.boxShadow = '0 2px 8px rgba(176, 116, 16, 0.3)'
             }}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

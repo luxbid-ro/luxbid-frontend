@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
+    "prebuild": "node scripts/update-sw-timestamp.js",
     "build": "next build",
     "build:analyze": "cross-env ANALYZE=true next build",
     "start": "next start",

@@ -1,7 +1,7 @@
 // Service Worker pentru LuxBid - Optimizare Performance și Caching
 
-// Auto-update cache version based on deploy timestamp
-const DEPLOY_TIMESTAMP = new Date().getTime()
+// FIXED: Use BUILD timestamp instead of runtime timestamp
+const DEPLOY_TIMESTAMP = 1757097369020 // Will be updated by build process
 const CACHE_VERSION = `v${DEPLOY_TIMESTAMP}`
 const CACHE_NAME = `luxbid-cache-${CACHE_VERSION}`
 const STATIC_CACHE_NAME = `luxbid-static-${CACHE_VERSION}`
