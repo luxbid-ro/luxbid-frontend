@@ -529,27 +529,47 @@ export default function NotificationBell() {
           )}
         </div>
 
-        {/* Footer */}
-        {notifications.length > 0 && (
-          <div style={{
-            padding: '10px 20px',
-            borderTop: '1px solid #e2e8f0',
-            background: '#f8fafc',
-            textAlign: 'center'
-          }}>
-            <a
-              href="/dashboard/notifications"
-              style={{
-                color: '#9a7b0f',
-                textDecoration: 'none',
-                fontSize: '0.8em',
-                fontWeight: 500
-              }}
-            >
-              Vezi toate notificările →
-            </a>
-          </div>
-        )}
+        {/* Footer - ENHANCED: Button pentru pagina notificări */}
+        <div style={{
+          padding: '12px 16px',
+          borderTop: '1px solid #e2e8f0',
+          background: '#f8fafc'
+        }}>
+          <button
+            onClick={() => {
+              setIsOpen(false) // Închide dropdown-ul
+              window.location.href = '/notifications' // Navighează la pagina notificări
+            }}
+            style={{
+              width: '100%',
+              padding: '10px 16px',
+              background: '#9a7b0f',
+              color: 'white',
+              border: 'none',
+              borderRadius: '8px',
+              fontSize: '0.9em',
+              fontWeight: 500,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px',
+              transition: 'background-color 0.2s ease'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = '#7d6608'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = '#9a7b0f'
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+            Vezi toate notificările
+          </button>
+        </div>
       </div>,
       document.body
     )
