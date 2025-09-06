@@ -1,7 +1,7 @@
 // Service Worker pentru LuxBid - Optimizare Performance și Caching
 
 // FIXED: Use BUILD timestamp instead of runtime timestamp
-const DEPLOY_TIMESTAMP = 1757138694123 // Will be updated by build process
+const DEPLOY_TIMESTAMP = 1757140838381 // Will be updated by build process
 const CACHE_VERSION = `v${DEPLOY_TIMESTAMP}`
 const CACHE_NAME = `luxbid-cache-${CACHE_VERSION}`
 const STATIC_CACHE_NAME = `luxbid-static-${CACHE_VERSION}`
