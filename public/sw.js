@@ -1,7 +1,7 @@
 // Service Worker pentru LuxBid - Optimizare Performance și Caching
 
 // FIXED: Use BUILD timestamp instead of runtime timestamp
-const DEPLOY_TIMESTAMP = 1757097369020 // Will be updated by build process
+const DEPLOY_TIMESTAMP = 1757138694123 // Will be updated by build process
 const CACHE_VERSION = `v${DEPLOY_TIMESTAMP}`
 const CACHE_NAME = `luxbid-cache-${CACHE_VERSION}`
 const STATIC_CACHE_NAME = `luxbid-static-${CACHE_VERSION}`
@@ -192,14 +192,17 @@ async function staleWhileRevalidateStrategy(request, cacheName) {
   const cachedResponse = await caches.match(request)
   
   // Fetch în background pentru a actualiza cache-ul
-  const fetchPromise = fetch(request).then((networkResponse) => {
+  const fetchPromise = fetch(request).then(async (networkResponse) => {
     if (networkResponse.ok) {
-      const cache = caches.open(cacheName)
-      cache.then(c => c.put(request, networkResponse.clone()))
+      // FIXED: Clone response BEFORE using it
+      const responseClone = networkResponse.clone()
+      const cache = await caches.open(cacheName)
+      await cache.put(request, responseClone)
     }
     return networkResponse
   }).catch(() => {
     // Network failed, nu face nimic
+    return null
   })
   
   // Returnează cache-ul imediat sau wait pentru network
