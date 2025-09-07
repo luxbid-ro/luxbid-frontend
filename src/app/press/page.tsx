@@ -1,5 +1,20 @@
-'use client'
+import type { Metadata } from 'next'
 import React from 'react'
+
+export const metadata: Metadata = {
+  title: 'Presă și Media | LuxBid - Articole și Mențiuni Media',
+  description: 'Citește articolele recente despre LuxBid în presa română și internațională. Mențiuni media, awards și press kit complet.',
+  keywords: 'presă LuxBid, articole media, mențiuni LuxBid, press kit, awards marketplace',
+  openGraph: {
+    title: 'Presă și Media | LuxBid',
+    description: 'Articole recente și mențiuni media despre LuxBid',
+    type: 'website',
+    url: 'https://luxbid.ro/press',
+  },
+  alternates: {
+    canonical: 'https://luxbid.ro/press',
+  }
+}
 
 export default function PressPage() {
   return (

@@ -685,14 +685,29 @@ function NavBarContent() {
               Despre LuxBid
             </a>
             
-            <a href="/about" onClick={() => setMobileMenuOpen(false)}
+            <a href="/how-it-works" onClick={() => setMobileMenuOpen(false)}
               style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%', textAlign: 'left', padding: '12px 0', textDecoration: 'none', fontSize: '16px', color: '#666' }}>
-              Parteneri Oficiali
+              Cum Funcționează
             </a>
             
-            <a href="/about" onClick={() => setMobileMenuOpen(false)}
+            <a href="/pricing" onClick={() => setMobileMenuOpen(false)}
               style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%', textAlign: 'left', padding: '12px 0', textDecoration: 'none', fontSize: '16px', color: '#666' }}>
-              Testimoniale
+              Tarife
+            </a>
+            
+            <a href="/success-stories" onClick={() => setMobileMenuOpen(false)}
+              style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%', textAlign: 'left', padding: '12px 0', textDecoration: 'none', fontSize: '16px', color: '#666' }}>
+              Povești de Succes
+            </a>
+            
+            <a href="/press" onClick={() => setMobileMenuOpen(false)}
+              style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%', textAlign: 'left', padding: '12px 0', textDecoration: 'none', fontSize: '16px', color: '#666' }}>
+              Presă
+            </a>
+            
+            <a href="/careers" onClick={() => setMobileMenuOpen(false)}
+              style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%', textAlign: 'left', padding: '12px 0', textDecoration: 'none', fontSize: '16px', color: '#666' }}>
+              Cariere
             </a>
           </div>
 
@@ -907,6 +922,51 @@ function NavBarContent() {
             Listează un Produs
           </a>
           
+          <a href="/market-analytics" onClick={() => setAccountMenuOpen(false)} style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            padding: '12px 16px',
+            textDecoration: 'none',
+            color: '#333',
+            borderRadius: '6px',
+            transition: 'background-color 0.2s ease',
+            fontSize: '16px',
+            fontWeight: '500'
+          }}>
+            Analytics Piață
+          </a>
+          
+          <a href="/bulk-listing" onClick={() => setAccountMenuOpen(false)} style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            padding: '12px 16px',
+            textDecoration: 'none',
+            color: '#333',
+            borderRadius: '6px',
+            transition: 'background-color 0.2s ease',
+            fontSize: '16px',
+            fontWeight: '500'
+          }}>
+            Bulk Listing
+          </a>
+          
+          <a href="/kyc-verification" onClick={() => setAccountMenuOpen(false)} style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            padding: '12px 16px',
+            textDecoration: 'none',
+            color: '#333',
+            borderRadius: '6px',
+            transition: 'background-color 0.2s ease',
+            fontSize: '16px',
+            fontWeight: '500'
+          }}>
+            Verificare Identitate
+          </a>
+          
           <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #eee' }} />
           
           {/* Setări */}
@@ -936,6 +996,48 @@ function NavBarContent() {
             fontSize: '16px'
           }}>
             Setări Cont
+          </a>
+          
+          <a href="/gdpr-compliance" onClick={() => setAccountMenuOpen(false)} style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            padding: '12px 16px',
+            textDecoration: 'none',
+            color: '#333',
+            borderRadius: '6px',
+            transition: 'background-color 0.2s ease',
+            fontSize: '16px'
+          }}>
+            GDPR Compliance
+          </a>
+          
+          <a href="/data-export" onClick={() => setAccountMenuOpen(false)} style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            padding: '12px 16px',
+            textDecoration: 'none',
+            color: '#333',
+            borderRadius: '6px',
+            transition: 'background-color 0.2s ease',
+            fontSize: '16px'
+          }}>
+            Export Date
+          </a>
+          
+          <a href="/anti-fraud" onClick={() => setAccountMenuOpen(false)} style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            padding: '12px 16px',
+            textDecoration: 'none',
+            color: '#333',
+            borderRadius: '6px',
+            transition: 'background-color 0.2s ease',
+            fontSize: '16px'
+          }}>
+            Anti-Fraud
           </a>
           
           

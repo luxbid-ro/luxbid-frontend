@@ -1,5 +1,20 @@
-'use client'
+import type { Metadata } from 'next'
 import React from 'react'
+
+export const metadata: Metadata = {
+  title: 'Tarife Transparente | LuxBid - Comisioane și Prețuri',
+  description: 'Descoperă tarifele transparente LuxBid. Comisioane competitive, planuri flexibile pentru vânzători și dealerii. Plătești doar când vânzi cu adevărat.',
+  keywords: 'tarife LuxBid, comisioane marketplace, prețuri platformă lux, costuri vânzare obiecte de lux',
+  openGraph: {
+    title: 'Tarife Transparente | LuxBid',
+    description: 'Comisioane competitive și planuri flexibile pentru vânzători de obiecte de lux',
+    type: 'website',
+    url: 'https://luxbid.ro/pricing',
+  },
+  alternates: {
+    canonical: 'https://luxbid.ro/pricing',
+  }
+}
 
 export default function PricingPage() {
   return (

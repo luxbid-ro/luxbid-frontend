@@ -1,5 +1,20 @@
-'use client'
+import type { Metadata } from 'next'
 import React from 'react'
+
+export const metadata: Metadata = {
+  title: 'Povești de Succes | LuxBid - Testimoniale și Cazuri Reale',
+  description: 'Descoperă poveștile de succes ale utilizatorilor LuxBid. Testimoniale reale, cazuri de studiu și statistici impresionante de vânzări.',
+  keywords: 'povești succes LuxBid, testimoniale utilizatori, cazuri studiu marketplace lux, statistici vânzări',
+  openGraph: {
+    title: 'Povești de Succes | LuxBid',
+    description: 'Testimoniale reale și cazuri de studiu ale utilizatorilor LuxBid',
+    type: 'website',
+    url: 'https://luxbid.ro/success-stories',
+  },
+  alternates: {
+    canonical: 'https://luxbid.ro/success-stories',
+  }
+}
 
 export default function SuccessStoriesPage() {
   return (

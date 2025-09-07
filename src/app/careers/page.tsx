@@ -1,5 +1,20 @@
-'use client'
+import type { Metadata } from 'next'
 import React from 'react'
+
+export const metadata: Metadata = {
+  title: 'Cariere la LuxBid | Oportunități de Angajare în Tech',
+  description: 'Alătură-te echipei LuxBid! Descoperă oportunitățile de cariere în tech, beneficii competitive și cultura companiei pentru marketplace-ul de lux.',
+  keywords: 'cariere LuxBid, joburi tech România, oportunități angajare, beneficii companie tech',
+  openGraph: {
+    title: 'Cariere la LuxBid | Oportunități de Angajare',
+    description: 'Alătură-te echipei LuxBid și construiește viitorul marketplace-ului de lux',
+    type: 'website',
+    url: 'https://luxbid.ro/careers',
+  },
+  alternates: {
+    canonical: 'https://luxbid.ro/careers',
+  }
+}
 
 export default function CareersPage() {
   return (
