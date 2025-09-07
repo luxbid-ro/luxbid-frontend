@@ -5,9 +5,18 @@ import { useRouter } from 'next/navigation'
 export default function DashboardPage() {
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
+  const [isMobile, setIsMobile] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
+    // Check if mobile on mount and resize
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    
     const fetchUser = async () => {
       const token = localStorage.getItem('luxbid_token')
       if (!token) {
@@ -43,6 +52,8 @@ export default function DashboardPage() {
     }
     
     fetchUser()
+    
+    return () => window.removeEventListener('resize', checkMobile)
   }, [router])
 
   const logout = () => {
@@ -87,9 +98,20 @@ export default function DashboardPage() {
             Deconectare
           </button>
         </div>
-        <div style={{ background: '#fff', padding: '32px', borderRadius: '16px' }}>
+        <div style={{ 
+          background: '#fff', 
+          padding: isMobile ? '20px' : '32px', 
+          borderRadius: '16px' 
+        }}>
           <h2 style={{ margin: '0 0 24px 0', fontSize: '24px', fontWeight: '600', color: '#333' }}>Acțiuni rapide</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', marginTop: '20px' }}>
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', 
+            gap: isMobile ? '12px' : '16px', 
+            marginTop: '20px',
+            maxWidth: '100%',
+            overflow: 'hidden'
+          }}>
             <a 
               href="/dashboard/add-listing" 
               style={{ 
