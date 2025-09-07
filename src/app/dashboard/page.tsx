@@ -88,32 +88,101 @@ export default function DashboardPage() {
           </button>
         </div>
         <div style={{ background: '#fff', padding: '32px', borderRadius: '16px' }}>
-          <h2>Acțiuni rapide</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', marginTop: '20px' }}>
-            <a href="/dashboard/add-listing" style={{ background: 'var(--gold)', color: '#fff', padding: '20px', borderRadius: '12px', textDecoration: 'none', textAlign: 'center', fontWeight: '600' }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
-                <path d="M12 19l7-7 3 3-7-7-3 3 7 7-3 3z"/>
-                <path d="M11 5H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9"/>
-                <line x1="9" y1="12" x2="15" y2="12"/>
-              </svg>
+          <h2 style={{ margin: '0 0 24px 0', fontSize: '24px', fontWeight: '600', color: '#333' }}>Acțiuni rapide</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px', marginTop: '20px' }}>
+            <a 
+              href="/dashboard/add-listing" 
+              style={{ 
+                background: 'linear-gradient(135deg, #D09A1E 0%, #B8860B 100%)', 
+                color: '#fff', 
+                padding: '24px 20px', 
+                borderRadius: '12px', 
+                textDecoration: 'none', 
+                textAlign: 'center', 
+                fontWeight: '600',
+                fontSize: '16px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minHeight: '60px',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 12px rgba(208, 154, 30, 0.2)',
+                border: 'none'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)'
+                e.currentTarget.style.boxShadow = '0 6px 20px rgba(208, 154, 30, 0.3)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)'
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(208, 154, 30, 0.2)'
+              }}
+            >
               Adaugă Anunț
             </a>
-            <a href="/dashboard/my-listings" style={{ background: 'var(--surface)', color: 'var(--dark)', padding: '20px', borderRadius: '12px', textDecoration: 'none', textAlign: 'center', fontWeight: '600' }}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '8px' }}>
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                <polyline points="14,2 14,8 20,8"></polyline>
-                <line x1="16" y1="13" x2="8" y2="13"></line>
-                <line x1="16" y1="17" x2="8" y2="17"></line>
-                <polyline points="10,9 9,9 8,9"></polyline>
-              </svg>
+            <a 
+              href="/dashboard/my-listings" 
+              style={{ 
+                background: '#f8f9fa', 
+                color: '#333', 
+                padding: '24px 20px', 
+                borderRadius: '12px', 
+                textDecoration: 'none', 
+                textAlign: 'center', 
+                fontWeight: '600',
+                fontSize: '16px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minHeight: '60px',
+                transition: 'all 0.3s ease',
+                border: '2px solid #D09A1E',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)'
+                e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.15)'
+                e.currentTarget.style.background = '#f0f0f0'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)'
+                e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)'
+                e.currentTarget.style.background = '#f8f9fa'
+              }}
+            >
               Anunțurile mele
             </a>
-            <a href="/profile/edit" style={{ background: '#f8f9fa', color: '#333', padding: '20px', borderRadius: '12px', textDecoration: 'none', textAlign: 'center', fontWeight: '600', border: '2px solid #D09A1E' }}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px' }}>
-          <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
-          <circle cx="12" cy="12" r="3"/>
-        </svg>
-        Editează Profil
+            <a 
+              href="/profile/edit" 
+              style={{ 
+                background: '#f8f9fa', 
+                color: '#333', 
+                padding: '24px 20px', 
+                borderRadius: '12px', 
+                textDecoration: 'none', 
+                textAlign: 'center', 
+                fontWeight: '600',
+                fontSize: '16px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minHeight: '60px',
+                transition: 'all 0.3s ease',
+                border: '2px solid #D09A1E',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)'
+                e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.15)'
+                e.currentTarget.style.background = '#f0f0f0'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)'
+                e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)'
+                e.currentTarget.style.background = '#f8f9fa'
+              }}
+            >
+              Editează Profil
             </a>
           </div>
         </div>
