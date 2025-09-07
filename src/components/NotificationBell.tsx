@@ -37,6 +37,12 @@ export default function NotificationBell() {
 
       if (response.ok) {
         const data = await response.json()
+        console.log('👤 User profile fetched:', {
+          id: data.id,
+          email: data.email,
+          createdAt: data.createdAt,
+          createdAtDate: new Date(data.createdAt).toISOString()
+        })
         setUserCreatedAt(data.createdAt)
       }
     } catch (error) {
@@ -194,6 +200,16 @@ export default function NotificationBell() {
     const createdDate = new Date(userCreatedAt)
     const now = new Date()
     const diffInHours = (now.getTime() - createdDate.getTime()) / (1000 * 60 * 60)
+    
+    // Debug logging
+    console.log('🔍 User age check:', {
+      userCreatedAt,
+      createdDate: createdDate.toISOString(),
+      now: now.toISOString(),
+      diffInHours: diffInHours.toFixed(2),
+      isNew: diffInHours < 24
+    })
+    
     return diffInHours < 24
   }
 
@@ -241,11 +257,21 @@ export default function NotificationBell() {
   // Generate notifications for display
   const getDisplayNotifications = () => {
     if (notifications.length > 0) {
+      console.log('📬 Showing real notifications:', notifications.length)
       return notifications
     }
 
+    const userIsNew = isNewUser()
+    console.log('🔔 Notification display logic:', {
+      hasRealNotifications: notifications.length > 0,
+      userIsNew,
+      welcomeMessageRead,
+      userCreatedAt
+    })
+
     // If no real notifications, show appropriate message based on user age
-    if (isNewUser()) {
+    if (userIsNew) {
+      console.log('✅ Showing welcome message for new user')
       return [{
         id: 'welcome',
         type: 'SYSTEM',
@@ -255,6 +281,7 @@ export default function NotificationBell() {
         createdAt: userCreatedAt || new Date().toISOString()
       }]
     } else {
+      console.log('ℹ️ Showing no notifications message for old user')
       return [{
         id: 'no-notifications',
         type: 'SYSTEM', 
