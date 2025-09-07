@@ -392,7 +392,7 @@ function NavBarContent() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
           {/* Descoperă Luxul Section */}
           <div style={{ padding: '16px 0' }}>
-            <h3 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '600', color: '#333' }}>Descoperă Luxul</h3>
+            <h3 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '600', color: '#333' }}>Descoperă Obiecte de LUX</h3>
             
             {/* Watch Brands */}
             <div style={{ position: 'relative' }}>
