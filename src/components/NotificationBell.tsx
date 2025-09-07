@@ -41,9 +41,13 @@ export default function NotificationBell() {
           id: data.id,
           email: data.email,
           createdAt: data.createdAt,
-          createdAtDate: new Date(data.createdAt).toISOString()
+          createdAtType: typeof data.createdAt,
+          createdAtDate: new Date(data.createdAt).toISOString(),
+          isValidDate: !isNaN(new Date(data.createdAt).getTime())
         })
         setUserCreatedAt(data.createdAt)
+      } else {
+        console.log('❌ Failed to fetch user profile:', response.status, response.statusText)
       }
     } catch (error) {
       console.error('Error fetching user profile:', error)
@@ -196,18 +200,34 @@ export default function NotificationBell() {
 
   // Check if user is new (< 24 hours)
   const isNewUser = () => {
-    if (!userCreatedAt) return false
+    if (!userCreatedAt) {
+      console.log('❌ No userCreatedAt found')
+      return false
+    }
+    
     const createdDate = new Date(userCreatedAt)
     const now = new Date()
-    const diffInHours = (now.getTime() - createdDate.getTime()) / (1000 * 60 * 60)
+    
+    // Check if date is valid
+    if (isNaN(createdDate.getTime())) {
+      console.log('❌ Invalid date format:', userCreatedAt)
+      return false
+    }
+    
+    const diffInMs = now.getTime() - createdDate.getTime()
+    const diffInHours = diffInMs / (1000 * 60 * 60)
+    const diffInDays = diffInMs / (1000 * 60 * 60 * 24)
     
     // Debug logging
     console.log('🔍 User age check:', {
       userCreatedAt,
       createdDate: createdDate.toISOString(),
       now: now.toISOString(),
+      diffInMs,
       diffInHours: diffInHours.toFixed(2),
-      isNew: diffInHours < 24
+      diffInDays: diffInDays.toFixed(2),
+      isNew: diffInHours < 24,
+      isOld: diffInDays > 1
     })
     
     return diffInHours < 24
