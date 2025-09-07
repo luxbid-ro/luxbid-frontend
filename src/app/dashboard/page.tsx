@@ -89,7 +89,7 @@ export default function DashboardPage() {
         </div>
         <div style={{ background: '#fff', padding: '32px', borderRadius: '16px' }}>
           <h2 style={{ margin: '0 0 24px 0', fontSize: '24px', fontWeight: '600', color: '#333' }}>Acțiuni rapide</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px', marginTop: '20px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', marginTop: '20px' }}>
             <a 
               href="/dashboard/add-listing" 
               style={{ 
