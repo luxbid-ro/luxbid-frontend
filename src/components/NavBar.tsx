@@ -678,7 +678,7 @@ function NavBarContent() {
             </a>
             
             <a 
-              href="/evaluation" 
+              href="/contact" 
               onClick={() => setMobileMenuOpen(false)}
               style={{ 
                 display: 'flex', 
@@ -696,7 +696,7 @@ function NavBarContent() {
             </a>
             
             <a 
-              href="/authentication" 
+              href="/about" 
               onClick={() => setMobileMenuOpen(false)}
               style={{ 
                 display: 'flex', 
@@ -714,7 +714,7 @@ function NavBarContent() {
             </a>
             
             <a 
-              href="/support" 
+              href="/contact" 
               onClick={() => setMobileMenuOpen(false)}
               style={{ 
                 display: 'flex', 
@@ -741,12 +741,12 @@ function NavBarContent() {
               Despre LuxBid
             </a>
             
-            <a href="/partners" onClick={() => setMobileMenuOpen(false)}
+            <a href="/about" onClick={() => setMobileMenuOpen(false)}
               style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%', textAlign: 'left', padding: '12px 0', textDecoration: 'none', fontSize: '16px', color: '#666' }}>
               Parteneri Oficiali
             </a>
             
-            <a href="/testimonials" onClick={() => setMobileMenuOpen(false)}
+            <a href="/about" onClick={() => setMobileMenuOpen(false)}
               style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%', textAlign: 'left', padding: '12px 0', textDecoration: 'none', fontSize: '16px', color: '#666' }}>
               Testimoniale
             </a>
