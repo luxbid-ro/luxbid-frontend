@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 
 type Notification = {
@@ -22,12 +22,19 @@ export default function NotificationBell() {
   const buttonRef = useRef<HTMLButtonElement>(null)
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, right: 0 })
 
-  // Fetch user profile to get creation date
-  const fetchUserProfile = async () => {
+  // Fetch user profile to get creation date - memoized to avoid repeated calls
+  const fetchUserProfile = useCallback(async () => {
     try {
       if (typeof window === 'undefined') return
       const token = localStorage.getItem('luxbid_token')
       if (!token) return
+
+      // Check if we already have userCreatedAt cached
+      const cachedCreatedAt = localStorage.getItem('luxbid_user_created_at')
+      if (cachedCreatedAt && userCreatedAt === null) {
+        setUserCreatedAt(cachedCreatedAt)
+        return
+      }
 
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || 'https://luxbid-backend.onrender.com'}/users/profile`, {
         headers: {
@@ -37,22 +44,14 @@ export default function NotificationBell() {
 
       if (response.ok) {
         const data = await response.json()
-        console.log('👤 User profile fetched:', {
-          id: data.id,
-          email: data.email,
-          createdAt: data.createdAt,
-          createdAtType: typeof data.createdAt,
-          createdAtDate: new Date(data.createdAt).toISOString(),
-          isValidDate: !isNaN(new Date(data.createdAt).getTime())
-        })
         setUserCreatedAt(data.createdAt)
-      } else {
-        console.log('❌ Failed to fetch user profile:', response.status, response.statusText)
+        // Cache the createdAt for future use
+        localStorage.setItem('luxbid_user_created_at', data.createdAt)
       }
     } catch (error) {
       console.error('Error fetching user profile:', error)
     }
-  }
+  }, [userCreatedAt])
 
   // Fetch unread count
   const fetchUnreadCount = async () => {
@@ -141,7 +140,7 @@ export default function NotificationBell() {
       if (!token) return
 
       // Marchează și welcome message-ul ca citit
-      if (isNewUser() && !welcomeMessageRead) {
+      if (isNewUser && !welcomeMessageRead) {
         markWelcomeAsRead()
       }
 
@@ -166,7 +165,7 @@ export default function NotificationBell() {
     // Mark as read if unread
     if (!notification.isRead) {
       // Pentru welcome message (notificare de sistem), marchează local
-      if (notification.id === 'welcome' && isNewUser()) {
+      if (notification.id === 'welcome' && isNewUser) {
         markWelcomeAsRead()
       } else {
         // Pentru notificări reale din backend
@@ -198,40 +197,21 @@ export default function NotificationBell() {
     setIsOpen(false)
   }
 
-  // Check if user is new (< 24 hours)
-  const isNewUser = () => {
-    if (!userCreatedAt) {
-      console.log('❌ No userCreatedAt found')
-      return false
-    }
+  // Check if user is new (< 24 hours) - memoized for performance
+  const isNewUser = useMemo(() => {
+    if (!userCreatedAt) return false
     
     const createdDate = new Date(userCreatedAt)
     const now = new Date()
     
     // Check if date is valid
-    if (isNaN(createdDate.getTime())) {
-      console.log('❌ Invalid date format:', userCreatedAt)
-      return false
-    }
+    if (isNaN(createdDate.getTime())) return false
     
     const diffInMs = now.getTime() - createdDate.getTime()
     const diffInHours = diffInMs / (1000 * 60 * 60)
-    const diffInDays = diffInMs / (1000 * 60 * 60 * 24)
-    
-    // Debug logging
-    console.log('🔍 User age check:', {
-      userCreatedAt,
-      createdDate: createdDate.toISOString(),
-      now: now.toISOString(),
-      diffInMs,
-      diffInHours: diffInHours.toFixed(2),
-      diffInDays: diffInDays.toFixed(2),
-      isNew: diffInHours < 24,
-      isOld: diffInDays > 1
-    })
     
     return diffInHours < 24
-  }
+  }, [userCreatedAt])
 
   // State pentru a urmări dacă welcome message-ul a fost citit
   const [welcomeMessageRead, setWelcomeMessageRead] = useState(false)
@@ -260,38 +240,28 @@ export default function NotificationBell() {
     }
   }
 
-  // Calculează numărul real de notificări necitite
-  const getRealUnreadCount = () => {
+  // Calculează numărul real de notificări necitite - memoized
+  const getRealUnreadCount = useMemo(() => {
     if (notifications.length > 0) {
       return unreadCount // Notificări reale din backend
     }
     
     // Pentru utilizatori noi cu welcome message
-    if (isNewUser() && !welcomeMessageRead) {
+    if (isNewUser && !welcomeMessageRead) {
       return 1 // Welcome message necitit
     }
     
     return 0 // Nu sunt notificări necitite
-  }
+  }, [notifications.length, unreadCount, isNewUser, welcomeMessageRead])
 
-  // Generate notifications for display
-  const getDisplayNotifications = () => {
+  // Generate notifications for display - memoized
+  const getDisplayNotifications = useMemo(() => {
     if (notifications.length > 0) {
-      console.log('📬 Showing real notifications:', notifications.length)
       return notifications
     }
 
-    const userIsNew = isNewUser()
-    console.log('🔔 Notification display logic:', {
-      hasRealNotifications: notifications.length > 0,
-      userIsNew,
-      welcomeMessageRead,
-      userCreatedAt
-    })
-
     // If no real notifications, show appropriate message based on user age
-    if (userIsNew) {
-      console.log('✅ Showing welcome message for new user')
+    if (isNewUser) {
       return [{
         id: 'welcome',
         type: 'SYSTEM',
@@ -301,7 +271,6 @@ export default function NotificationBell() {
         createdAt: userCreatedAt || new Date().toISOString()
       }]
     } else {
-      console.log('ℹ️ Showing no notifications message for old user')
       return [{
         id: 'no-notifications',
         type: 'SYSTEM', 
@@ -311,7 +280,7 @@ export default function NotificationBell() {
         createdAt: new Date().toISOString()
       }]
     }
-  }
+  }, [notifications, isNewUser, welcomeMessageRead, userCreatedAt])
 
   // Format time ago
   const formatTimeAgo = (dateString: string) => {
@@ -380,14 +349,6 @@ export default function NotificationBell() {
         right: window.innerWidth - rect.right
       }
       
-      console.log('🔔 NotificationBell positioning:', {
-        buttonRect: rect,
-        scrollY: window.scrollY,
-        windowWidth: window.innerWidth,
-        finalPosition: newPosition,
-        page: window.location.pathname
-      })
-      
       setDropdownPosition(newPosition)
     }
   }
@@ -399,23 +360,19 @@ export default function NotificationBell() {
       
       // Don't close if clicking on dropdown or button
       if (dropdownRef.current && dropdownRef.current.contains(target)) {
-        console.log('🔔 Click inside dropdown - staying open')
         return
       }
       
       if (buttonRef.current && buttonRef.current.contains(target)) {
-        console.log('🔔 Click on button - handled by onClick')
         return
       }
       
       // Close dropdown for outside clicks
-      console.log('🔔 Click outside - closing dropdown')
       setIsOpen(false)
     }
 
     // Close dropdown on scroll
     const handleScroll = () => {
-      console.log('🔔 Scroll detected - closing dropdown')
       setIsOpen(false)
     }
 
@@ -486,9 +443,9 @@ export default function NotificationBell() {
           background: '#f8fafc'
         }}>
           <h3 style={{ margin: 0, fontSize: '1em', fontWeight: 600 }}>
-            Notificări ({getRealUnreadCount()} necitite)
+            Notificări ({getRealUnreadCount} necitite)
           </h3>
-          {getRealUnreadCount() > 0 && (
+          {getRealUnreadCount > 0 && (
             <button
               onClick={markAllAsRead}
               style={{
@@ -512,7 +469,7 @@ export default function NotificationBell() {
               Se încarcă...
             </div>
           ) : (
-            getDisplayNotifications().map((notification) => (
+            getDisplayNotifications.map((notification) => (
               <div
                 key={notification.id}
                 onClick={() => handleNotificationClick(notification)}
@@ -637,7 +594,7 @@ export default function NotificationBell() {
             updateDropdownPosition()
             fetchNotifications()
             // Marchează welcome message-ul ca citit pentru utilizatorii noi
-            if (isNewUser() && !welcomeMessageRead) {
+            if (isNewUser && !welcomeMessageRead) {
               markWelcomeAsRead()
             }
           }
@@ -665,7 +622,7 @@ export default function NotificationBell() {
           <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
           <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
         </svg>
-        {getRealUnreadCount() > 0 && (
+        {getRealUnreadCount > 0 && (
           <span style={{
             position: 'absolute',
             top: 2,
@@ -681,7 +638,7 @@ export default function NotificationBell() {
             justifyContent: 'center',
             fontWeight: 'bold'
           }}>
-            {getRealUnreadCount() > 99 ? '99+' : getRealUnreadCount()}
+            {getRealUnreadCount > 99 ? '99+' : getRealUnreadCount}
           </span>
         )}
       </button>

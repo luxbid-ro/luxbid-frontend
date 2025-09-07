@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 
 export default function NotificationsPage() {
@@ -9,12 +9,19 @@ export default function NotificationsPage() {
   const [welcomeMessageRead, setWelcomeMessageRead] = useState(false)
   const router = useRouter()
 
-  // Fetch user profile to get creation date
-  const fetchUserProfile = async () => {
+  // Fetch user profile to get creation date - memoized with cache
+  const fetchUserProfile = useCallback(async () => {
     try {
       if (typeof window === 'undefined') return
       const token = localStorage.getItem('luxbid_token')
       if (!token) return
+
+      // Check if we already have userCreatedAt cached
+      const cachedCreatedAt = localStorage.getItem('luxbid_user_created_at')
+      if (cachedCreatedAt && userCreatedAt === null) {
+        setUserCreatedAt(cachedCreatedAt)
+        return
+      }
 
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || 'https://luxbid-backend.onrender.com'}/users/profile`, {
         headers: {
@@ -24,57 +31,30 @@ export default function NotificationsPage() {
 
       if (response.ok) {
         const data = await response.json()
-        console.log('👤 Notifications page - User profile fetched:', {
-          id: data.id,
-          email: data.email,
-          createdAt: data.createdAt,
-          createdAtType: typeof data.createdAt,
-          createdAtDate: new Date(data.createdAt).toISOString(),
-          isValidDate: !isNaN(new Date(data.createdAt).getTime())
-        })
         setUserCreatedAt(data.createdAt)
-      } else {
-        console.log('❌ Failed to fetch user profile:', response.status, response.statusText)
+        // Cache the createdAt for future use
+        localStorage.setItem('luxbid_user_created_at', data.createdAt)
       }
     } catch (error) {
       console.error('Error fetching user profile:', error)
     }
-  }
+  }, [userCreatedAt])
 
-  // Check if user is new (< 24 hours)
-  const isNewUser = () => {
-    if (!userCreatedAt) {
-      console.log('❌ No userCreatedAt found in notifications page')
-      return false
-    }
+  // Check if user is new (< 24 hours) - memoized for performance
+  const isNewUser = useMemo(() => {
+    if (!userCreatedAt) return false
     
     const createdDate = new Date(userCreatedAt)
     const now = new Date()
     
     // Check if date is valid
-    if (isNaN(createdDate.getTime())) {
-      console.log('❌ Invalid date format in notifications page:', userCreatedAt)
-      return false
-    }
+    if (isNaN(createdDate.getTime())) return false
     
     const diffInMs = now.getTime() - createdDate.getTime()
     const diffInHours = diffInMs / (1000 * 60 * 60)
-    const diffInDays = diffInMs / (1000 * 60 * 60 * 24)
-    
-    // Debug logging
-    console.log('🔍 Notifications page - User age check:', {
-      userCreatedAt,
-      createdDate: createdDate.toISOString(),
-      now: now.toISOString(),
-      diffInMs,
-      diffInHours: diffInHours.toFixed(2),
-      diffInDays: diffInDays.toFixed(2),
-      isNew: diffInHours < 24,
-      isOld: diffInDays > 1
-    })
     
     return diffInHours < 24
-  }
+  }, [userCreatedAt])
 
   // Load welcome message read status din localStorage
   useEffect(() => {
@@ -156,16 +136,8 @@ export default function NotificationsPage() {
           {/* Notifications List */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             {(() => {
-              const userIsNew = isNewUser()
-              console.log('🔔 Notifications page - Display logic:', {
-                userIsNew,
-                welcomeMessageRead,
-                userCreatedAt
-              })
-
               // Show welcome message only for new users who haven't read it
-              if (userIsNew && !welcomeMessageRead) {
-                console.log('✅ Notifications page - Showing welcome message for new user')
+              if (isNewUser && !welcomeMessageRead) {
                 return (
                   <div style={{
                     padding: '16px',
@@ -196,7 +168,6 @@ export default function NotificationsPage() {
               }
 
               // Show no notifications message for old users
-              console.log('ℹ️ Notifications page - Showing no notifications message for old user')
               return (
                 <div style={{
                   padding: '40px',
