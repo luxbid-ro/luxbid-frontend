@@ -338,9 +338,8 @@ export default function ListingDetailPage() {
               }}>
                 <h3 style={{ margin: '0 0 16px 0', color: '#333', fontSize: '1.1em', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: '#D09A1E' }}>
-                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                    <path d="M2 17l10 5 10-5"/>
-                    <path d="M2 12l10 5 10-5"/>
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12,6 12,12 16,14"/>
                   </svg>
                   Alertă de Preț
                 </h3>
