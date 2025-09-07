@@ -880,7 +880,7 @@ function NavBarContent() {
             transition: 'background-color 0.2s ease',
             fontSize: '16px'
           }}>
-            Favorituri
+            Anunțuri Favorite
           </a>
           
           <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #eee' }} />
@@ -914,7 +914,7 @@ function NavBarContent() {
             Notificări
           </a>
           
-          <a href="/history" onClick={() => setAccountMenuOpen(false)} style={{
+          <a href="/dashboard" onClick={() => setAccountMenuOpen(false)} style={{
             display: 'flex',
             alignItems: 'center',
             gap: '12px',
@@ -925,7 +925,7 @@ function NavBarContent() {
             transition: 'background-color 0.2s ease',
             fontSize: '16px'
           }}>
-            Istoric
+            Istoric Activități
           </a>
           
           <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #eee' }} />
@@ -960,7 +960,7 @@ function NavBarContent() {
             fontWeight: '500',
             background: 'rgba(208, 154, 30, 0.1)'
           }}>
-            Listează Premium
+            Listează un Produs
           </a>
           
           <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #eee' }} />
@@ -980,7 +980,7 @@ function NavBarContent() {
             Profil
           </a>
           
-          <a href="/preferences" onClick={() => setAccountMenuOpen(false)} style={{
+          <a href="/profile/edit" onClick={() => setAccountMenuOpen(false)} style={{
             display: 'flex',
             alignItems: 'center',
             gap: '12px',
@@ -991,7 +991,7 @@ function NavBarContent() {
             transition: 'background-color 0.2s ease',
             fontSize: '16px'
           }}>
-            Preferințe
+            Setări Cont
           </a>
           
           
