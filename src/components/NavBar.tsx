@@ -658,26 +658,6 @@ function NavBarContent() {
             <h3 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '600', color: '#333' }}>Servicii LuxBid</h3>
             
             <a 
-              href="/dashboard/add-listing" 
-              onClick={() => setMobileMenuOpen(false)}
-              style={{ 
-                display: 'block', 
-                width: '100%', 
-                textAlign: 'left', 
-                padding: '12px 16px', 
-                background: '#D09A1E',
-                color: '#fff',
-                textDecoration: 'none', 
-                fontSize: '16px',
-                fontWeight: '500',
-                borderRadius: '8px',
-                marginBottom: '8px'
-              }}
-            >
-              Listează Premium
-            </a>
-            
-            <a 
               href="/contact" 
               onClick={() => setMobileMenuOpen(false)}
               style={{ 
