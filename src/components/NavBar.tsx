@@ -692,42 +692,6 @@ function NavBarContent() {
                 color: '#666' 
               }}
             >
-              Evaluare Gratuită
-            </a>
-            
-            <a 
-              href="/about" 
-              onClick={() => setMobileMenuOpen(false)}
-              style={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                gap: '8px', 
-                width: '100%', 
-                textAlign: 'left', 
-                padding: '12px 0', 
-                textDecoration: 'none', 
-                fontSize: '16px', 
-                color: '#666' 
-              }}
-            >
-              Autentificare Certificată
-            </a>
-            
-            <a 
-              href="/contact" 
-              onClick={() => setMobileMenuOpen(false)}
-              style={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                gap: '8px', 
-                width: '100%', 
-                textAlign: 'left', 
-                padding: '12px 0', 
-                textDecoration: 'none', 
-                fontSize: '16px', 
-                color: '#666' 
-              }}
-            >
               Asistență Personală
             </a>
           </div>
