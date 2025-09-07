@@ -390,9 +390,9 @@ function NavBarContent() {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
-          {/* Buy Section */}
+          {/* Descoperă Luxul Section */}
           <div style={{ padding: '16px 0' }}>
-            <h3 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '600', color: '#333' }}>Cumpără un obiect de lux</h3>
+            <h3 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '600', color: '#333' }}>Descoperă Luxul</h3>
             
             {/* Watch Brands */}
             <div style={{ position: 'relative' }}>
@@ -414,7 +414,7 @@ function NavBarContent() {
                   fontWeight: '500'
                 }}
               >
-                Cumpără ceas după brand
+                Ceasuri Premium
                 <span style={{ fontSize: '12px', color: '#999', transform: brandsMenuOpen ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>›</span>
               </button>
               
@@ -486,7 +486,7 @@ function NavBarContent() {
                   fontWeight: '500'
                 }}
               >
-                Cumpără geantă după brand
+                Genți Designer
                 <span style={{ fontSize: '12px', color: '#999', transform: bagBrandsMenuOpen ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>›</span>
               </button>
               
@@ -558,7 +558,7 @@ function NavBarContent() {
                   fontWeight: '500'
                 }}
               >
-                Caută bijuterii după brand
+                Bijuterii Exclusiv
                 <span style={{ fontSize: '12px', color: '#999', transform: jewelryBrandsMenuOpen ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>›</span>
               </button>
               
@@ -611,6 +611,27 @@ function NavBarContent() {
             </div>
             
             <button 
+              onClick={() => { setActiveCategory(''); router.push('/oferte?featured=true'); setMobileMenuOpen(false); }}
+              style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'space-between',
+                width: '100%', 
+                textAlign: 'left', 
+                padding: '12px 0', 
+                background: 'none', 
+                border: 'none', 
+                fontSize: '16px', 
+                color: '#333', 
+                cursor: 'pointer',
+                fontWeight: '500'
+              }}
+            >
+              Colecții Speciale
+              <span style={{ fontSize: '12px', color: '#999' }}>›</span>
+            </button>
+            
+            <button 
               onClick={() => { setActiveCategory(''); router.push('/oferte'); setMobileMenuOpen(false); }}
               style={{ 
                 display: 'flex', 
@@ -627,14 +648,14 @@ function NavBarContent() {
                 fontWeight: '500'
               }}
             >
-              Explorează categoriile
+              Toate Ofertele
               <span style={{ fontSize: '12px', color: '#999' }}>›</span>
             </button>
           </div>
 
-          {/* Sell Section */}
+          {/* Servicii LuxBid Section */}
           <div style={{ padding: '16px 0', borderTop: '1px solid #eee' }}>
-            <h3 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '600', color: '#333' }}>Vinde un obiect de lux</h3>
+            <h3 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '600', color: '#333' }}>Servicii LuxBid</h3>
             
             <a 
               href="/dashboard/add-listing" 
@@ -653,100 +674,100 @@ function NavBarContent() {
                 marginBottom: '8px'
               }}
             >
-              Publică anunțul tău
+              Listează Premium
+            </a>
+            
+            <a 
+              href="/evaluation" 
+              onClick={() => setMobileMenuOpen(false)}
+              style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: '8px', 
+                width: '100%', 
+                textAlign: 'left', 
+                padding: '12px 0', 
+                textDecoration: 'none', 
+                fontSize: '16px', 
+                color: '#666' 
+              }}
+            >
+              Evaluare Gratuită
+            </a>
+            
+            <a 
+              href="/authentication" 
+              onClick={() => setMobileMenuOpen(false)}
+              style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: '8px', 
+                width: '100%', 
+                textAlign: 'left', 
+                padding: '12px 0', 
+                textDecoration: 'none', 
+                fontSize: '16px', 
+                color: '#666' 
+              }}
+            >
+              Autentificare Certificată
+            </a>
+            
+            <a 
+              href="/support" 
+              onClick={() => setMobileMenuOpen(false)}
+              style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: '8px', 
+                width: '100%', 
+                textAlign: 'left', 
+                padding: '12px 0', 
+                textDecoration: 'none', 
+                fontSize: '16px', 
+                color: '#666' 
+              }}
+            >
+              Asistență Personală
             </a>
           </div>
           
-          {/* Activități */}
+          {/* Despre Platforma */}
           <div style={{ padding: '16px 0', borderTop: '1px solid #eee' }}>
-            <h3 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '600', color: '#333' }}>Activități</h3>
-
-            <a href="/dashboard/my-listings" onClick={() => setMobileMenuOpen(false)}
-              style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%', textAlign: 'left', padding: '12px 0', textDecoration: 'none', fontSize: '16px', color: '#666' }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <polyline points="12,6 12,12 16,14"></polyline>
-              </svg>
-              Anunțurile mele
-            </a>
-
-            <a href="/mesaje" onClick={() => setMobileMenuOpen(false)}
-              style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%', textAlign: 'left', padding: '12px 0', textDecoration: 'none', fontSize: '16px', color: '#666' }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-              </svg>
-              Mesajele mele
-            </a>
-          </div>
-
-          {/* About */}
-          <div style={{ padding: '16px 0', borderTop: '1px solid #eee' }}>
-            <h3 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '600', color: '#333' }}>Despre</h3>
+            <h3 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '600', color: '#333' }}>Despre Platforma</h3>
             
             <a href="/about" onClick={() => setMobileMenuOpen(false)}
               style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%', textAlign: 'left', padding: '12px 0', textDecoration: 'none', fontSize: '16px', color: '#666' }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="16" x2="12" y2="12"></line>
-                <line x1="9" y1="9" x2="15" y2="15"></line>
-              </svg>
               Despre LuxBid
             </a>
             
-            <a href="/faq" onClick={() => setMobileMenuOpen(false)}
+            <a href="/partners" onClick={() => setMobileMenuOpen(false)}
               style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%', textAlign: 'left', padding: '12px 0', textDecoration: 'none', fontSize: '16px', color: '#666' }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                <line x1="12" y1="17" x2="12.01" y2="17"></line>
-              </svg>
-              FAQ
+              Parteneri Oficiali
             </a>
             
-            <a href="/contact" onClick={() => setMobileMenuOpen(false)}
+            <a href="/testimonials" onClick={() => setMobileMenuOpen(false)}
               style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%', textAlign: 'left', padding: '12px 0', textDecoration: 'none', fontSize: '16px', color: '#666' }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                <polyline points="22,6 12,13 2,6"></polyline>
-              </svg>
-              Contact
+              Testimoniale
             </a>
           </div>
 
           {/* Legal */}
           <div style={{ padding: '16px 0', borderTop: '1px solid #eee' }}>
-            <h3 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '600', color: '#333' }}>Legal</h3>
+            <h3 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '600', color: '#333' }}>Informații Legale</h3>
             
             <a href="/legal/terms-conditions" onClick={() => setMobileMenuOpen(false)}
               style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%', textAlign: 'left', padding: '8px 0', textDecoration: 'none', fontSize: '14px', color: '#666' }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                <polyline points="14,2 14,8 20,8"></polyline>
-                <line x1="16" y1="13" x2="8" y2="13"></line>
-                <line x1="16" y1="17" x2="8" y2="17"></line>
-                <polyline points="10,9 9,9 8,9"></polyline>
-              </svg>
               Termeni și Condiții
             </a>
             
             <a href="/legal/privacy-policy" onClick={() => setMobileMenuOpen(false)}
               style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%', textAlign: 'left', padding: '8px 0', textDecoration: 'none', fontSize: '14px', color: '#666' }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                <circle cx="12" cy="16" r="1"></circle>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-              </svg>
               Politica de Confidențialitate
             </a>
             
             <a href="/legal/cookie-policy" onClick={() => setMobileMenuOpen(false)}
               style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%', textAlign: 'left', padding: '8px 0', textDecoration: 'none', fontSize: '14px', color: '#666' }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
-                <line x1="9" y1="9" x2="9.01" y2="9"></line>
-                <line x1="15" y1="9" x2="15.01" y2="9"></line>
-              </svg>
               Politica Cookies
             </a>
           </div>
@@ -818,7 +839,23 @@ function NavBarContent() {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          {/* Dashboard Principal */}
           <a href="/dashboard" onClick={() => setAccountMenuOpen(false)} style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            padding: '12px 16px',
+            textDecoration: 'none',
+            color: '#333',
+            borderRadius: '6px',
+            transition: 'background-color 0.2s ease',
+            fontSize: '16px',
+            fontWeight: '500'
+          }}>
+            Contul meu
+          </a>
+          
+          <a href="/dashboard/my-listings" onClick={() => setAccountMenuOpen(false)} style={{
             display: 'flex',
             alignItems: 'center',
             gap: '12px',
@@ -829,15 +866,26 @@ function NavBarContent() {
             transition: 'background-color 0.2s ease',
             fontSize: '16px'
           }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <rect x="3" y="3" width="7" height="7"/>
-              <rect x="14" y="3" width="7" height="7"/>
-              <rect x="14" y="14" width="7" height="7"/>
-              <rect x="3" y="14" width="7" height="7"/>
-            </svg>
-            Contul meu
+            Colecția mea
           </a>
           
+          <a href="/favorites" onClick={() => setAccountMenuOpen(false)} style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            padding: '12px 16px',
+            textDecoration: 'none',
+            color: '#333',
+            borderRadius: '6px',
+            transition: 'background-color 0.2s ease',
+            fontSize: '16px'
+          }}>
+            Favorituri
+          </a>
+          
+          <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #eee' }} />
+          
+          {/* Activități */}
           <a href="/mesaje" onClick={() => setAccountMenuOpen(false)} style={{
             display: 'flex',
             alignItems: 'center',
@@ -849,66 +897,7 @@ function NavBarContent() {
             transition: 'background-color 0.2s ease',
             fontSize: '16px'
           }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-              <polyline points="22,6 12,13 2,6"/>
-            </svg>
             Mesaje
-          </a>
-          
-          <a href="/oferte" onClick={() => setAccountMenuOpen(false)} style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '12px',
-            padding: '12px 16px',
-            textDecoration: 'none',
-            color: '#333',
-            borderRadius: '6px',
-            transition: 'background-color 0.2s ease',
-            fontSize: '16px'
-          }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="9" cy="21" r="1"/>
-              <circle cx="20" cy="21" r="1"/>
-              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-            </svg>
-            Cumpără
-          </a>
-          
-          <a href="/dashboard/add-listing" onClick={() => setAccountMenuOpen(false)} style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '12px',
-            padding: '12px 16px',
-            textDecoration: 'none',
-            color: '#333',
-            borderRadius: '6px',
-            transition: 'background-color 0.2s ease',
-            fontSize: '16px'
-          }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
-            </svg>
-            Vinde
-          </a>
-          <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #eee' }} />
-          
-          <a href="/profile/edit" onClick={() => setAccountMenuOpen(false)} style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '12px',
-            padding: '12px 16px',
-            textDecoration: 'none',
-            color: '#333',
-            borderRadius: '6px',
-            transition: 'background-color 0.2s ease',
-            fontSize: '16px'
-          }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-              <circle cx="12" cy="7" r="4"/>
-            </svg>
-            Profil
           </a>
           
           <a href="/notifications" onClick={() => setAccountMenuOpen(false)} style={{
@@ -922,12 +911,89 @@ function NavBarContent() {
             transition: 'background-color 0.2s ease',
             fontSize: '16px'
           }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
-              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-            </svg>
             Notificări
           </a>
+          
+          <a href="/history" onClick={() => setAccountMenuOpen(false)} style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            padding: '12px 16px',
+            textDecoration: 'none',
+            color: '#333',
+            borderRadius: '6px',
+            transition: 'background-color 0.2s ease',
+            fontSize: '16px'
+          }}>
+            Istoric
+          </a>
+          
+          <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #eee' }} />
+          
+          {/* Acțiuni Rapide */}
+          <a href="/oferte" onClick={() => setAccountMenuOpen(false)} style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            padding: '12px 16px',
+            textDecoration: 'none',
+            color: '#D09A1E',
+            borderRadius: '6px',
+            transition: 'background-color 0.2s ease',
+            fontSize: '16px',
+            fontWeight: '500',
+            background: 'rgba(208, 154, 30, 0.1)'
+          }}>
+            Cumpără Acum
+          </a>
+          
+          <a href="/dashboard/add-listing" onClick={() => setAccountMenuOpen(false)} style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            padding: '12px 16px',
+            textDecoration: 'none',
+            color: '#D09A1E',
+            borderRadius: '6px',
+            transition: 'background-color 0.2s ease',
+            fontSize: '16px',
+            fontWeight: '500',
+            background: 'rgba(208, 154, 30, 0.1)'
+          }}>
+            Listează Premium
+          </a>
+          
+          <hr style={{ margin: '16px 0', border: 'none', borderTop: '1px solid #eee' }} />
+          
+          {/* Setări */}
+          <a href="/profile/edit" onClick={() => setAccountMenuOpen(false)} style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            padding: '12px 16px',
+            textDecoration: 'none',
+            color: '#333',
+            borderRadius: '6px',
+            transition: 'background-color 0.2s ease',
+            fontSize: '16px'
+          }}>
+            Profil
+          </a>
+          
+          <a href="/preferences" onClick={() => setAccountMenuOpen(false)} style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            padding: '12px 16px',
+            textDecoration: 'none',
+            color: '#333',
+            borderRadius: '6px',
+            transition: 'background-color 0.2s ease',
+            fontSize: '16px'
+          }}>
+            Preferințe
+          </a>
+          
           
           <button 
             onClick={() => {
@@ -950,11 +1016,6 @@ function NavBarContent() {
               fontSize: '16px'
             }}
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-              <polyline points="16,17 21,12 16,7"/>
-              <line x1="21" y1="12" x2="9" y2="12"/>
-            </svg>
             Deconectare
           </button>
         </div>
