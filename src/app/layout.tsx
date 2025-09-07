@@ -72,8 +72,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="apple-mobile-web-app-title" content="LuxBid" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png" />
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="icon" href="/favicon.ico" />
+        <meta name="msapplication-TileImage" content="/apple-touch-icon.png" />
+        <meta name="msapplication-TileColor" content="#D09A1E" />
         
         {/* Google Analytics 4 - Direct Integration */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-PXGXDYQDY3"></script>
@@ -88,6 +91,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 anonymize_ip: true
               });
               console.log('📊 [GA4] DIRECT INTEGRATION - ID: G-PXGXDYQDY3');
+            `
+          }}
+        />
+        
+        {/* Force local icon loading */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              // Prevent browser from searching for external apple-touch-icon
+              if (typeof window !== 'undefined') {
+                const link = document.createElement('link');
+                link.rel = 'apple-touch-icon';
+                link.href = '/apple-touch-icon.png';
+                link.sizes = '180x180';
+                document.head.appendChild(link);
+              }
             `
           }}
         />
