@@ -59,11 +59,21 @@ export default function RegisterPage() {
       })
       if (res.ok) {
         const data = await res.json()
-        localStorage.setItem('luxbid_token', data.accessToken)
-        if (data?.user?.id) {
-          localStorage.setItem('luxbid_user_id', data.user.id)
+        
+        // Send email verification code
+        try {
+          await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || 'https://luxbid-backend.onrender.com'}/auth/send-email-verification`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: form.email }),
+          })
+        } catch (emailError) {
+          console.error('Failed to send verification email:', emailError)
+          // Continue with registration even if email fails
         }
-        router.push('/dashboard')
+        
+        // Redirect to email verification page
+        router.push(`/auth/verify-email?email=${encodeURIComponent(form.email)}`)
       } else {
         const err = await res.json()
         setError(err.message || 'Eroare la înregistrare')

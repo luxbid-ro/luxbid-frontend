@@ -25,7 +25,15 @@ export default function LoginPage() {
         if (data?.user?.id) {
           localStorage.setItem('luxbid_user_id', data.user.id)
         }
-        router.push('/dashboard')
+        
+        // Check if user is verified
+        if (data.user && !data.user.isVerified) {
+          // User is not verified, redirect to verification page
+          router.push(`/auth/verify-email?email=${encodeURIComponent(form.email)}`)
+        } else {
+          // User is verified, proceed to dashboard
+          router.push('/dashboard')
+        }
       } else {
         const err = await res.json()
         console.log('Login error response:', err)
