@@ -4,6 +4,7 @@ import { useParams } from 'next/navigation'
 import { LazyImageGallery } from '@/components/LazyComponents'
 import { ProductSchema, BreadcrumbSchema } from '@/components/StructuredData'
 import { generateSEOMetadata } from '@/utils/seo'
+import { usePriceAlerts } from '@/hooks/usePriceAlerts'
 
 export default function ListingDetailPage() {
   const params = useParams()
@@ -17,6 +18,11 @@ export default function ListingDetailPage() {
   const [loading, setLoading] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const [isOwner, setIsOwner] = useState(false)
+  const [showPriceAlertForm, setShowPriceAlertForm] = useState(false)
+  const [priceAlertTarget, setPriceAlertTarget] = useState('')
+  
+  // Price Alerts hook
+  const { createAlert, hasAlertForListing, getAlertForListing } = usePriceAlerts()
 
   useEffect(() => {
     // Detectez dacă este mobile
@@ -251,6 +257,35 @@ export default function ListingDetailPage() {
     }
   }
 
+  // Create price alert
+  const handleCreatePriceAlert = () => {
+    if (!priceAlertTarget || !listing) return
+    
+    const targetPrice = parseFloat(priceAlertTarget)
+    const currentPrice = listing.desiredPrice || listing.price || 0
+    
+    if (targetPrice >= currentPrice) {
+      setMessage('Prețul țintă trebuie să fie mai mic decât prețul curent')
+      return
+    }
+    
+    createAlert({
+      listingId: listing.id,
+      listingTitle: listing.title,
+      currentPrice,
+      targetPrice,
+      currency: listing.currency || 'RON',
+      category: listing.category,
+      brand: listing.brand,
+      notificationType: 'both',
+      userEmail: localStorage.getItem('luxbid_user_email') || undefined
+    })
+    
+    setMessage('Alertă de preț creată cu succes! Vei fi notificat când prețul va scădea.')
+    setShowPriceAlertForm(false)
+    setPriceAlertTarget('')
+  }
+
   if (!listing) return <div style={{ padding: 40 }}>Se încarcă...</div>
 
   return (
@@ -290,6 +325,114 @@ export default function ListingDetailPage() {
                 Poți face orice ofertă - vânzătorul va decide dacă o acceptă
               </p>
             </div>
+
+            {/* Price Alert Section - only for non-owners */}
+            {!isOwner && (
+              <div style={{ 
+                background: '#f8f9fa', 
+                border: '2px solid #e9ecef', 
+                borderRadius: 12, 
+                padding: 20, 
+                marginBottom: 30,
+                textAlign: 'center'
+              }}>
+                <h3 style={{ margin: '0 0 16px 0', color: '#333', fontSize: '1.1em', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: '#D09A1E' }}>
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                    <path d="M2 17l10 5 10-5"/>
+                    <path d="M2 12l10 5 10-5"/>
+                  </svg>
+                  Alertă de Preț
+                </h3>
+                
+                {hasAlertForListing(listing.id) ? (
+                  <div style={{ color: '#28a745', fontSize: '0.9em' }}>
+                    ✅ Ai deja un alert activ pentru acest obiect
+                    <br />
+                    <a href="/price-alerts" style={{ color: '#D09A1E', textDecoration: 'none', fontWeight: '500' }}>
+                      Vezi alertele mele →
+                    </a>
+                  </div>
+                ) : (
+                  <div>
+                    <p style={{ margin: '0 0 16px 0', color: '#666', fontSize: '0.9em' }}>
+                      Primești notificare când prețul scade la nivelul dorit
+                    </p>
+                    
+                    {!showPriceAlertForm ? (
+                      <button
+                        onClick={() => setShowPriceAlertForm(true)}
+                        style={{
+                          background: 'linear-gradient(135deg, #D09A1E 0%, #B8860B 100%)',
+                          color: '#fff',
+                          border: 'none',
+                          padding: '12px 24px',
+                          borderRadius: '8px',
+                          fontSize: '14px',
+                          fontWeight: '600',
+                          cursor: 'pointer',
+                          transition: 'transform 0.2s ease'
+                        }}
+                      >
+                        Creează Alertă de Preț
+                      </button>
+                    ) : (
+                      <div style={{ display: 'flex', gap: '12px', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap' }}>
+                        <input
+                          type="number"
+                          placeholder="Preț țintă"
+                          value={priceAlertTarget}
+                          onChange={(e) => setPriceAlertTarget(e.target.value)}
+                          style={{
+                            padding: '10px 12px',
+                            border: '2px solid #e5e5e5',
+                            borderRadius: '8px',
+                            fontSize: '14px',
+                            width: '120px',
+                            outline: 'none'
+                          }}
+                        />
+                        <span style={{ fontSize: '14px', color: '#666' }}>{listing.currency || 'RON'}</span>
+                        <button
+                          onClick={handleCreatePriceAlert}
+                          disabled={!priceAlertTarget}
+                          style={{
+                            background: 'linear-gradient(135deg, #D09A1E 0%, #B8860B 100%)',
+                            color: '#fff',
+                            border: 'none',
+                            padding: '10px 16px',
+                            borderRadius: '8px',
+                            fontSize: '14px',
+                            fontWeight: '600',
+                            cursor: 'pointer',
+                            opacity: priceAlertTarget ? 1 : 0.6
+                          }}
+                        >
+                          Creează
+                        </button>
+                        <button
+                          onClick={() => {
+                            setShowPriceAlertForm(false)
+                            setPriceAlertTarget('')
+                          }}
+                          style={{
+                            background: 'transparent',
+                            color: '#666',
+                            border: '1px solid #ddd',
+                            padding: '10px 16px',
+                            borderRadius: '8px',
+                            fontSize: '14px',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          Anulează
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Edit button for owner */}
             {isOwner && (

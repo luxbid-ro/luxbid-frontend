@@ -34,6 +34,14 @@ function OfertesContent() {
   const [selectedBrand, setSelectedBrand] = useState('')
   const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'price-low' | 'price-high' | 'name'>('newest')
   const [filteredListings, setFilteredListings] = useState<Listing[]>([])
+  
+  // Advanced Search Filters
+  const [priceRange, setPriceRange] = useState({ min: '', max: '' })
+  const [selectedCondition, setSelectedCondition] = useState('')
+  const [selectedLocation, setSelectedLocation] = useState('')
+  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false)
+  const [selectedCurrency, setSelectedCurrency] = useState('')
+  const [dateRange, setDateRange] = useState('')
   const { isFavorite, toggleFavorite } = useFavorites()
   const { setupCacheInvalidationListener } = useCacheInvalidation()
 
@@ -181,7 +189,7 @@ function OfertesContent() {
   useEffect(() => {
     let filtered = [...listings]
 
-    // Apply filters
+    // Apply basic filters
     if (searchQuery) {
       filtered = filtered.filter(listing => 
         listing.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -198,6 +206,43 @@ function OfertesContent() {
     if (selectedBrand) {
       filtered = filtered.filter(listing => 
         listing.brand && listing.brand.toLowerCase().includes(selectedBrand.toLowerCase())
+      )
+    }
+
+    // Apply advanced filters
+    if (priceRange.min) {
+      filtered = filtered.filter(listing => listing.price >= parseFloat(priceRange.min))
+    }
+
+    if (priceRange.max) {
+      filtered = filtered.filter(listing => listing.price <= parseFloat(priceRange.max))
+    }
+
+    if (selectedCondition) {
+      filtered = filtered.filter(listing => 
+        listing.condition && listing.condition.toLowerCase().includes(selectedCondition.toLowerCase())
+      )
+    }
+
+    if (selectedLocation) {
+      filtered = filtered.filter(listing => 
+        listing.location && listing.location.toLowerCase().includes(selectedLocation.toLowerCase())
+      )
+    }
+
+    if (selectedCurrency) {
+      filtered = filtered.filter(listing => 
+        listing.currency.toLowerCase() === selectedCurrency.toLowerCase()
+      )
+    }
+
+    if (dateRange) {
+      const now = new Date()
+      const daysAgo = parseInt(dateRange)
+      const cutoffDate = new Date(now.getTime() - (daysAgo * 24 * 60 * 60 * 1000))
+      
+      filtered = filtered.filter(listing => 
+        new Date(listing.createdAt) >= cutoffDate
       )
     }
 
@@ -220,7 +265,7 @@ function OfertesContent() {
     })
 
     setFilteredListings(filtered)
-  }, [listings, searchQuery, selectedCategory, selectedBrand, sortBy])
+  }, [listings, searchQuery, selectedCategory, selectedBrand, sortBy, priceRange, selectedCondition, selectedLocation, selectedCurrency, dateRange])
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
@@ -352,6 +397,234 @@ function OfertesContent() {
                 </button>
               ))}
             </div>
+          </div>
+
+          {/* Advanced Filters Toggle */}
+          <div style={{ marginTop: '24px', paddingTop: '24px', borderTop: '1px solid #eee' }}>
+            <button
+              onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '12px 20px',
+                background: showAdvancedFilters ? '#D09A1E' : 'transparent',
+                color: showAdvancedFilters ? '#fff' : '#D09A1E',
+                border: '2px solid #D09A1E',
+                borderRadius: '12px',
+                fontSize: '16px',
+                fontWeight: '600',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                marginBottom: showAdvancedFilters ? '24px' : '0'
+              }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <polygon points="22,3 2,3 10,12.46 10,19 14,21 14,12.46 22,3"/>
+              </svg>
+              Filtre Avansate
+              <span style={{ fontSize: '12px', opacity: 0.8 }}>
+                {showAdvancedFilters ? '▼' : '▶'}
+              </span>
+            </button>
+
+            {/* Advanced Filters Panel */}
+            {showAdvancedFilters && (
+              <div style={{
+                background: '#f8f9fa',
+                borderRadius: '12px',
+                padding: '24px',
+                marginTop: '16px'
+              }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '24px' }}>
+                  
+                  {/* Price Range */}
+                  <div>
+                    <h4 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600', color: '#333' }}>
+                      Interval Preț
+                    </h4>
+                    <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                      <input
+                        type="number"
+                        placeholder="Min"
+                        value={priceRange.min}
+                        onChange={(e) => setPriceRange(prev => ({ ...prev, min: e.target.value }))}
+                        style={{
+                          flex: 1,
+                          padding: '10px 12px',
+                          border: '1px solid #ddd',
+                          borderRadius: '8px',
+                          fontSize: '14px'
+                        }}
+                      />
+                      <span style={{ color: '#666' }}>-</span>
+                      <input
+                        type="number"
+                        placeholder="Max"
+                        value={priceRange.max}
+                        onChange={(e) => setPriceRange(prev => ({ ...prev, max: e.target.value }))}
+                        style={{
+                          flex: 1,
+                          padding: '10px 12px',
+                          border: '1px solid #ddd',
+                          borderRadius: '8px',
+                          fontSize: '14px'
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Currency */}
+                  <div>
+                    <h4 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600', color: '#333' }}>
+                      Monedă
+                    </h4>
+                    <select
+                      value={selectedCurrency}
+                      onChange={(e) => setSelectedCurrency(e.target.value)}
+                      style={{
+                        width: '100%',
+                        padding: '10px 12px',
+                        border: '1px solid #ddd',
+                        borderRadius: '8px',
+                        fontSize: '14px',
+                        background: '#fff'
+                      }}
+                    >
+                      <option value="">Toate monedele</option>
+                      <option value="RON">RON</option>
+                      <option value="EUR">EUR</option>
+                      <option value="USD">USD</option>
+                    </select>
+                  </div>
+
+                  {/* Condition */}
+                  <div>
+                    <h4 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600', color: '#333' }}>
+                      Stare
+                    </h4>
+                    <select
+                      value={selectedCondition}
+                      onChange={(e) => setSelectedCondition(e.target.value)}
+                      style={{
+                        width: '100%',
+                        padding: '10px 12px',
+                        border: '1px solid #ddd',
+                        borderRadius: '8px',
+                        fontSize: '14px',
+                        background: '#fff'
+                      }}
+                    >
+                      <option value="">Toate stările</option>
+                      <option value="Nou">Nou</option>
+                      <option value="Foarte bună">Foarte bună</option>
+                      <option value="Bună">Bună</option>
+                      <option value="Acceptabilă">Acceptabilă</option>
+                    </select>
+                  </div>
+
+                  {/* Location */}
+                  <div>
+                    <h4 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600', color: '#333' }}>
+                      Locație
+                    </h4>
+                    <select
+                      value={selectedLocation}
+                      onChange={(e) => setSelectedLocation(e.target.value)}
+                      style={{
+                        width: '100%',
+                        padding: '10px 12px',
+                        border: '1px solid #ddd',
+                        borderRadius: '8px',
+                        fontSize: '14px',
+                        background: '#fff'
+                      }}
+                    >
+                      <option value="">Toate locațiile</option>
+                      <option value="București">București</option>
+                      <option value="Cluj-Napoca">Cluj-Napoca</option>
+                      <option value="Timișoara">Timișoara</option>
+                      <option value="Iași">Iași</option>
+                      <option value="Constanța">Constanța</option>
+                      <option value="Craiova">Craiova</option>
+                      <option value="Brașov">Brașov</option>
+                    </select>
+                  </div>
+
+                  {/* Date Range */}
+                  <div>
+                    <h4 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600', color: '#333' }}>
+                      Data Publicării
+                    </h4>
+                    <select
+                      value={dateRange}
+                      onChange={(e) => setDateRange(e.target.value)}
+                      style={{
+                        width: '100%',
+                        padding: '10px 12px',
+                        border: '1px solid #ddd',
+                        borderRadius: '8px',
+                        fontSize: '14px',
+                        background: '#fff'
+                      }}
+                    >
+                      <option value="">Toate perioadele</option>
+                      <option value="1">Ultima zi</option>
+                      <option value="7">Ultima săptămână</option>
+                      <option value="30">Ultima lună</option>
+                      <option value="90">Ultimele 3 luni</option>
+                    </select>
+                  </div>
+
+                  {/* Brand Filter */}
+                  <div>
+                    <h4 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600', color: '#333' }}>
+                      Brand
+                    </h4>
+                    <input
+                      type="text"
+                      placeholder="Caută brand specific..."
+                      value={selectedBrand}
+                      onChange={(e) => setSelectedBrand(e.target.value)}
+                      style={{
+                        width: '100%',
+                        padding: '10px 12px',
+                        border: '1px solid #ddd',
+                        borderRadius: '8px',
+                        fontSize: '14px'
+                      }}
+                    />
+                  </div>
+                </div>
+
+                {/* Clear Filters Button */}
+                <div style={{ marginTop: '20px', textAlign: 'center' }}>
+                  <button
+                    onClick={() => {
+                      setPriceRange({ min: '', max: '' })
+                      setSelectedCondition('')
+                      setSelectedLocation('')
+                      setSelectedCurrency('')
+                      setDateRange('')
+                      setSelectedBrand('')
+                    }}
+                    style={{
+                      padding: '10px 24px',
+                      background: 'transparent',
+                      color: '#666',
+                      border: '1px solid #ddd',
+                      borderRadius: '8px',
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease'
+                    }}
+                  >
+                    Șterge Toate Filtrele
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Sort Options */}
