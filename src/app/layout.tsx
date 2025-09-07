@@ -71,6 +71,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="LuxBid" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.ico" />
         
         {/* Google Analytics 4 - Direct Integration */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-PXGXDYQDY3"></script>
