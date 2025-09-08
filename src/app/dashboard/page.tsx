@@ -1,12 +1,10 @@
 'use client'
 import React, { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { useAuth } from '@/hooks/useAuth'
 
 export default function DashboardPage() {
-  const [user, setUser] = useState<any>(null)
-  const [loading, setLoading] = useState(true)
+  const { user, loading, isAuthenticated, logout } = useAuth()
   const [isMobile, setIsMobile] = useState(false)
-  const router = useRouter()
 
   useEffect(() => {
     // Check if mobile on mount and resize
@@ -17,49 +15,8 @@ export default function DashboardPage() {
     checkMobile()
     window.addEventListener('resize', checkMobile)
     
-    const fetchUser = async () => {
-      const token = localStorage.getItem('luxbid_token')
-      if (!token) {
-        setLoading(false)
-        router.push('/auth/login')
-        return
-      }
-      
-      try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || 'https://luxbid-backend.onrender.com'}/users/me`, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        
-        if (res.ok) {
-          const userData = await res.json()
-          setUser(userData)
-        } else {
-          localStorage.removeItem('luxbid_token')
-          router.push('/auth/login')
-        }
-      } catch (err) {
-        console.error('Dashboard fetch error:', err)
-        // In case of API error, show a mock user dashboard
-        setUser({ 
-          email: 'demo@luxbid.ro', 
-          firstName: 'Demo', 
-          lastName: 'User',
-          name: 'Demo User'
-        })
-      } finally {
-        setLoading(false)
-      }
-    }
-    
-    fetchUser()
-    
     return () => window.removeEventListener('resize', checkMobile)
-  }, [router])
-
-  const logout = () => {
-    localStorage.removeItem('luxbid_token')
-    router.push('/')
-  }
+  }, [])
 
   // Function to get greeting based on current time
   const getGreeting = () => {

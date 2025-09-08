@@ -21,19 +21,22 @@ export default function LoginPage() {
       })
       if (res.ok) {
         const data = await res.json()
+        
+        // Check if user is verified BEFORE saving token
+        if (data.user && !data.user.isVerified) {
+          // User is not verified, redirect to verification page WITHOUT saving token
+          router.push(`/auth/verify-email?email=${encodeURIComponent(form.email)}`)
+          return
+        }
+        
+        // Only save token if user is verified
         localStorage.setItem('luxbid_token', data.accessToken)
         if (data?.user?.id) {
           localStorage.setItem('luxbid_user_id', data.user.id)
         }
         
-        // Check if user is verified
-        if (data.user && !data.user.isVerified) {
-          // User is not verified, redirect to verification page
-          router.push(`/auth/verify-email?email=${encodeURIComponent(form.email)}`)
-        } else {
-          // User is verified, proceed to dashboard
-          router.push('/dashboard')
-        }
+        // User is verified, proceed to dashboard
+        router.push('/dashboard')
       } else {
         const err = await res.json()
         console.log('Login error response:', err)
