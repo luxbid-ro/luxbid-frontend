@@ -1026,6 +1026,21 @@ function NavBarContent() {
             Export Date
           </a>
           
+          <a href="/dashboard/delete-account" onClick={() => setAccountMenuOpen(false)} style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            padding: '12px 16px',
+            textDecoration: 'none',
+            color: '#e74c3c',
+            borderRadius: '6px',
+            transition: 'background-color 0.2s ease',
+            fontSize: '16px',
+            fontWeight: '600'
+          }}>
+            Șterge Cont Definitiv
+          </a>
+          
           <a href="/anti-fraud" onClick={() => setAccountMenuOpen(false)} style={{
             display: 'flex',
             alignItems: 'center',

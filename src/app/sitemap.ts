@@ -123,6 +123,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly' as const,
       priority: 0.6,
     },
+    {
+      url: `${baseUrl}/dashboard/delete-account`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly' as const,
+      priority: 0.3,
+    },
   ]
 
   // Brand pages
