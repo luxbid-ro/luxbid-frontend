@@ -184,7 +184,9 @@ export default function ImageGallery({ images, className = '' }: ImageGalleryPro
                 overflow: 'hidden',
                 cursor: 'pointer',
                 border: selectedIndex === index ? '3px solid #9a7b0f' : '1px solid #ddd',
-                opacity: selectedIndex === index ? 1 : 0.7
+                opacity: selectedIndex === index ? 1 : 0.7,
+                background: '#f5f5f5',
+                height: 60
               }}
               onClick={() => setSelectedIndex(index)}
             >
@@ -193,10 +195,9 @@ export default function ImageGallery({ images, className = '' }: ImageGalleryPro
                 alt={`Thumbnail ${index + 1}`}
                 style={{
                   width: '100%',
-                  height: 60,
+                  height: '100%',
                   objectFit: 'cover',
-                  display: 'block',
-                  background: '#f5f5f5'
+                  display: 'block'
                 }}
               />
               {image.isPrimary && (
