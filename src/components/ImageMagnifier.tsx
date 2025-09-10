@@ -31,6 +31,7 @@ export default function ImageMagnifier({
   const [showMagnifier, setShowMagnifier] = useState(false)
   const [magnifierPosition, setMagnifierPosition] = useState({ x: 0, y: 0 })
   const [imgPosition, setImgPosition] = useState({ x: 0, y: 0 })
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [isMobile, setIsMobile] = useState(false)
   const imageRef = useRef<HTMLImageElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -76,6 +77,10 @@ export default function ImageMagnifier({
       onMagnifierStateChange?.(false)
       return
     }
+
+    // Actualizez pozitiile în timp real
+    setImgPosition({ x: rect.left, y: rect.top })
+    setMousePosition({ x, y })
 
     // Calculez pozitia magnifier-ului cu offset pentru a evita overlapping
     let magnifierX = e.clientX + 20
@@ -202,8 +207,8 @@ export default function ImageMagnifier({
             backgroundRepeat: 'no-repeat',
             backgroundSize: `${(imageRef.current?.offsetWidth || width) * zoomLevel}px ${(imageRef.current?.offsetHeight || height) * zoomLevel}px`,
             backgroundPosition: `
-              -${((magnifierPosition.x + magnifierSize / 2 - imgPosition.x) * zoomLevel) - magnifierSize / 2}px 
-              -${((magnifierPosition.y + magnifierSize / 2 - imgPosition.y) * zoomLevel) - magnifierSize / 2}px
+              -${(mousePosition.x * zoomLevel) - magnifierSize / 2}px 
+              -${(mousePosition.y * zoomLevel) - magnifierSize / 2}px
             `,
             pointerEvents: 'none',
             zIndex: 1000,

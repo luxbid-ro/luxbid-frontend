@@ -73,7 +73,9 @@ export default function ImageGallery({ images, className = '' }: ImageGalleryPro
             overflow: 'hidden',
             background: '#f5f5f5'
           }}
-          onMouseLeave={() => setIsMagnifierActive(false)}
+          onMouseLeave={() => {
+            setIsMagnifierActive(false)
+          }}
         >
           {isMobile ? (
             // Pe mobile afișez doar imaginea simplă cu click pentru zoom
@@ -193,7 +195,8 @@ export default function ImageGallery({ images, className = '' }: ImageGalleryPro
                   width: '100%',
                   height: 60,
                   objectFit: 'cover',
-                  display: 'block'
+                  display: 'block',
+                  background: '#f5f5f5'
                 }}
               />
               {image.isPrimary && (
