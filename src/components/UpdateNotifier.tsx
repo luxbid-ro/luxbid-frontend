@@ -3,15 +3,17 @@ import React from 'react'
 import { useCacheManager, useAppleCacheBuster } from '../hooks/useCacheManager'
 
 export default function UpdateNotifier() {
-  const { cacheStatus, forceRefresh } = useCacheManager()
-  
-  // Activează Apple cache buster
-  useAppleCacheBuster()
+  // Temporar disabled pentru debugging continuous updates
+  // const { cacheStatus, forceRefresh } = useCacheManager()
+  // useAppleCacheBuster()
 
-  // Nu afișa notificarea dacă nu e disponibil update
-  if (!cacheStatus.isUpdateAvailable) {
-    return null
-  }
+  // Disabled temporarily to prevent continuous updates
+  return null
+
+  // // Nu afișa notificarea dacă nu e disponibil update
+  // if (!cacheStatus.isUpdateAvailable) {
+  //   return null
+  // }
 
   return (
     <div style={{

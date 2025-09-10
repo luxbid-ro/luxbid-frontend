@@ -317,7 +317,84 @@ export default function ListingDetailPage() {
           <div>
             <h2 style={{ marginTop: 0 }}>{listing.title}</h2>
             <p style={{ color: '#666', marginBottom: 20, lineHeight: 1.6 }}>{listing.description}</p>
-            <p style={{ color: '#9a7b0f', fontWeight: 700, marginBottom: 10 }}>Categorie: {listing.category}</p>
+            
+            {/* Detalii complete produs */}
+            <div style={{ 
+              background: '#f8f9fa', 
+              border: '1px solid #e9ecef', 
+              borderRadius: 12, 
+              padding: 20, 
+              marginBottom: 20 
+            }}>
+              <h3 style={{ margin: '0 0 15px 0', color: '#333', fontSize: '1.1em', fontWeight: '600' }}>
+                Detalii produs
+              </h3>
+              
+              <div style={{ display: 'grid', gap: '8px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ color: '#666', fontWeight: '500' }}>Categorie:</span>
+                  <span style={{ color: '#9a7b0f', fontWeight: '600' }}>{listing.category}</span>
+                </div>
+                
+                {listing.brand && (
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ color: '#666', fontWeight: '500' }}>Brand:</span>
+                    <span style={{ color: '#333', fontWeight: '600' }}>{listing.brand}</span>
+                  </div>
+                )}
+                
+                {listing.material && (
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ color: '#666', fontWeight: '500' }}>Material:</span>
+                    <span style={{ color: '#333', fontWeight: '600' }}>{listing.material}</span>
+                  </div>
+                )}
+                
+                {listing.condition && (
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ color: '#666', fontWeight: '500' }}>Stare:</span>
+                    <span style={{ color: '#333', fontWeight: '600' }}>{listing.condition}</span>
+                  </div>
+                )}
+                
+                {listing.hasDocuments && (
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ color: '#666', fontWeight: '500' }}>Documente:</span>
+                    <span style={{ 
+                      color: listing.hasDocuments === 'Cu acte' ? '#28a745' : '#6c757d', 
+                      fontWeight: '600',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '4px'
+                    }}>
+                      {listing.hasDocuments === 'Cu acte' ? (
+                        <>
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M20 6 9 17l-5-5"/>
+                          </svg>
+                          Cu acte
+                        </>
+                      ) : (
+                        <>
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M18 6 6 18"/>
+                            <path d="m6 6 12 12"/>
+                          </svg>
+                          Fără acte
+                        </>
+                      )}
+                    </span>
+                  </div>
+                )}
+                
+                {listing.location && (
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ color: '#666', fontWeight: '500' }}>Locație:</span>
+                    <span style={{ color: '#333', fontWeight: '600' }}>{listing.location}</span>
+                  </div>
+                )}
+              </div>
+            </div>
             
             {/* Preț dorit de vânzător */}
             <div style={{ 
