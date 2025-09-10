@@ -13,6 +13,8 @@ type Listing = {
   brand?: string
   price: number
   currency: string
+  condition?: string
+  location?: string
   createdAt: string
   images: string[]
   user: {
@@ -140,6 +142,8 @@ function OfertesContent() {
         // Process API data
         
         // Set data immediately for better performance
+        console.log('✅ API Data loaded:', data.length, 'listings')
+        console.log('📋 First listing:', data[0])
         setListings(data)
         // Real data loaded
       } else {
@@ -187,6 +191,7 @@ function OfertesContent() {
 
   // Filter and sort listings based on search, category, and sort option
   useEffect(() => {
+    console.log('🔍 Filtering listings. Total:', listings.length)
     let filtered = [...listings]
 
     // Apply basic filters
@@ -264,6 +269,7 @@ function OfertesContent() {
       }
     })
 
+    console.log('✅ Filtered listings:', filtered.length)
     setFilteredListings(filtered)
   }, [listings, searchQuery, selectedCategory, selectedBrand, sortBy, priceRange, selectedCondition, selectedLocation, selectedCurrency, dateRange])
 
