@@ -120,8 +120,37 @@ export default function AddListingPage() {
   }
 
   const handlePublishWithImages = async () => {
-    // Redirect to the published listing
-    router.push(`/oferte/${listingId}`)
+    if (!listingId) return;
+    
+    setLoading(true);
+    try {
+      const token = localStorage.getItem('luxbid_token');
+      if (!token) {
+        window.location.href = '/auth/login';
+        return;
+      }
+
+      // Call the publish endpoint
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000'}/listings/${listingId}/publish`, {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json', 
+          Authorization: `Bearer ${token}` 
+        },
+      });
+
+      if (!res.ok) {
+        throw new Error('Eroare la publicarea anunțului');
+      }
+
+      // Redirect to the published listing
+      router.push(`/oferte/${listingId}`);
+    } catch (error) {
+      console.error('Error publishing listing:', error);
+      setError('Eroare la publicarea anunțului. Încearcă din nou.');
+    } finally {
+      setLoading(false);
+    }
   }
 
   if (step === 2 && listingId) {
@@ -153,7 +182,7 @@ export default function AddListingPage() {
               marginBottom: '12px',
               lineHeight: '1.3'
             }}>
-              Anunț creat cu succes!
+              Draft creat cu succes!
             </h1>
             <p style={{ 
               fontSize: '18px', 
@@ -170,7 +199,7 @@ export default function AddListingPage() {
               maxWidth: '500px',
               margin: '0 auto'
             }}>
-              Adaugă imagini de înaltă calitate pentru a atrage cumpărători serioși și pentru a crește vizibilitatea anunțului tău.
+              Anunțul este în draft și nu este vizibil public. Adaugă imagini de înaltă calitate și apasă "Publică Anunț" pentru a-l face vizibil cumpărătorilor.
             </p>
           </div>
 
@@ -230,36 +259,53 @@ export default function AddListingPage() {
             
             <button 
               onClick={handlePublishWithImages}
+              disabled={loading}
               style={{ 
-                background: 'linear-gradient(135deg, #D09A1E 0%, #B8860B 100%)', 
+                background: loading ? '#ccc' : 'linear-gradient(135deg, #D09A1E 0%, #B8860B 100%)', 
                 color: '#fff', 
                 border: 'none',
                 padding: '16px 32px', 
                 borderRadius: '12px', 
                 fontSize: '16px',
                 fontWeight: '600',
-                cursor: 'pointer',
+                cursor: loading ? 'not-allowed' : 'pointer',
                 transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                 boxShadow: '0 4px 12px rgba(208, 154, 30, 0.2)',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '8px'
+                gap: '8px',
+                opacity: loading ? 0.7 : 1
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)'
-                e.currentTarget.style.boxShadow = '0 8px 24px rgba(208, 154, 30, 0.3)'
-                e.currentTarget.style.background = 'linear-gradient(135deg, #E5A82A 0%, #C69A0F 100%)'
+                if (!loading) {
+                  e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)'
+                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(208, 154, 30, 0.3)'
+                  e.currentTarget.style.background = 'linear-gradient(135deg, #E5A82A 0%, #C69A0F 100%)'
+                }
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0) scale(1)'
-                e.currentTarget.style.boxShadow = '0 4px 12px rgba(208, 154, 30, 0.2)'
-                e.currentTarget.style.background = 'linear-gradient(135deg, #D09A1E 0%, #B8860B 100%)'
+                if (!loading) {
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)'
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(208, 154, 30, 0.2)'
+                  e.currentTarget.style.background = 'linear-gradient(135deg, #D09A1E 0%, #B8860B 100%)'
+                }
               }}
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-              </svg>
-              Publică Anunț
+              {loading ? (
+                <>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ animation: 'spin 1s linear infinite' }}>
+                    <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.49 8.49l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.49-8.49l2.83-2.83"/>
+                  </svg>
+                  Se publică...
+                </>
+              ) : (
+                <>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                  </svg>
+                  Publică Anunț
+                </>
+              )}
             </button>
           </div>
         </div>
@@ -268,8 +314,15 @@ export default function AddListingPage() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--surface)', padding: '40px 20px', display: 'flex', justifyContent: 'center' }}>
-      <form onSubmit={createListing} style={{ background: '#fff', padding: 24, maxWidth: 560, width: '100%', borderRadius: 16 }}>
+    <>
+      <style jsx>{`
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+      `}</style>
+      <div style={{ minHeight: '100vh', background: 'var(--surface)', padding: '40px 20px', display: 'flex', justifyContent: 'center' }}>
+        <form onSubmit={createListing} style={{ background: '#fff', padding: 24, maxWidth: 560, width: '100%', borderRadius: 16 }}>
         <h2 style={{ marginTop: 0 }}>Adaugă Listare Nouă</h2>
         <p style={{ color: '#666', marginBottom: 20 }}>
           Primul pas: completează detaliile despre obiectul de lux.
@@ -580,7 +633,8 @@ export default function AddListingPage() {
         <p style={{ fontSize: '0.8em', color: '#999', marginTop: 15, textAlign: 'center' }}>
           Pasul următor: vei putea adăuga imagini de înaltă calitate
         </p>
-      </form>
-    </div>
+        </form>
+      </div>
+    </>
   )
 }
