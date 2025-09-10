@@ -4,6 +4,17 @@ import { useParams, useRouter } from 'next/navigation'
 import { WATCH_BRANDS } from '@/constants/watchBrands'
 import { BAG_BRANDS } from '@/constants/bagBrands'
 import { JEWELRY_BRANDS } from '@/constants/jewelryBrands'
+import { LazyImageUpload } from '@/components/LazyComponents'
+
+const WATCH_MATERIALS = [
+  'Oțel', 'Aur', 'Aur cu Oțel', 'Aur alb', 'Aur roz', 'Platină', 'Titanium',
+  'Carbon', 'Ceramică', 'Bronz', 'Aluminiu', 'Tantalum', 'Altul'
+] as const
+
+const CONDITION_OPTIONS = [
+  'Nou', 'Aproape nou', 'Folosit în stare foarte bună',
+  'Folosit în stare bună', 'Folosit cu urme de uzură'
+] as const
 
 export default function EditListingPage() {
   const params = useParams()
@@ -16,12 +27,18 @@ export default function EditListingPage() {
     category: '', 
     brand: '',
     desiredPrice: '', 
-    currency: 'RON' 
+    currency: 'RON',
+    hasDocuments: '',
+    material: '',
+    condition: ''
   })
   const [loading, setLoading] = useState(false)
   const [loadingData, setLoadingData] = useState(true)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
+  const [showImageUpload, setShowImageUpload] = useState(false)
+  const [currentImages, setCurrentImages] = useState<string[]>([])
+  const [step, setStep] = useState(1) // 1: Edit details, 2: Edit images
 
   // Încarcă datele listării existente
   useEffect(() => {
@@ -56,9 +73,15 @@ export default function EditListingPage() {
               description: listing.description || '',
               category: listing.category || '',
               brand: listing.brand || '',
-              desiredPrice: listing.desiredPrice?.toString() || '',
-              currency: listing.currency || 'RON'
+              desiredPrice: listing.desiredPrice?.toString() || listing.price?.toString() || '',
+              currency: listing.currency || 'RON',
+              hasDocuments: listing.hasDocuments || '',
+              material: listing.material || '',
+              condition: listing.condition || ''
             })
+            
+            // Încarcă imaginile existente
+            setCurrentImages(listing.images || [])
           }
         } else {
           setError('Listarea nu a fost găsită')
@@ -220,6 +243,45 @@ export default function EditListingPage() {
           </div>
         )}
 
+        {/* Material for watches */}
+        {form.category === 'Ceasuri' && (
+          <div style={{ marginBottom: 20 }}>
+            <label style={{ display: 'block', marginBottom: 5, fontWeight: 600 }}>Material Ceas</label>
+            <select 
+              value={form.material} 
+              onChange={(e)=>setForm({...form,material:e.target.value})} 
+              style={{ width: '100%', padding: 12, border:'1px solid #ddd', borderRadius: 8 }}
+            >
+              <option value=''>Selectează materialul</option>
+              {WATCH_MATERIALS.map((material) => (
+                <option key={material} value={material}>{material}</option>
+              ))}
+            </select>
+            <p style={{ fontSize: '0.8em', color: '#666', marginTop: 5 }}>
+              Specifică materialul din care este fabricat ceasul.
+            </p>
+          </div>
+        )}
+
+        {/* Documents for watches */}
+        {form.category === 'Ceasuri' && (
+          <div style={{ marginBottom: 20 }}>
+            <label style={{ display: 'block', marginBottom: 5, fontWeight: 600 }}>Documente</label>
+            <select 
+              value={form.hasDocuments} 
+              onChange={(e)=>setForm({...form,hasDocuments:e.target.value})} 
+              style={{ width: '100%', padding: 12, border:'1px solid #ddd', borderRadius: 8 }}
+            >
+              <option value=''>Selectează</option>
+              <option value='Cu acte'>Cu acte</option>
+              <option value='Fără acte'>Fără acte</option>
+            </select>
+            <p style={{ fontSize: '0.8em', color: '#666', marginTop: 5 }}>
+              Specifică dacă ceasul are documentele originale (certificat, garanție, etc.).
+            </p>
+          </div>
+        )}
+
         {/* Brand selection for bags */}
         {form.category === 'Genți' && (
           <div style={{ marginBottom: 20 }}>
@@ -236,6 +298,25 @@ export default function EditListingPage() {
             </select>
             <p style={{ fontSize: '0.8em', color: '#666', marginTop: 5 }}>
               Selectează brandul genții pentru a ajuta cumpărătorii să o găsească mai ușor.
+            </p>
+          </div>
+        )}
+
+        {/* Documents for bags */}
+        {form.category === 'Genți' && (
+          <div style={{ marginBottom: 20 }}>
+            <label style={{ display: 'block', marginBottom: 5, fontWeight: 600 }}>Documente</label>
+            <select 
+              value={form.hasDocuments} 
+              onChange={(e)=>setForm({...form,hasDocuments:e.target.value})} 
+              style={{ width: '100%', padding: 12, border:'1px solid #ddd', borderRadius: 8 }}
+            >
+              <option value=''>Selectează</option>
+              <option value='Cu acte'>Cu acte</option>
+              <option value='Fără acte'>Fără acte</option>
+            </select>
+            <p style={{ fontSize: '0.8em', color: '#666', marginTop: 5 }}>
+              Specifică dacă geanta are documentele originale (certificat de autenticitate, chitanță, etc.).
             </p>
           </div>
         )}
@@ -259,6 +340,63 @@ export default function EditListingPage() {
             </p>
           </div>
         )}
+
+        {/* Documents for jewelry */}
+        {form.category === 'Bijuterii' && (
+          <div style={{ marginBottom: 20 }}>
+            <label style={{ display: 'block', marginBottom: 5, fontWeight: 600 }}>Documente</label>
+            <select 
+              value={form.hasDocuments} 
+              onChange={(e)=>setForm({...form,hasDocuments:e.target.value})} 
+              style={{ width: '100%', padding: 12, border:'1px solid #ddd', borderRadius: 8 }}
+            >
+              <option value=''>Selectează</option>
+              <option value='Cu acte'>Cu acte</option>
+              <option value='Fără acte'>Fără acte</option>
+            </select>
+            <p style={{ fontSize: '0.8em', color: '#666', marginTop: 5 }}>
+              Specifică dacă bijuteria are documentele originale (certificat de autenticitate, evaluare, etc.).
+            </p>
+          </div>
+        )}
+
+        {/* Documents for art */}
+        {form.category === 'Artă' && (
+          <div style={{ marginBottom: 20 }}>
+            <label style={{ display: 'block', marginBottom: 5, fontWeight: 600 }}>Documente</label>
+            <select 
+              value={form.hasDocuments} 
+              onChange={(e)=>setForm({...form,hasDocuments:e.target.value})} 
+              style={{ width: '100%', padding: 12, border:'1px solid #ddd', borderRadius: 8 }}
+            >
+              <option value=''>Selectează</option>
+              <option value='Cu acte'>Cu acte</option>
+              <option value='Fără acte'>Fără acte</option>
+            </select>
+            <p style={{ fontSize: '0.8em', color: '#666', marginTop: 5 }}>
+              Specifică dacă opera de artă are documentele originale (certificat de autenticitate, provenință, etc.).
+            </p>
+          </div>
+        )}
+
+        {/* Condition field for all categories */}
+        <div style={{ marginBottom: 20 }}>
+          <label style={{ display: 'block', marginBottom: 5, fontWeight: 600 }}>Stare *</label>
+          <select
+            required
+            value={form.condition}
+            onChange={(e)=>setForm({...form,condition:e.target.value})}
+            style={{ width: '100%', padding: 12, border:'1px solid #ddd', borderRadius: 8 }}
+          >
+            <option value=''>Selectează starea</option>
+            {CONDITION_OPTIONS.map((condition) => (
+              <option key={condition} value={condition}>{condition}</option>
+            ))}
+          </select>
+          <p style={{ fontSize: '0.8em', color: '#666', marginTop: 5 }}>
+            Descrie starea actuală a obiectului pentru a ajuta cumpărătorii să ia o decizie informată.
+          </p>
+        </div>
         
         {/* Preț dorit */}
         <div style={{ marginBottom: 20 }}>
@@ -288,6 +426,61 @@ export default function EditListingPage() {
             Acest preț va fi afișat ca referință. Cumpărătorii pot face orice ofertă.
           </p>
         </div>
+
+        {/* Current images display */}
+        {currentImages.length > 0 && (
+          <div style={{ marginBottom: 20 }}>
+            <label style={{ display: 'block', marginBottom: 10, fontWeight: 600 }}>Imaginile actuale</label>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))', gap: 10 }}>
+              {currentImages.map((image, index) => (
+                <img 
+                  key={index} 
+                  src={image} 
+                  alt={`Imaginea ${index + 1}`}
+                  style={{ 
+                    width: '100%', 
+                    height: '100px', 
+                    objectFit: 'cover', 
+                    borderRadius: 8,
+                    border: '1px solid #ddd'
+                  }}
+                />
+              ))}
+            </div>
+            <p style={{ fontSize: '0.8em', color: '#666', marginTop: 5 }}>
+              Pentru a modifica imaginile, folosește butonul "Editează imagini" de mai jos.
+            </p>
+          </div>
+        )}
+        
+        <div style={{ display: 'flex', gap: 12, marginBottom: 20 }}>
+          <button 
+            type="button"
+            onClick={() => setStep(2)}
+            style={{ 
+              flex: 1, 
+              padding: 12, 
+              background: 'linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)', 
+              color: '#fff',
+              border: 'none', 
+              borderRadius: 8, 
+              cursor: 'pointer',
+              fontSize: '14px',
+              fontWeight: '600',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px'
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <path d="M21 15l-5-5L5 21"/>
+            </svg>
+            Editează imagini ({currentImages.length})
+          </button>
+        </div>
         
         <div style={{ display: 'flex', gap: 12 }}>
           <button 
@@ -307,18 +500,131 @@ export default function EditListingPage() {
           </button>
           <button 
             type='submit' 
-            disabled={loading || !form.desiredPrice} 
+            disabled={loading || !form.desiredPrice || !form.condition} 
             className='btn btn-gold' 
             style={{ flex: 2 }}
           >
             {loading ? 'Se salvează...' : 'Salvează modificările'}
           </button>
         </div>
-        
-        <p style={{ fontSize: '0.8em', color: '#999', marginTop: 15, textAlign: 'center' }}>
-          * Imaginile se editează separat din pagina listării
-        </p>
       </form>
+
+      {/* Image upload step */}
+      {step === 2 && (
+        <div style={{ 
+          position: 'fixed', 
+          top: 0, 
+          left: 0, 
+          right: 0, 
+          bottom: 0, 
+          background: 'rgba(0,0,0,0.5)', 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'center',
+          zIndex: 1000,
+          padding: '20px'
+        }}>
+          <div style={{ 
+            background: '#fff', 
+            padding: '40px', 
+            maxWidth: '900px', 
+            width: '100%', 
+            borderRadius: '20px', 
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
+            maxHeight: '90vh',
+            overflow: 'auto'
+          }}>
+            <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+              <h1 style={{ fontSize: '28px', fontWeight: '700', color: '#333', marginBottom: '8px' }}>
+                Editează imaginile
+              </h1>
+              <p style={{ color: '#666', fontSize: '16px', marginBottom: '20px' }}>
+                "{form.title}"
+              </p>
+              <p style={{ color: '#666', fontSize: '14px' }}>
+                Adaugă sau înlocuiește imaginile pentru acest anunț
+              </p>
+            </div>
+
+            <LazyImageUpload
+              listingId={listingId}
+              onImagesUploaded={(images) => {
+                setCurrentImages(images)
+                setSuccess('Imaginile au fost actualizate cu succes!')
+              }}
+              maxImages={10}
+              existingImages={currentImages}
+            />
+
+            <div style={{ display: 'flex', gap: '16px', marginTop: '40px', justifyContent: 'center' }}>
+              <button
+                onClick={() => setStep(1)}
+                style={{
+                  background: 'transparent',
+                  color: '#666',
+                  border: '2px solid #e2e8f0',
+                  padding: '12px 24px',
+                  borderRadius: '12px',
+                  fontSize: '16px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = '#D09A1E'
+                  e.currentTarget.style.color = '#D09A1E'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = '#e2e8f0'
+                  e.currentTarget.style.color = '#666'
+                }}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="m15 18-6-6 6-6"/>
+                </svg>
+                Înapoi la detalii
+              </button>
+              
+              <button
+                onClick={() => {
+                  setStep(1)
+                  setSuccess('Imaginile au fost actualizate cu succes!')
+                }}
+                style={{
+                  background: 'linear-gradient(135deg, #D09A1E 0%, #B8860B 100%)',
+                  color: '#fff',
+                  border: 'none',
+                  padding: '12px 24px',
+                  borderRadius: '12px',
+                  fontSize: '16px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'linear-gradient(135deg, #E5A82A 0%, #C69A0F 100%)'
+                  e.currentTarget.style.transform = 'translateY(-1px)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'linear-gradient(135deg, #D09A1E 0%, #B8860B 100%)'
+                  e.currentTarget.style.transform = 'translateY(0)'
+                }}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M20 6 9 17l-5-5"/>
+                </svg>
+                Finalizează
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
