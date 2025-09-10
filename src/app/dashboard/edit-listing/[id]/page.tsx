@@ -551,6 +551,18 @@ export default function EditListingPage() {
               onImagesUploaded={(images) => {
                 setCurrentImages(images)
                 setSuccess('Imaginile au fost actualizate cu succes!')
+                
+                // Force cache invalidation for listing detail page
+                if (typeof window !== 'undefined' && 'caches' in window) {
+                  caches.keys().then(cacheNames => {
+                    cacheNames.forEach(cacheName => {
+                      caches.open(cacheName).then(cache => {
+                        cache.delete(`/oferte/${listingId}`)
+                        cache.delete(`/api/listings/${listingId}`)
+                      })
+                    })
+                  })
+                }
               }}
               maxImages={10}
               existingImages={currentImages}
@@ -591,7 +603,12 @@ export default function EditListingPage() {
               <button
                 onClick={() => {
                   setStep(1)
-                  setSuccess('Imaginile au fost actualizate cu succes!')
+                  setSuccess('Imaginile au fost actualizate cu succes! Redirecting...')
+                  
+                  // Redirect to listing detail page to see updated images
+                  setTimeout(() => {
+                    window.location.href = `/oferte/${listingId}?refresh=${Date.now()}`
+                  }, 1500)
                 }}
                 style={{
                   background: 'linear-gradient(135deg, #D09A1E 0%, #B8860B 100%)',

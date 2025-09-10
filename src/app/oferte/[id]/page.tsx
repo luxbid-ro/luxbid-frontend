@@ -40,14 +40,18 @@ export default function ListingDetailPage() {
       try {
         console.log(`🔗 Fetching listing from: ${base}/listings/${id}`)
         
-        // Optimized listing fetch with smart caching
-        const listingRes = await fetch(`${base}/listings/${id}`, {
+        // Check if this is a cache refresh request
+        const urlParams = new URLSearchParams(window.location.search)
+        const isRefresh = urlParams.has('refresh')
+        
+        // Optimized listing fetch with conditional caching
+        const listingRes = await fetch(`${base}/listings/${id}${isRefresh ? `?t=${Date.now()}` : ''}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            'Cache-Control': 'public, max-age=300', // 5 minute cache
+            'Cache-Control': isRefresh ? 'no-cache, no-store, must-revalidate' : 'public, max-age=300',
           },
-          next: { revalidate: 300 }, // Next.js cache
+          next: isRefresh ? { revalidate: 0 } : { revalidate: 300 },
           mode: 'cors',
           credentials: 'omit'
         })
