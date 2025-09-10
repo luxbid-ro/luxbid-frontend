@@ -56,11 +56,16 @@ export default function EmailVerificationPage() {
         throw new Error(data.message || 'Eroare la verificarea email-ului');
       }
 
-      // Save user data to localStorage after successful verification
+      // Save user data and token to localStorage after successful verification
       if (data.user) {
         localStorage.setItem('luxbid_user_id', data.user.id);
         localStorage.setItem('luxbid_user_email', data.user.email);
         localStorage.setItem('luxbid_user_verified', 'true');
+      }
+      
+      // Save JWT token if provided
+      if (data.accessToken) {
+        localStorage.setItem('luxbid_token', data.accessToken);
       }
 
       setSuccess(true);
