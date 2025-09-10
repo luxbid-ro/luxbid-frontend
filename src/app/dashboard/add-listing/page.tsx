@@ -227,48 +227,13 @@ export default function AddListingPage() {
           </div>
         )}
         
-        {/* Processing indicator */}
-        {isProcessing && (
-          <div style={{
-            marginBottom: 20,
-            padding: 12,
-            backgroundColor: '#f0f9ff',
-            border: '1px solid #0ea5e9',
-            borderRadius: 8,
-            display: 'flex',
-            alignItems: 'center',
-            gap: 8
-          }}>
-            <div style={{
-              width: 16,
-              height: 16,
-              border: '2px solid #0ea5e9',
-              borderTop: '2px solid transparent',
-              borderRadius: '50%',
-              animation: 'spin 1s linear infinite'
-            }} />
-            <span style={{ fontSize: 14, color: '#0369a1' }}>
-              Se verifică conținutul...
-            </span>
-          </div>
-        )}
-        
         <div style={{ marginBottom: 15 }}>
           <label style={{ display: 'block', marginBottom: 5, fontWeight: 600 }}>Titlu *</label>
           <input 
             placeholder='Ex: Rolex Submariner 2023' 
             required 
             value={form.title} 
-            onChange={(e) => {
-              setForm({...form, title: e.target.value})
-              // Moderare în timp real (debounced)
-              moderate({
-                title: e.target.value,
-                description: form.description,
-                category: form.category,
-                price: parseFloat(form.desiredPrice) || 0
-              })
-            }}
+            onChange={(e) => setForm({...form, title: e.target.value})}
             style={{ width: '100%', padding: 12, border:'1px solid #ddd', borderRadius: 8 }} 
           />
         </div>
@@ -279,16 +244,7 @@ export default function AddListingPage() {
             placeholder='Descrie starea, anul, orice defecte, accesorii incluse...' 
             required 
             value={form.description} 
-            onChange={(e) => {
-              setForm({...form, description: e.target.value})
-              // Moderare în timp real (debounced)
-              moderate({
-                title: form.title,
-                description: e.target.value,
-                category: form.category,
-                price: parseFloat(form.desiredPrice) || 0
-              })
-            }}
+            onChange={(e) => setForm({...form, description: e.target.value})}
             style={{ width: '100%', padding: 12, border:'1px solid #ddd', borderRadius: 8, minHeight: 120 }} 
           />
         </div>
