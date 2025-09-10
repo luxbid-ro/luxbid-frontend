@@ -84,17 +84,21 @@ export default function DashboardPage() {
                 alignItems: 'center',
                 justifyContent: 'center',
                 minHeight: '60px',
-                transition: 'all 0.3s ease',
-                boxShadow: '0 4px 12px rgba(208, 154, 30, 0.2)',
-                border: 'none'
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                boxShadow: '0 4px 12px rgba(208, 154, 30, 0.15)',
+                border: 'none',
+                position: 'relative',
+                overflow: 'hidden'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px)'
-                e.currentTarget.style.boxShadow = '0 6px 20px rgba(208, 154, 30, 0.3)'
+                e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)'
+                e.currentTarget.style.boxShadow = '0 8px 30px rgba(208, 154, 30, 0.25), 0 12px 20px rgba(0, 0, 0, 0.08)'
+                e.currentTarget.style.background = 'linear-gradient(135deg, #E5A82A 0%, #C69A0F 100%)'
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)'
-                e.currentTarget.style.boxShadow = '0 4px 12px rgba(208, 154, 30, 0.2)'
+                e.currentTarget.style.transform = 'translateY(0) scale(1)'
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(208, 154, 30, 0.15)'
+                e.currentTarget.style.background = 'linear-gradient(135deg, #D09A1E 0%, #B8860B 100%)'
               }}
             >
               Adaugă Anunț
@@ -102,7 +106,7 @@ export default function DashboardPage() {
             <a 
               href="/dashboard/my-listings" 
               style={{ 
-                background: '#f8f9fa', 
+                background: 'linear-gradient(135deg, #fff 0%, #f8f9fa 100%)', 
                 color: '#333', 
                 padding: '24px 20px', 
                 borderRadius: '12px', 
@@ -114,19 +118,25 @@ export default function DashboardPage() {
                 alignItems: 'center',
                 justifyContent: 'center',
                 minHeight: '60px',
-                transition: 'all 0.3s ease',
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                 border: '2px solid #D09A1E',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
+                boxShadow: '0 4px 12px rgba(208, 154, 30, 0.08)',
+                position: 'relative',
+                overflow: 'hidden'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px)'
-                e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.15)'
-                e.currentTarget.style.background = '#f0f0f0'
+                e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)'
+                e.currentTarget.style.boxShadow = '0 8px 25px rgba(208, 154, 30, 0.15), 0 12px 20px rgba(0, 0, 0, 0.06)'
+                e.currentTarget.style.background = 'linear-gradient(135deg, #D09A1E 0%, #B8860B 100%)'
+                e.currentTarget.style.color = '#fff'
+                e.currentTarget.style.borderColor = '#B8860B'
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)'
-                e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)'
-                e.currentTarget.style.background = '#f8f9fa'
+                e.currentTarget.style.transform = 'translateY(0) scale(1)'
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(208, 154, 30, 0.08)'
+                e.currentTarget.style.background = 'linear-gradient(135deg, #fff 0%, #f8f9fa 100%)'
+                e.currentTarget.style.color = '#333'
+                e.currentTarget.style.borderColor = '#D09A1E'
               }}
             >
               Anunțurile mele
@@ -134,7 +144,7 @@ export default function DashboardPage() {
             <a 
               href="/profile/edit" 
               style={{ 
-                background: '#f8f9fa', 
+                background: 'linear-gradient(135deg, #fff 0%, #f8f9fa 100%)', 
                 color: '#333', 
                 padding: '24px 20px', 
                 borderRadius: '12px', 
@@ -146,19 +156,25 @@ export default function DashboardPage() {
                 alignItems: 'center',
                 justifyContent: 'center',
                 minHeight: '60px',
-                transition: 'all 0.3s ease',
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                 border: '2px solid #D09A1E',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
+                boxShadow: '0 4px 12px rgba(208, 154, 30, 0.08)',
+                position: 'relative',
+                overflow: 'hidden'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px)'
-                e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.15)'
-                e.currentTarget.style.background = '#f0f0f0'
+                e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)'
+                e.currentTarget.style.boxShadow = '0 8px 25px rgba(208, 154, 30, 0.15), 0 12px 20px rgba(0, 0, 0, 0.06)'
+                e.currentTarget.style.background = 'linear-gradient(135deg, #D09A1E 0%, #B8860B 100%)'
+                e.currentTarget.style.color = '#fff'
+                e.currentTarget.style.borderColor = '#B8860B'
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)'
-                e.currentTarget.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)'
-                e.currentTarget.style.background = '#f8f9fa'
+                e.currentTarget.style.transform = 'translateY(0) scale(1)'
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(208, 154, 30, 0.08)'
+                e.currentTarget.style.background = 'linear-gradient(135deg, #fff 0%, #f8f9fa 100%)'
+                e.currentTarget.style.color = '#333'
+                e.currentTarget.style.borderColor = '#D09A1E'
               }}
             >
               Editează Profil
