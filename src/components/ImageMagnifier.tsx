@@ -79,35 +79,18 @@ export default function ImageMagnifier({
       return
     }
 
+    // Calculez procentajele poziției mouse-ului (ca la Chrono24)
+    const xPercent = (x / rect.width) * 100
+    const yPercent = (y / rect.height) * 100
+
     // Actualizez pozitiile și dimensiunile în timp real
     setImgPosition({ x: rect.left, y: rect.top })
-    setMousePosition({ x, y })
+    setMousePosition({ x: xPercent, y: yPercent }) // Salvez procentajele
     setImageSize({ width: rect.width, height: rect.height })
 
-    // Calculez pozitia magnifier-ului cu offset pentru a evita overlapping
-    const windowWidth = window.innerWidth
-    const windowHeight = window.innerHeight
-    
-    // Determin pe ce parte să plasez magnifier-ul bazat pe poziția mouse-ului în imagine
-    const imageMiddleX = rect.width / 2
-    const isMouseOnLeftSide = x < imageMiddleX
-    
-    let magnifierX = isMouseOnLeftSide ? e.clientX + 20 : e.clientX - magnifierSize - 20
-    let magnifierY = e.clientY - magnifierSize / 2
-
-    // Verific marginile ecranului și ajustez poziția
-    if (magnifierX + magnifierSize > windowWidth) {
-      magnifierX = e.clientX - magnifierSize - 20
-    }
-    if (magnifierX < 0) {
-      magnifierX = e.clientX + 20
-    }
-    if (magnifierY < 0) {
-      magnifierY = 10
-    }
-    if (magnifierY + magnifierSize > windowHeight) {
-      magnifierY = windowHeight - magnifierSize - 10
-    }
+    // Pozitionez lupa fix deasupra mouse-ului (ca la Chrono24)
+    const magnifierX = Math.min(rect.width - magnifierSize, Math.max(0, x - magnifierSize / 2))
+    const magnifierY = Math.min(rect.height - magnifierSize, Math.max(0, y - magnifierSize / 2))
 
     setMagnifierPosition({ x: magnifierX, y: magnifierY })
     setShowMagnifier(true)
@@ -204,7 +187,7 @@ export default function ImageMagnifier({
       {showMagnifier && (
         <div
           style={{
-            position: 'fixed',
+            position: 'absolute',
             left: `${magnifierPosition.x}px`,
             top: `${magnifierPosition.y}px`,
             width: `${magnifierSize}px`,
@@ -216,8 +199,8 @@ export default function ImageMagnifier({
             backgroundRepeat: 'no-repeat',
             backgroundSize: `${imageSize.width * zoomLevel}px ${imageSize.height * zoomLevel}px`,
             backgroundPosition: `
-              ${magnifierSize / 2 - mousePosition.x * zoomLevel}px 
-              ${magnifierSize / 2 - mousePosition.y * zoomLevel}px
+              ${Math.min(100, Math.max(0, mousePosition.x))}% 
+              ${Math.min(100, Math.max(0, mousePosition.y))}%
             `,
             pointerEvents: 'none',
             zIndex: 1000,
