@@ -438,7 +438,13 @@ function OfertesContent() {
                 padding: '24px',
                 marginTop: '16px'
               }}>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '24px' }}>
+                {/* First Row - Price and Currency */}
+                <div style={{ 
+                  display: 'grid', 
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
+                  gap: '24px',
+                  marginBottom: '24px'
+                }}>
                   
                   {/* Price Range */}
                   <div>
@@ -499,7 +505,16 @@ function OfertesContent() {
                       <option value="USD">USD</option>
                     </select>
                   </div>
+                </div>
 
+                {/* Second Row - Condition and Location */}
+                <div style={{ 
+                  display: 'grid', 
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
+                  gap: '24px',
+                  marginBottom: '24px'
+                }}>
+                  
                   {/* Condition */}
                   <div>
                     <h4 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600', color: '#333' }}>
@@ -552,7 +567,15 @@ function OfertesContent() {
                       <option value="Brașov">Brașov</option>
                     </select>
                   </div>
+                </div>
 
+                {/* Third Row - Date and Brand */}
+                <div style={{ 
+                  display: 'grid', 
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
+                  gap: '24px'
+                }}>
+                  
                   {/* Date Range */}
                   <div>
                     <h4 style={{ marginBottom: '12px', fontSize: '16px', fontWeight: '600', color: '#333' }}>
