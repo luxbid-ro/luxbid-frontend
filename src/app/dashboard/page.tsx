@@ -91,14 +91,16 @@ export default function DashboardPage() {
                 overflow: 'hidden'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)'
-                e.currentTarget.style.boxShadow = '0 8px 30px rgba(208, 154, 30, 0.25), 0 12px 20px rgba(0, 0, 0, 0.08)'
+                e.currentTarget.style.transform = 'translateY(-8px) scale(1.03)'
+                e.currentTarget.style.boxShadow = '0 20px 40px rgba(208, 154, 30, 0.4), 0 16px 32px rgba(0, 0, 0, 0.15)'
                 e.currentTarget.style.background = 'linear-gradient(135deg, #E5A82A 0%, #C69A0F 100%)'
+                e.currentTarget.style.zIndex = '10'
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'translateY(0) scale(1)'
                 e.currentTarget.style.boxShadow = '0 4px 12px rgba(208, 154, 30, 0.15)'
                 e.currentTarget.style.background = 'linear-gradient(135deg, #D09A1E 0%, #B8860B 100%)'
+                e.currentTarget.style.zIndex = '1'
               }}
             >
               Adaugă Anunț
@@ -125,11 +127,12 @@ export default function DashboardPage() {
                 overflow: 'hidden'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)'
-                e.currentTarget.style.boxShadow = '0 8px 25px rgba(208, 154, 30, 0.15), 0 12px 20px rgba(0, 0, 0, 0.06)'
+                e.currentTarget.style.transform = 'translateY(-8px) scale(1.03)'
+                e.currentTarget.style.boxShadow = '0 20px 40px rgba(208, 154, 30, 0.3), 0 16px 32px rgba(0, 0, 0, 0.12)'
                 e.currentTarget.style.background = 'linear-gradient(135deg, #D09A1E 0%, #B8860B 100%)'
                 e.currentTarget.style.color = '#fff'
                 e.currentTarget.style.borderColor = '#B8860B'
+                e.currentTarget.style.zIndex = '10'
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'translateY(0) scale(1)'
@@ -137,6 +140,7 @@ export default function DashboardPage() {
                 e.currentTarget.style.background = 'linear-gradient(135deg, #fff 0%, #f8f9fa 100%)'
                 e.currentTarget.style.color = '#333'
                 e.currentTarget.style.borderColor = '#D09A1E'
+                e.currentTarget.style.zIndex = '1'
               }}
             >
               Anunțurile mele
@@ -163,11 +167,12 @@ export default function DashboardPage() {
                 overflow: 'hidden'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)'
-                e.currentTarget.style.boxShadow = '0 8px 25px rgba(208, 154, 30, 0.15), 0 12px 20px rgba(0, 0, 0, 0.06)'
+                e.currentTarget.style.transform = 'translateY(-8px) scale(1.03)'
+                e.currentTarget.style.boxShadow = '0 20px 40px rgba(208, 154, 30, 0.3), 0 16px 32px rgba(0, 0, 0, 0.12)'
                 e.currentTarget.style.background = 'linear-gradient(135deg, #D09A1E 0%, #B8860B 100%)'
                 e.currentTarget.style.color = '#fff'
                 e.currentTarget.style.borderColor = '#B8860B'
+                e.currentTarget.style.zIndex = '10'
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'translateY(0) scale(1)'
@@ -175,6 +180,7 @@ export default function DashboardPage() {
                 e.currentTarget.style.background = 'linear-gradient(135deg, #fff 0%, #f8f9fa 100%)'
                 e.currentTarget.style.color = '#333'
                 e.currentTarget.style.borderColor = '#D09A1E'
+                e.currentTarget.style.zIndex = '1'
               }}
             >
               Editează Profil
