@@ -382,21 +382,6 @@ export default function AddListingPage() {
             <option value='Artă'>Artă</option>
           </select>
         </div>
-
-        {/* Documents option */}
-        <div style={{ marginBottom: 20 }}>
-          <label style={{ display: 'block', marginBottom: 5, fontWeight: 600 }}>Acte *</label>
-          <select 
-            required 
-            value={form.hasDocuments} 
-            onChange={(e)=>setForm({...form,hasDocuments:e.target.value})} 
-            style={{ width: '100%', padding: 12, border:'1px solid #ddd', borderRadius: 8 }}
-          >
-            <option value=''>Selectează</option>
-            <option value='Cu acte'>Cu acte</option>
-            <option value='Fără acte'>Fără acte</option>
-          </select>
-        </div>
         
         {/* Brand selection for watches */}
         {form.category === 'Ceasuri' && (
@@ -439,6 +424,26 @@ export default function AddListingPage() {
           </div>
         )}
 
+        {/* Documents option - appears after material selection for watches */}
+        {form.category === 'Ceasuri' && (
+          <div style={{ marginBottom: 20 }}>
+            <label style={{ display: 'block', marginBottom: 5, fontWeight: 600 }}>Acte *</label>
+            <select 
+              required 
+              value={form.hasDocuments} 
+              onChange={(e)=>setForm({...form,hasDocuments:e.target.value})} 
+              style={{ width: '100%', padding: 12, border:'1px solid #ddd', borderRadius: 8 }}
+            >
+              <option value=''>Selectează</option>
+              <option value='Cu acte'>Cu acte</option>
+              <option value='Fără acte'>Fără acte</option>
+            </select>
+            <p style={{ fontSize: '0.8em', color: '#666', marginTop: 5 }}>
+              Specifică dacă ceasul are documentele originale (certificat, garanție, etc.).
+            </p>
+          </div>
+        )}
+
         {/* Brand selection for bags */}
         {form.category === 'Genți' && (
           <div style={{ marginBottom: 20 }}>
@@ -459,6 +464,26 @@ export default function AddListingPage() {
           </div>
         )}
 
+        {/* Documents option for bags */}
+        {form.category === 'Genți' && (
+          <div style={{ marginBottom: 20 }}>
+            <label style={{ display: 'block', marginBottom: 5, fontWeight: 600 }}>Acte *</label>
+            <select 
+              required 
+              value={form.hasDocuments} 
+              onChange={(e)=>setForm({...form,hasDocuments:e.target.value})} 
+              style={{ width: '100%', padding: 12, border:'1px solid #ddd', borderRadius: 8 }}
+            >
+              <option value=''>Selectează</option>
+              <option value='Cu acte'>Cu acte</option>
+              <option value='Fără acte'>Fără acte</option>
+            </select>
+            <p style={{ fontSize: '0.8em', color: '#666', marginTop: 5 }}>
+              Specifică dacă geanta are documentele originale (certificat de autenticitate, chitanță, etc.).
+            </p>
+          </div>
+        )}
+
         {/* Brand selection for jewelry */}
         {form.category === 'Bijuterii' && (
           <div style={{ marginBottom: 20 }}>
@@ -475,6 +500,46 @@ export default function AddListingPage() {
             </select>
             <p style={{ fontSize: '0.8em', color: '#666', marginTop: 5 }}>
               Selectează brandul bijuteriei pentru a ajuta cumpărătorii să o găsească mai ușor.
+            </p>
+          </div>
+        )}
+
+        {/* Documents option for jewelry */}
+        {form.category === 'Bijuterii' && (
+          <div style={{ marginBottom: 20 }}>
+            <label style={{ display: 'block', marginBottom: 5, fontWeight: 600 }}>Acte *</label>
+            <select 
+              required 
+              value={form.hasDocuments} 
+              onChange={(e)=>setForm({...form,hasDocuments:e.target.value})} 
+              style={{ width: '100%', padding: 12, border:'1px solid #ddd', borderRadius: 8 }}
+            >
+              <option value=''>Selectează</option>
+              <option value='Cu acte'>Cu acte</option>
+              <option value='Fără acte'>Fără acte</option>
+            </select>
+            <p style={{ fontSize: '0.8em', color: '#666', marginTop: 5 }}>
+              Specifică dacă bijuteria are documentele originale (certificat de autenticitate, evaluare, etc.).
+            </p>
+          </div>
+        )}
+
+        {/* Documents option for art category */}
+        {form.category === 'Artă' && (
+          <div style={{ marginBottom: 20 }}>
+            <label style={{ display: 'block', marginBottom: 5, fontWeight: 600 }}>Acte *</label>
+            <select 
+              required 
+              value={form.hasDocuments} 
+              onChange={(e)=>setForm({...form,hasDocuments:e.target.value})} 
+              style={{ width: '100%', padding: 12, border:'1px solid #ddd', borderRadius: 8 }}
+            >
+              <option value=''>Selectează</option>
+              <option value='Cu acte'>Cu acte</option>
+              <option value='Fără acte'>Fără acte</option>
+            </select>
+            <p style={{ fontSize: '0.8em', color: '#666', marginTop: 5 }}>
+              Specifică dacă opera de artă are documentele originale (certificat de autenticitate, provenință, etc.).
             </p>
           </div>
         )}
