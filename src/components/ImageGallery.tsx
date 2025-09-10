@@ -169,6 +169,29 @@ export default function ImageGallery({ images, className = '' }: ImageGalleryPro
           }}>
             {/* Buton inimioară */}
             <button
+              onClick={(e) => {
+                e.stopPropagation()
+                // Simulez toggle favorite
+                const currentFilled = e.currentTarget.getAttribute('data-filled') === 'true'
+                const newFilled = !currentFilled
+                e.currentTarget.setAttribute('data-filled', String(newFilled))
+                
+                // Schimb culoarea inimii
+                const svg = e.currentTarget.querySelector('svg')
+                if (svg) {
+                  svg.style.fill = newFilled ? '#ff4757' : 'none'
+                  svg.style.stroke = newFilled ? '#ff4757' : 'currentColor'
+                }
+                
+                // Feedback vizual
+                e.currentTarget.style.transform = 'scale(1.2)'
+                setTimeout(() => {
+                  e.currentTarget.style.transform = 'scale(1)'
+                }, 150)
+                
+                console.log('❤️ Favorite toggled:', newFilled ? 'Added' : 'Removed')
+              }}
+              data-filled="false"
               style={{
                 background: 'rgba(255, 255, 255, 0.9)',
                 border: 'none',
@@ -188,7 +211,8 @@ export default function ImageGallery({ images, className = '' }: ImageGalleryPro
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)'
-                e.currentTarget.style.transform = 'scale(1)'
+                const filled = e.currentTarget.getAttribute('data-filled') === 'true'
+                e.currentTarget.style.transform = filled ? 'scale(1)' : 'scale(1)'
               }}
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -198,6 +222,51 @@ export default function ImageGallery({ images, className = '' }: ImageGalleryPro
 
             {/* Buton share */}
             <button
+              onClick={(e) => {
+                e.stopPropagation()
+                
+                // Încerc să folosesc Web Share API dacă este disponibil
+                if (navigator.share) {
+                  navigator.share({
+                    title: 'Anunț LuxBid',
+                    text: 'Verifică acest anunț pe LuxBid',
+                    url: window.location.href
+                  }).then(() => {
+                    console.log('📤 Shared successfully')
+                  }).catch((err) => {
+                    console.log('📤 Share failed:', err)
+                    fallbackShare()
+                  })
+                } else {
+                  fallbackShare()
+                }
+                
+                function fallbackShare() {
+                  // Fallback: copiez URL-ul în clipboard
+                  navigator.clipboard.writeText(window.location.href).then(() => {
+                    // Feedback vizual
+                    const originalText = e.currentTarget.title
+                    e.currentTarget.title = 'Link copiat!'
+                    e.currentTarget.style.background = 'rgba(34, 197, 94, 0.9)'
+                    
+                    setTimeout(() => {
+                      e.currentTarget.title = originalText || 'Distribuie'
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)'
+                    }, 2000)
+                    
+                    console.log('📋 URL copied to clipboard')
+                  }).catch(() => {
+                    console.log('📋 Clipboard copy failed')
+                  })
+                }
+                
+                // Animație click
+                e.currentTarget.style.transform = 'scale(1.15)'
+                setTimeout(() => {
+                  e.currentTarget.style.transform = 'scale(1)'
+                }, 150)
+              }}
+              title="Distribuie"
               style={{
                 background: 'rgba(255, 255, 255, 0.9)',
                 border: 'none',
