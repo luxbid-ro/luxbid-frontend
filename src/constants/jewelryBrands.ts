@@ -1,15 +1,15 @@
-// Top luxury jewelry brands for marketplace
+// Top luxury jewelry brands for marketplace (sorted alphabetically A-Z)
 export const JEWELRY_BRANDS = [
-  'Cartier',
-  'Tiffany & Co.',
+  'Boucheron',
   'Bulgari',
-  'Van Cleef & Arpels',
-  'Harry Winston',
+  'Cartier',
   'Chopard',
   'Graff',
+  'Harry Winston',
+  'Mikimoto',
   'Piaget',
-  'Boucheron',
-  'Mikimoto'
+  'Tiffany & Co.',
+  'Van Cleef & Arpels'
 ] as const;
 
 export type JewelryBrand = typeof JEWELRY_BRANDS[number];

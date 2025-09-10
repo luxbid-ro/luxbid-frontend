@@ -8,9 +8,25 @@ import { JEWELRY_BRANDS } from '@/constants/jewelryBrands'
 import { useContentModeration } from '@/hooks/useContentModeration'
 import { RiskLevel } from '@/utils/contentModeration'
 
+// Watch materials for luxury timepieces
+const WATCH_MATERIALS = [
+  'Oțel',
+  'Aur',
+  'Aur cu Oțel',
+  'Aur alb',
+  'Aur roz',
+  'Platină',
+  'Titanium',
+  'Carbon',
+  'Ceramică',
+  'Bronz',
+  'Aluminiu',
+  'Tantalum'
+] as const
+
 export default function AddListingPage() {
   const router = useRouter()
-  const [form, setForm] = useState({ title: '', description: '', category: '', brand: '', desiredPrice: '', currency: 'RON' })
+  const [form, setForm] = useState({ title: '', description: '', category: '', brand: '', desiredPrice: '', currency: 'RON', hasDocuments: '', material: '' })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [step, setStep] = useState(1) // 1: Create listing, 2: Upload images
@@ -103,45 +119,147 @@ export default function AddListingPage() {
     router.push(`/oferte/${listingId}`)
   }
 
+  const handlePublishWithImages = async () => {
+    // Redirect to the published listing
+    router.push(`/oferte/${listingId}`)
+  }
+
   if (step === 2 && listingId) {
     return (
       <div style={{ minHeight: '100vh', background: 'var(--surface)', padding: '40px 20px', display: 'flex', justifyContent: 'center' }}>
-        <div style={{ background: '#fff', padding: 24, maxWidth: 800, width: '100%', borderRadius: 16 }}>
-          <h2 style={{ marginTop: 0 }}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '8px', verticalAlign: 'middle' }}>
-              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-            </svg>
-            Listarea "{form.title}" a fost creată!
-          </h2>
-          <p style={{ color: '#666', marginBottom: 30 }}>
-            Acum adaugă imagini de înaltă calitate pentru a atrage cumpărători serioși.
-          </p>
+        <div style={{ background: '#fff', padding: '40px', maxWidth: '900px', width: '100%', borderRadius: '20px', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08)' }}>
           
-          <LazyImageUpload 
-            listingId={listingId} 
-            onImagesUploaded={handleImagesUploaded}
-            maxImages={10}
-          />
+          {/* Header Section */}
+          <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+            <div style={{ 
+              width: '80px', 
+              height: '80px', 
+              borderRadius: '50%', 
+              background: 'linear-gradient(135deg, #D09A1E 0%, #B8860B 100%)', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center', 
+              margin: '0 auto 20px',
+              boxShadow: '0 8px 24px rgba(208, 154, 30, 0.3)'
+            }}>
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            <h1 style={{ 
+              fontSize: '28px', 
+              fontWeight: '700', 
+              color: '#1a1a1a', 
+              marginBottom: '12px',
+              lineHeight: '1.3'
+            }}>
+              Anunț creat cu succes!
+            </h1>
+            <p style={{ 
+              fontSize: '18px', 
+              color: '#666', 
+              marginBottom: '8px',
+              fontWeight: '500'
+            }}>
+              "{form.title}"
+            </p>
+            <p style={{ 
+              fontSize: '16px', 
+              color: '#888', 
+              lineHeight: '1.5',
+              maxWidth: '500px',
+              margin: '0 auto'
+            }}>
+              Adaugă imagini de înaltă calitate pentru a atrage cumpărători serioși și pentru a crește vizibilitatea anunțului tău.
+            </p>
+          </div>
+
+          {/* Upload Section */}
+          <div style={{ 
+            background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)', 
+            borderRadius: '16px', 
+            padding: '32px', 
+            marginBottom: '40px',
+            border: '2px dashed #D09A1E'
+          }}>
+            <LazyImageUpload 
+              listingId={listingId} 
+              onImagesUploaded={handleImagesUploaded}
+              maxImages={10}
+            />
+          </div>
           
-          <div style={{ textAlign: 'center', marginTop: 20 }}>
+          {/* Action Buttons */}
+          <div style={{ 
+            display: 'flex', 
+            gap: '16px', 
+            justifyContent: 'center',
+            flexWrap: 'wrap'
+          }}>
             <button 
-              onClick={skipImages}
+              onClick={() => setStep(1)}
               style={{ 
-                background: 'transparent', 
-                border: '1px solid #ddd', 
-                padding: '8px 16px', 
-                borderRadius: 8, 
+                background: 'linear-gradient(135deg, #6c757d 0%, #495057 100%)', 
+                color: '#fff', 
+                border: 'none',
+                padding: '16px 32px', 
+                borderRadius: '12px', 
+                fontSize: '16px',
+                fontWeight: '600',
                 cursor: 'pointer',
-                marginRight: 10
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                boxShadow: '0 4px 12px rgba(108, 117, 125, 0.15)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)'
+                e.currentTarget.style.boxShadow = '0 8px 24px rgba(108, 117, 125, 0.25)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0) scale(1)'
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(108, 117, 125, 0.15)'
               }}
             >
-              Sari peste imagini (pentru acum)
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M19 12H5m7-7l-7 7 7 7"/>
+              </svg>
+              Înapoi la Detalii
             </button>
+            
             <button 
-              onClick={() => router.push('/dashboard')}
-              className="btn btn-gold"
+              onClick={handlePublishWithImages}
+              style={{ 
+                background: 'linear-gradient(135deg, #D09A1E 0%, #B8860B 100%)', 
+                color: '#fff', 
+                border: 'none',
+                padding: '16px 32px', 
+                borderRadius: '12px', 
+                fontSize: '16px',
+                fontWeight: '600',
+                cursor: 'pointer',
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                boxShadow: '0 4px 12px rgba(208, 154, 30, 0.2)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)'
+                e.currentTarget.style.boxShadow = '0 8px 24px rgba(208, 154, 30, 0.3)'
+                e.currentTarget.style.background = 'linear-gradient(135deg, #E5A82A 0%, #C69A0F 100%)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0) scale(1)'
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(208, 154, 30, 0.2)'
+                e.currentTarget.style.background = 'linear-gradient(135deg, #D09A1E 0%, #B8860B 100%)'
+              }}
             >
-              Înapoi la Dashboard
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+              Publică Anunț
             </button>
           </div>
         </div>
@@ -264,6 +382,21 @@ export default function AddListingPage() {
             <option value='Artă'>Artă</option>
           </select>
         </div>
+
+        {/* Documents option */}
+        <div style={{ marginBottom: 20 }}>
+          <label style={{ display: 'block', marginBottom: 5, fontWeight: 600 }}>Acte *</label>
+          <select 
+            required 
+            value={form.hasDocuments} 
+            onChange={(e)=>setForm({...form,hasDocuments:e.target.value})} 
+            style={{ width: '100%', padding: 12, border:'1px solid #ddd', borderRadius: 8 }}
+          >
+            <option value=''>Selectează</option>
+            <option value='Cu acte'>Cu acte</option>
+            <option value='Fără acte'>Fără acte</option>
+          </select>
+        </div>
         
         {/* Brand selection for watches */}
         {form.category === 'Ceasuri' && (
@@ -281,6 +414,27 @@ export default function AddListingPage() {
             </select>
             <p style={{ fontSize: '0.8em', color: '#666', marginTop: 5 }}>
               Selectează brandul ceasului pentru a ajuta cumpărătorii să îl găsească mai ușor.
+            </p>
+          </div>
+        )}
+
+        {/* Material selection for watches */}
+        {form.category === 'Ceasuri' && (
+          <div style={{ marginBottom: 20 }}>
+            <label style={{ display: 'block', marginBottom: 5, fontWeight: 600 }}>Material Ceas *</label>
+            <select 
+              required 
+              value={form.material} 
+              onChange={(e)=>setForm({...form,material:e.target.value})} 
+              style={{ width: '100%', padding: 12, border:'1px solid #ddd', borderRadius: 8 }}
+            >
+              <option value=''>Selectează materialul</option>
+              {WATCH_MATERIALS.map((material) => (
+                <option key={material} value={material}>{material}</option>
+              ))}
+            </select>
+            <p style={{ fontSize: '0.8em', color: '#666', marginTop: 5 }}>
+              Materialul din care este făcut ceasul (carcasă și brățară).
             </p>
           </div>
         )}
