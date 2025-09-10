@@ -46,8 +46,8 @@ export default function DashboardPage() {
   if (loading) return <div style={{ textAlign: 'center', padding: '100px' }}>Loading...</div>
 
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--surface)', padding: '40px 20px' }}>
-      <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+    <div style={{ minHeight: '100vh', background: 'var(--surface)', padding: '40px 20px', overflow: 'visible' }}>
+      <div style={{ maxWidth: '800px', margin: '0 auto', overflow: 'visible' }}>
         <div style={{ background: '#fff', padding: '32px', borderRadius: '16px', marginBottom: '24px' }}>
           <h1 style={{ marginBottom: '16px' }}>{getGreeting()}, {getUserDisplayName()}!</h1>
           <p style={{ color: 'var(--muted)', marginBottom: '20px' }}>Bine ai venit în dashboard-ul tău LuxBid.</p>
@@ -58,7 +58,8 @@ export default function DashboardPage() {
         <div style={{ 
           background: '#fff', 
           padding: isMobile ? '20px' : '32px', 
-          borderRadius: '16px' 
+          borderRadius: '16px',
+          overflow: 'visible'
         }}>
           <h2 style={{ margin: '0 0 24px 0', fontSize: '24px', fontWeight: '600', color: '#333' }}>Acțiuni rapide</h2>
           <div style={{ 
@@ -67,7 +68,8 @@ export default function DashboardPage() {
             gap: isMobile ? '12px' : '16px', 
             marginTop: '20px',
             maxWidth: '100%',
-            overflow: 'hidden'
+            overflow: 'visible',
+            padding: '12px 8px 48px 8px'
           }}>
             <a 
               href="/dashboard/add-listing" 
