@@ -699,13 +699,21 @@ function OfertesContent() {
                 onClick={() => window.location.href = `/oferte/${listing.id}`}
               >
                 {/* Image */}
-                <div style={{ position: 'relative', height: '240px', overflow: 'hidden' }}>
+                <div style={{ 
+                  position: 'relative', 
+                  height: '280px', 
+                  overflow: 'hidden',
+                  borderRadius: '12px 12px 0 0'
+                }}>
                   <ListingImage
                     src={listing.images && listing.images.length > 0 ? listing.images[0] : null}
                     alt={listing.title}
                     category={listing.category}
                     priority={false} // Lazy loading pentru performanță
                     style={{ 
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
                       transition: 'transform 0.3s ease'
                     }}
                   />

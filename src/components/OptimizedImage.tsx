@@ -181,8 +181,7 @@ export function ListingImage({
     <OptimizedImage
       src={src || getRandomPlaceholder(category)}
       alt={alt}
-      width={width}
-      height={height}
+      fill={true}
       fallbackSrc={getRandomPlaceholder(category)}
       priority={priority}
       placeholder="blur"
@@ -190,6 +189,7 @@ export function ListingImage({
       className={className}
       style={style}
       onClick={onClick}
+      objectFit="cover"
       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
     />
   )
