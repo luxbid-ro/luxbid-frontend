@@ -299,7 +299,18 @@ export default function ListingDetailPage() {
         }}>
           {/* Coloana imaginilor */}
           <div>
-            <LazyImageGallery images={images} />
+            <LazyImageGallery 
+              images={images} 
+              listing={listing ? {
+                id: listing.id,
+                title: listing.title,
+                price: listing.desiredPrice || 0,
+                currency: listing.currency || 'RON',
+                category: listing.category,
+                condition: listing.condition,
+                brand: listing.brand
+              } : undefined}
+            />
           </div>
           
           {/* Coloana detaliilor */}

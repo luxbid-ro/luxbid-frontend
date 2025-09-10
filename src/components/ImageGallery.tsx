@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import ImageMagnifier from './ImageMagnifier'
 import { GalleryImage } from './OptimizedImage'
+import { useFavorites, FavoriteListing } from '@/hooks/useFavorites'
 
 interface ImageGalleryProps {
   images: Array<{
@@ -10,13 +11,25 @@ interface ImageGalleryProps {
     isPrimary: boolean
   }>
   className?: string
+  listing?: {
+    id: string
+    title: string
+    price: number
+    currency: string
+    category: string
+    condition?: string
+    brand?: string
+  }
 }
 
-export default function ImageGallery({ images, className = '' }: ImageGalleryProps) {
+export default function ImageGallery({ images, className = '', listing }: ImageGalleryProps) {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [showZoom, setShowZoom] = useState(false)
   const [isMagnifierActive, setIsMagnifierActive] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  
+  // Hook pentru sistemul real de favorite
+  const { isFavorite, toggleFavorite } = useFavorites()
 
   // Detectez mobile pentru a dezactiva magnifier-ul
   React.useEffect(() => {
@@ -171,16 +184,30 @@ export default function ImageGallery({ images, className = '' }: ImageGalleryPro
             <button
               onClick={(e) => {
                 e.stopPropagation()
-                // Simulez toggle favorite
-                const currentFilled = e.currentTarget.getAttribute('data-filled') === 'true'
-                const newFilled = !currentFilled
-                e.currentTarget.setAttribute('data-filled', String(newFilled))
                 
-                // Schimb culoarea inimii
+                if (!listing) {
+                  console.warn('No listing data provided for favorites')
+                  return
+                }
+                
+                // Folosesc sistemul real de favorite
+                const favoriteListing: FavoriteListing = {
+                  id: listing.id,
+                  title: listing.title,
+                  price: listing.price,
+                  currency: listing.currency,
+                  category: listing.category,
+                  condition: listing.condition || 'Foarte bună',
+                  brand: listing.brand
+                }
+                
+                const isNowFavorite = toggleFavorite(favoriteListing)
+                
+                // Schimb culoarea inimii bazat pe starea reală
                 const svg = e.currentTarget.querySelector('svg')
                 if (svg) {
-                  svg.style.fill = newFilled ? '#ff4757' : 'none'
-                  svg.style.stroke = newFilled ? '#ff4757' : 'currentColor'
+                  svg.style.fill = isNowFavorite ? '#ff4757' : 'none'
+                  svg.style.stroke = isNowFavorite ? '#ff4757' : 'currentColor'
                 }
                 
                 // Feedback vizual
@@ -189,9 +216,9 @@ export default function ImageGallery({ images, className = '' }: ImageGalleryPro
                   e.currentTarget.style.transform = 'scale(1)'
                 }, 150)
                 
-                console.log('❤️ Favorite toggled:', newFilled ? 'Added' : 'Removed')
+                console.log('❤️ Favorite toggled:', isNowFavorite ? 'Added' : 'Removed')
               }}
-              data-filled="false"
+              data-filled={listing ? String(isFavorite(listing.id)) : "false"}
               style={{
                 background: 'rgba(255, 255, 255, 0.9)',
                 border: 'none',
@@ -215,7 +242,14 @@ export default function ImageGallery({ images, className = '' }: ImageGalleryPro
                 e.currentTarget.style.transform = filled ? 'scale(1)' : 'scale(1)'
               }}
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg 
+                width="18" 
+                height="18" 
+                viewBox="0 0 24 24" 
+                fill={listing && isFavorite(listing.id) ? '#ff4757' : 'none'} 
+                stroke={listing && isFavorite(listing.id) ? '#ff4757' : 'currentColor'} 
+                strokeWidth="2"
+              >
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
               </svg>
             </button>
