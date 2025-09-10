@@ -57,11 +57,22 @@ export function useAuth() {
             isVerified: userData.isVerified || false,
           })
 
-          // If user is not verified, redirect to verification page
+          // If user is not verified, check if they just verified locally
           if (!userData.isVerified) {
-            localStorage.removeItem('luxbid_token')
-            localStorage.removeItem('luxbid_user_id')
-            router.push(`/auth/verify-email?email=${encodeURIComponent(userData.email)}`)
+            const localVerified = localStorage.getItem('luxbid_user_verified')
+            
+            // If locally marked as verified, give a grace period (user just verified)
+            if (localVerified === 'true') {
+              console.log('User locally verified, giving grace period for database sync')
+              // Give 5 seconds for database to sync, then recheck
+              setTimeout(() => {
+                window.location.reload()
+              }, 5000)
+            } else {
+              localStorage.removeItem('luxbid_token')
+              localStorage.removeItem('luxbid_user_id')
+              router.push(`/auth/verify-email?email=${encodeURIComponent(userData.email)}`)
+            }
           }
         } else {
           // Token is invalid
