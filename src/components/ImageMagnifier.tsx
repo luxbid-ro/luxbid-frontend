@@ -83,15 +83,22 @@ export default function ImageMagnifier({
     setMousePosition({ x, y })
 
     // Calculez pozitia magnifier-ului cu offset pentru a evita overlapping
-    let magnifierX = e.clientX + 20
+    const windowWidth = window.innerWidth
+    const windowHeight = window.innerHeight
+    
+    // Determin pe ce parte să plasez magnifier-ul bazat pe poziția mouse-ului în imagine
+    const imageMiddleX = rect.width / 2
+    const isMouseOnLeftSide = x < imageMiddleX
+    
+    let magnifierX = isMouseOnLeftSide ? e.clientX + 20 : e.clientX - magnifierSize - 20
     let magnifierY = e.clientY - magnifierSize / 2
 
     // Verific marginile ecranului și ajustez poziția
-    const windowWidth = window.innerWidth
-    const windowHeight = window.innerHeight
-
     if (magnifierX + magnifierSize > windowWidth) {
       magnifierX = e.clientX - magnifierSize - 20
+    }
+    if (magnifierX < 0) {
+      magnifierX = e.clientX + 20
     }
     if (magnifierY < 0) {
       magnifierY = 10
@@ -205,7 +212,7 @@ export default function ImageMagnifier({
             background: '#fff',
             backgroundImage: `url(${src})`,
             backgroundRepeat: 'no-repeat',
-            backgroundSize: `${(imageRef.current?.offsetWidth || width) * zoomLevel}px ${(imageRef.current?.offsetHeight || height) * zoomLevel}px`,
+            backgroundSize: `${(imageRef.current?.clientWidth || width) * zoomLevel}px ${(imageRef.current?.clientHeight || height) * zoomLevel}px`,
             backgroundPosition: `
               -${(mousePosition.x * zoomLevel) - magnifierSize / 2}px 
               -${(mousePosition.y * zoomLevel) - magnifierSize / 2}px
