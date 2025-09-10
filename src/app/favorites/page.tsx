@@ -18,28 +18,14 @@ interface FavoriteListing {
 
 export default function FavoritesPage() {
   const router = useRouter()
-  const { favorites, loading, removeFromFavorites, cleanupOrphanedFavorites } = useFavorites()
+  const { favorites, loading, removeFromFavorites } = useFavorites()
   const [error, setError] = React.useState<string | null>(null)
-  const [isCleaningUp, setIsCleaningUp] = React.useState(false)
   
   // Force cache bust - ensure fresh build deployment
   React.useEffect(() => {
     console.log('✅ Favorites page - error state properly defined:', typeof error)
   }, [])
 
-  // Handle cleanup of orphaned favorites
-  const handleCleanup = async () => {
-    try {
-      setIsCleaningUp(true)
-      await cleanupOrphanedFavorites()
-      console.log('🧹 Cleanup completed successfully')
-    } catch (error) {
-      console.error('❌ Cleanup failed:', error)
-      setError('A apărut o eroare la curățarea favoritelor')
-    } finally {
-      setIsCleaningUp(false)
-    }
-  }
 
   // State for authentication
   const [isAuthenticated, setIsAuthenticated] = React.useState<boolean | null>(null)
@@ -121,92 +107,35 @@ export default function FavoritesPage() {
 
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px' }}>
         <div style={{ marginBottom: '30px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
-            <h1 style={{
-              fontSize: '32px',
-              fontWeight: '700',
-              color: '#333',
-              margin: 0,
-              display: 'flex',
-              alignItems: 'center',
-              gap: '12px'
-            }}>
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: '#e53e3e' }}>
-                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-              </svg>
-              Anunțurile mele favorite
-              {favorites.length > 0 && (
-                <span style={{
-                  background: '#D09A1E',
-                  color: '#fff',
-                  fontSize: '16px',
-                  fontWeight: '600',
-                  padding: '4px 12px',
-                  borderRadius: '20px',
-                  marginLeft: '8px'
-                }}>
-                  {favorites.length}
-                </span>
-              )}
-            </h1>
-            
+          <h1 style={{
+            fontSize: '32px',
+            fontWeight: '700',
+            color: '#333',
+            marginBottom: '10px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px'
+          }}>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: '#e53e3e' }}>
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+            Anunțurile mele favorite
             {favorites.length > 0 && (
-              <button
-                onClick={handleCleanup}
-                disabled={isCleaningUp}
-                style={{
-                  background: isCleaningUp ? '#ccc' : '#f1f5f9',
-                  color: isCleaningUp ? '#999' : '#475569',
-                  border: '1px solid #e2e8f0',
-                  padding: '8px 16px',
-                  borderRadius: '8px',
-                  fontSize: '14px',
-                  cursor: isCleaningUp ? 'not-allowed' : 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  transition: 'all 0.2s ease'
-                }}
-                onMouseEnter={(e) => {
-                  if (!isCleaningUp) {
-                    e.currentTarget.style.background = '#e2e8f0'
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!isCleaningUp) {
-                    e.currentTarget.style.background = '#f1f5f9'
-                  }
-                }}
-              >
-                {isCleaningUp ? (
-                  <>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ animation: 'spin 1s linear infinite' }}>
-                      <path d="M21 12a9 9 0 11-6.219-8.56"/>
-                    </svg>
-                    Se curăță...
-                  </>
-                ) : (
-                  <>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M3 6h18"/>
-                      <path d="m19 6-2 14c-1 1-3 1-4 1H8c-1 0-3 0-4-1L2 6"/>
-                      <path d="m8 6V4c0-1 0-2 1-2h6c1 0 1 1 1 2v2"/>
-                      <line x1="10" y1="11" x2="10" y2="17"/>
-                      <line x1="14" y1="11" x2="14" y2="17"/>
-                    </svg>
-                    Curăță anunțuri șterse
-                  </>
-                )}
-              </button>
-            )}
-          </div>
-          <p style={{ color: '#666', fontSize: '16px', margin: 0 }}>
-            Anunțurile pe care le-ai salvat pentru mai târziu
-            {favorites.length > 0 && (
-              <span style={{ opacity: 0.7, fontSize: '14px', marginLeft: '8px' }}>
-                • Folosește butonul de curățare pentru a elimina anunțurile șterse
+              <span style={{
+                background: '#D09A1E',
+                color: '#fff',
+                fontSize: '16px',
+                fontWeight: '600',
+                padding: '4px 12px',
+                borderRadius: '20px',
+                marginLeft: '8px'
+              }}>
+                {favorites.length}
               </span>
             )}
+          </h1>
+          <p style={{ color: '#666', fontSize: '16px' }}>
+            Anunțurile pe care le-ai salvat pentru mai târziu
           </p>
         </div>
 

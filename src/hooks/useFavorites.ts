@@ -102,11 +102,14 @@ export const useFavorites = () => {
           const parsedFavorites = JSON.parse(savedFavorites)
           setFavorites(parsedFavorites)
           
-          // Validate favorites against backend (but don't block UI)
+          // Always validate favorites against backend (seamless cleanup)
+          console.log('🔍 Auto-validating favorites for deleted listings...')
           validateFavorites(parsedFavorites).then(validatedFavorites => {
             if (validatedFavorites.length !== parsedFavorites.length) {
-              console.log(`🧹 Updated favorites: ${parsedFavorites.length} → ${validatedFavorites.length}`)
+              console.log(`🧹 Auto-cleaned favorites: ${parsedFavorites.length} → ${validatedFavorites.length}`)
               setFavorites(validatedFavorites)
+            } else {
+              console.log('✅ All favorites are valid')
             }
           }).catch(error => {
             console.warn('⚠️ Favorites validation failed:', error)
@@ -128,6 +131,27 @@ export const useFavorites = () => {
 
     loadFavorites()
   }, [validateFavorites])
+
+  // Periodic validation of favorites (every 5 minutes when tab is active)
+  useEffect(() => {
+    if (typeof window === 'undefined' || favorites.length === 0) return
+
+    const interval = setInterval(() => {
+      if (!document.hidden && favorites.length > 0) {
+        console.log('🔄 Periodic favorites validation...')
+        validateFavorites(favorites).then(validatedFavorites => {
+          if (validatedFavorites.length !== favorites.length) {
+            console.log(`🧹 Periodic cleanup: ${favorites.length} → ${validatedFavorites.length}`)
+            setFavorites(validatedFavorites)
+          }
+        }).catch(error => {
+          console.warn('⚠️ Periodic validation failed:', error)
+        })
+      }
+    }, 5 * 60 * 1000) // 5 minutes
+
+    return () => clearInterval(interval)
+  }, [favorites, validateFavorites])
 
   // Save favorites to localStorage (SSR safe)
   const saveFavorites = useCallback((newFavorites: FavoriteListing[], newFavoriteIds: Set<string>) => {
@@ -207,12 +231,6 @@ export const useFavorites = () => {
     saveFavorites([], new Set())
   }, [saveFavorites])
 
-  // Manual cleanup of orphaned favorites
-  const cleanupOrphanedFavorites = useCallback(async () => {
-    console.log('🧹 Starting manual cleanup of orphaned favorites...')
-    const validatedFavorites = await validateFavorites(favorites)
-    return validatedFavorites
-  }, [favorites, validateFavorites])
 
   // Get favorites count
   const favoritesCount = favorites.length
@@ -226,9 +244,7 @@ export const useFavorites = () => {
     removeFromFavorites,
     isFavorite,
     toggleFavorite,
-    clearAllFavorites,
-    cleanupOrphanedFavorites,
-    validateFavorites
+    clearAllFavorites
   }
 }
 
