@@ -216,8 +216,8 @@ export default function ImageMagnifier({
             backgroundRepeat: 'no-repeat',
             backgroundSize: `${imageSize.width * zoomLevel}px ${imageSize.height * zoomLevel}px`,
             backgroundPosition: `
-              -${(mousePosition.x * zoomLevel) - magnifierSize / 2}px 
-              -${(mousePosition.y * zoomLevel) - magnifierSize / 2}px
+              ${magnifierSize / 2 - mousePosition.x * zoomLevel}px 
+              ${magnifierSize / 2 - mousePosition.y * zoomLevel}px
             `,
             pointerEvents: 'none',
             zIndex: 1000,
