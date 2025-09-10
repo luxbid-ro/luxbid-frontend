@@ -22,6 +22,62 @@ export const useFavorites = () => {
   // Cache invalidation pentru favorites
   const { invalidateAPICache } = useCacheInvalidation()
 
+  // Validate favorites against backend to remove deleted listings
+  const validateFavorites = useCallback(async (favoritesToValidate: FavoriteListing[]) => {
+    try {
+      if (favoritesToValidate.length === 0) return favoritesToValidate
+
+      const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://luxbid-backend.onrender.com'
+      
+      // Check each favorite listing to see if it still exists
+      const validatedFavorites: FavoriteListing[] = []
+      const orphanedIds: string[] = []
+
+      for (const favorite of favoritesToValidate) {
+        try {
+          const response = await fetch(`${apiBaseUrl}/listings/${favorite.id}`)
+          if (response.ok) {
+            const listing = await response.json()
+            // Check if listing is still active (not deleted)
+            if (listing && listing.status !== 'REMOVED') {
+              validatedFavorites.push(favorite)
+            } else {
+              orphanedIds.push(favorite.id)
+              console.log(`🧹 Removing deleted/inactive listing from favorites: ${favorite.title}`)
+            }
+          } else if (response.status === 404) {
+            // Listing doesn't exist anymore
+            orphanedIds.push(favorite.id)
+            console.log(`🧹 Removing deleted listing from favorites: ${favorite.title}`)
+          } else {
+            // Keep the favorite if we can't verify (network issues, etc.)
+            validatedFavorites.push(favorite)
+          }
+        } catch (error) {
+          // Keep the favorite if there's a network error
+          console.warn(`⚠️ Could not validate favorite ${favorite.id}:`, error)
+          validatedFavorites.push(favorite)
+        }
+      }
+
+      // If we found orphaned favorites, clean them up
+      if (orphanedIds.length > 0) {
+        console.log(`🧹 Cleaned up ${orphanedIds.length} orphaned favorites`)
+        const cleanedFavoriteIds = new Set(favoriteIds)
+        orphanedIds.forEach(id => cleanedFavoriteIds.delete(id))
+        
+        // Update storage with cleaned favorites
+        saveFavorites(validatedFavorites, cleanedFavoriteIds)
+      }
+
+      return validatedFavorites
+    } catch (error) {
+      console.error('❌ Error validating favorites:', error)
+      // Return original favorites if validation fails
+      return favoritesToValidate
+    }
+  }, [favoriteIds])
+
   const getStorageKey = (suffix: string) => {
     if (typeof window === 'undefined') return `luxbid_${suffix}_server`
     
@@ -32,7 +88,7 @@ export const useFavorites = () => {
 
   // Load favorites from localStorage (SSR safe)
   useEffect(() => {
-    const loadFavorites = () => {
+    const loadFavorites = async () => {
       try {
         if (typeof window === 'undefined') {
           setLoading(false)
@@ -45,6 +101,16 @@ export const useFavorites = () => {
         if (savedFavorites) {
           const parsedFavorites = JSON.parse(savedFavorites)
           setFavorites(parsedFavorites)
+          
+          // Validate favorites against backend (but don't block UI)
+          validateFavorites(parsedFavorites).then(validatedFavorites => {
+            if (validatedFavorites.length !== parsedFavorites.length) {
+              console.log(`🧹 Updated favorites: ${parsedFavorites.length} → ${validatedFavorites.length}`)
+              setFavorites(validatedFavorites)
+            }
+          }).catch(error => {
+            console.warn('⚠️ Favorites validation failed:', error)
+          })
         }
 
         if (savedFavoriteIds) {
@@ -61,7 +127,7 @@ export const useFavorites = () => {
     }
 
     loadFavorites()
-  }, [])
+  }, [validateFavorites])
 
   // Save favorites to localStorage (SSR safe)
   const saveFavorites = useCallback((newFavorites: FavoriteListing[], newFavoriteIds: Set<string>) => {
@@ -141,6 +207,13 @@ export const useFavorites = () => {
     saveFavorites([], new Set())
   }, [saveFavorites])
 
+  // Manual cleanup of orphaned favorites
+  const cleanupOrphanedFavorites = useCallback(async () => {
+    console.log('🧹 Starting manual cleanup of orphaned favorites...')
+    const validatedFavorites = await validateFavorites(favorites)
+    return validatedFavorites
+  }, [favorites, validateFavorites])
+
   // Get favorites count
   const favoritesCount = favorites.length
 
@@ -153,7 +226,9 @@ export const useFavorites = () => {
     removeFromFavorites,
     isFavorite,
     toggleFavorite,
-    clearAllFavorites
+    clearAllFavorites,
+    cleanupOrphanedFavorites,
+    validateFavorites
   }
 }
 
