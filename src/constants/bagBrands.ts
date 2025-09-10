@@ -25,7 +25,8 @@ export const BAG_BRANDS = [
   'Salvatore Ferragamo',
   'Staud',
   'Valentino',
-  'Versace'
+  'Versace',
+  'Altul'
 ] as const;
 
 export type BagBrand = typeof BAG_BRANDS[number];

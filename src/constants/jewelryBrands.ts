@@ -9,7 +9,8 @@ export const JEWELRY_BRANDS = [
   'Mikimoto',
   'Piaget',
   'Tiffany & Co.',
-  'Van Cleef & Arpels'
+  'Van Cleef & Arpels',
+  'Altul'
 ] as const;
 
 export type JewelryBrand = typeof JEWELRY_BRANDS[number];

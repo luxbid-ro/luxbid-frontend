@@ -25,7 +25,8 @@ export const WATCH_BRANDS = [
   'Tudor',
   'Ulysse Nardin',
   'Vacheron Constantin',
-  'Zenith'
+  'Zenith',
+  'Altul'
 ] as const;
 
 export type WatchBrand = typeof WATCH_BRANDS[number];

@@ -21,7 +21,8 @@ const WATCH_MATERIALS = [
   'Ceramică',
   'Bronz',
   'Aluminiu',
-  'Tantalum'
+  'Tantalum',
+  'Altul'
 ] as const
 
 export default function AddListingPage() {
