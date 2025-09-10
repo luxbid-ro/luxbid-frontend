@@ -64,7 +64,7 @@ export default function ImageGallery({ images, className = '' }: ImageGalleryPro
 
   return (
     <div className={className}>
-      {/* Imaginea principală cu Magnifier */}
+      {/* Imaginea principală cu Magnifier și controale */}
       <div style={{ marginBottom: 15, position: 'relative' }}>
         <div 
           style={{ 
@@ -77,6 +77,158 @@ export default function ImageGallery({ images, className = '' }: ImageGalleryPro
             setIsMagnifierActive(false)
           }}
         >
+          
+          {/* Săgeți navigare - stânga */}
+          {sortedImages.length > 1 && selectedIndex > 0 && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                setSelectedIndex(prev => prev - 1)
+              }}
+              style={{
+                position: 'absolute',
+                left: 12,
+                top: '50%',
+                transform: 'translateY(-50%)',
+                background: 'rgba(255, 255, 255, 0.9)',
+                border: 'none',
+                borderRadius: '50%',
+                width: 40,
+                height: 40,
+                cursor: 'pointer',
+                zIndex: 100,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 1)'
+                e.currentTarget.style.transform = 'translateY(-50%) scale(1.05)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)'
+                e.currentTarget.style.transform = 'translateY(-50%) scale(1)'
+              }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M15 18l-6-6 6-6"/>
+              </svg>
+            </button>
+          )}
+
+          {/* Săgeți navigare - dreapta */}
+          {sortedImages.length > 1 && selectedIndex < sortedImages.length - 1 && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                setSelectedIndex(prev => prev + 1)
+              }}
+              style={{
+                position: 'absolute',
+                right: 12,
+                top: '50%',
+                transform: 'translateY(-50%)',
+                background: 'rgba(255, 255, 255, 0.9)',
+                border: 'none',
+                borderRadius: '50%',
+                width: 40,
+                height: 40,
+                cursor: 'pointer',
+                zIndex: 100,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 1)'
+                e.currentTarget.style.transform = 'translateY(-50%) scale(1.05)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)'
+                e.currentTarget.style.transform = 'translateY(-50%) scale(1)'
+              }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M9 18l6-6-6-6"/>
+              </svg>
+            </button>
+          )}
+
+          {/* Butoane inimioară și share - top right */}
+          <div style={{
+            position: 'absolute',
+            top: 12,
+            right: 12,
+            display: 'flex',
+            gap: 8,
+            zIndex: 200
+          }}>
+            {/* Buton inimioară */}
+            <button
+              style={{
+                background: 'rgba(255, 255, 255, 0.9)',
+                border: 'none',
+                borderRadius: '50%',
+                width: 40,
+                height: 40,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 1)'
+                e.currentTarget.style.transform = 'scale(1.05)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)'
+                e.currentTarget.style.transform = 'scale(1)'
+              }}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            </button>
+
+            {/* Buton share */}
+            <button
+              style={{
+                background: 'rgba(255, 255, 255, 0.9)',
+                border: 'none',
+                borderRadius: '50%',
+                width: 40,
+                height: 40,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 1)'
+                e.currentTarget.style.transform = 'scale(1.05)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)'
+                e.currentTarget.style.transform = 'scale(1)'
+              }}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="18" cy="5" r="3"></circle>
+                <circle cx="6" cy="12" r="3"></circle>
+                <circle cx="18" cy="19" r="3"></circle>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+              </svg>
+            </button>
+          </div>
           {isMobile ? (
             // Pe mobile afișez doar imaginea simplă cu click pentru zoom
             <img
@@ -107,7 +259,8 @@ export default function ImageGallery({ images, className = '' }: ImageGalleryPro
               style={{
                 width: '100%',
                 height: '400px',
-                borderRadius: '12px'
+                borderRadius: '12px',
+                cursor: 'zoom-in' // Indică că se poate face click pentru zoom
               }}
             />
           )}
@@ -131,49 +284,16 @@ export default function ImageGallery({ images, className = '' }: ImageGalleryPro
             </div>
           )}
           
-          {/* Click pentru zoom complet - întotdeauna vizibil, cu z-index mare pentru a fi deasupra magnifier-ului */}
-          <button
-            onClick={() => setShowZoom(true)}
-            onMouseEnter={() => setIsMagnifierActive(false)} // Dezactivez magnifier-ul când intru pe buton
-            style={{
-              position: 'absolute',
-              top: 12,
-              right: 12,
-              background: 'rgba(0, 0, 0, 0.8)',
-              color: '#fff',
-              border: 'none',
-              padding: '8px 12px',
-              borderRadius: '20px',
-              fontSize: '12px',
-              fontWeight: '500',
-              cursor: 'pointer',
-              backdropFilter: 'blur(4px)',
-              zIndex: 1500, // Mai mare decât magnifier-ul (1000)
-              transition: 'all 0.2s ease',
-              pointerEvents: 'auto' // Asigur că butonul este clickabil
-            }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.background = 'rgba(208, 154, 30, 0.9)'
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.background = 'rgba(0, 0, 0, 0.8)'
-            }}
-          >
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: '6px' }}>
-                <circle cx="11" cy="11" r="8"></circle>
-                <path d="m21 21-4.35-4.35"></path>
-              </svg>
-              {isMobile ? 'Zoom' : 'Zoom complet'}
-          </button>
         </div>
       </div>
 
-      {/* Thumbnails */}
+      {/* Thumbnails - Chrono24 style: mari și pătrați */}
       {sortedImages.length > 1 && (
         <div style={{ 
           display: 'grid', 
           gridTemplateColumns: `repeat(${Math.min(sortedImages.length, 6)}, 1fr)`, 
-          gap: 8 
+          gap: 12,
+          marginTop: 16
         }}>
           {sortedImages.map((image, index) => (
             <div
@@ -183,12 +303,26 @@ export default function ImageGallery({ images, className = '' }: ImageGalleryPro
                 borderRadius: 8,
                 overflow: 'hidden',
                 cursor: 'pointer',
-                border: selectedIndex === index ? '3px solid #9a7b0f' : '1px solid #ddd',
-                opacity: selectedIndex === index ? 1 : 0.7,
+                border: selectedIndex === index ? '3px solid #9a7b0f' : '2px solid #e5e5e5',
+                opacity: selectedIndex === index ? 1 : 0.8,
                 background: '#f5f5f5',
-                height: 60
+                height: 100, // Mărit de la 60 la 100px
+                aspectRatio: '1', // Forțez pătratul perfect
+                transition: 'all 0.2s ease'
               }}
               onClick={() => setSelectedIndex(index)}
+              onMouseEnter={(e) => {
+                if (selectedIndex !== index) {
+                  e.currentTarget.style.opacity = '0.9'
+                  e.currentTarget.style.borderColor = '#ccc'
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (selectedIndex !== index) {
+                  e.currentTarget.style.opacity = '0.8'
+                  e.currentTarget.style.borderColor = '#e5e5e5'
+                }
+              }}
             >
               <img
                 src={image.imageUrl}
@@ -203,13 +337,13 @@ export default function ImageGallery({ images, className = '' }: ImageGalleryPro
               {image.isPrimary && (
                 <div style={{
                   position: 'absolute',
-                  top: 2,
-                  left: 2,
+                  top: 4,
+                  left: 4,
                   background: '#9a7b0f',
                   color: 'white',
-                  borderRadius: 2,
-                  width: 8,
-                  height: 8
+                  borderRadius: 3,
+                  width: 12,
+                  height: 12
                 }} />
               )}
             </div>
