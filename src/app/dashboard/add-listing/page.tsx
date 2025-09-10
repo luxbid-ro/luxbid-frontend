@@ -25,9 +25,18 @@ const WATCH_MATERIALS = [
   'Altul'
 ] as const
 
+// Condition options for all items
+const CONDITION_OPTIONS = [
+  'Nou',
+  'Aproape nou',
+  'Folosit în stare foarte bună',
+  'Folosit în stare bună',
+  'Folosit cu urme de uzură'
+] as const
+
 export default function AddListingPage() {
   const router = useRouter()
-  const [form, setForm] = useState({ title: '', description: '', category: '', brand: '', desiredPrice: '', currency: 'RON', hasDocuments: '', material: '' })
+  const [form, setForm] = useState({ title: '', description: '', category: '', brand: '', desiredPrice: '', currency: 'RON', hasDocuments: '', material: '', condition: '' })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [step, setStep] = useState(1) // 1: Create listing, 2: Upload images
@@ -481,7 +490,7 @@ export default function AddListingPage() {
         {/* Documents option - appears after material selection for watches */}
         {form.category === 'Ceasuri' && (
           <div style={{ marginBottom: 20 }}>
-            <label style={{ display: 'block', marginBottom: 5, fontWeight: 600 }}>Acte *</label>
+            <label style={{ display: 'block', marginBottom: 5, fontWeight: 600 }}>Documente *</label>
             <select 
               required 
               value={form.hasDocuments} 
@@ -521,7 +530,7 @@ export default function AddListingPage() {
         {/* Documents option for bags */}
         {form.category === 'Genți' && (
           <div style={{ marginBottom: 20 }}>
-            <label style={{ display: 'block', marginBottom: 5, fontWeight: 600 }}>Acte *</label>
+            <label style={{ display: 'block', marginBottom: 5, fontWeight: 600 }}>Documente *</label>
             <select 
               required 
               value={form.hasDocuments} 
@@ -561,7 +570,7 @@ export default function AddListingPage() {
         {/* Documents option for jewelry */}
         {form.category === 'Bijuterii' && (
           <div style={{ marginBottom: 20 }}>
-            <label style={{ display: 'block', marginBottom: 5, fontWeight: 600 }}>Acte *</label>
+            <label style={{ display: 'block', marginBottom: 5, fontWeight: 600 }}>Documente *</label>
             <select 
               required 
               value={form.hasDocuments} 
@@ -581,7 +590,7 @@ export default function AddListingPage() {
         {/* Documents option for art category */}
         {form.category === 'Artă' && (
           <div style={{ marginBottom: 20 }}>
-            <label style={{ display: 'block', marginBottom: 5, fontWeight: 600 }}>Acte *</label>
+            <label style={{ display: 'block', marginBottom: 5, fontWeight: 600 }}>Documente *</label>
             <select 
               required 
               value={form.hasDocuments} 
@@ -597,6 +606,25 @@ export default function AddListingPage() {
             </p>
           </div>
         )}
+        
+        {/* Condition field for all categories */}
+        <div style={{ marginBottom: 20 }}>
+          <label style={{ display: 'block', marginBottom: 5, fontWeight: 600 }}>Stare *</label>
+          <select 
+            required 
+            value={form.condition} 
+            onChange={(e)=>setForm({...form,condition:e.target.value})} 
+            style={{ width: '100%', padding: 12, border:'1px solid #ddd', borderRadius: 8 }}
+          >
+            <option value=''>Selectează starea</option>
+            {CONDITION_OPTIONS.map((condition) => (
+              <option key={condition} value={condition}>{condition}</option>
+            ))}
+          </select>
+          <p style={{ fontSize: '0.8em', color: '#666', marginTop: 5 }}>
+            Descrie starea actuală a obiectului pentru a ajuta cumpărătorii să ia o decizie informată.
+          </p>
+        </div>
         
         {/* Preț dorit */}
         <div style={{ marginBottom: 20 }}>
