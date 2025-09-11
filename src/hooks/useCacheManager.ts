@@ -96,14 +96,8 @@ export function useCacheManager() {
             isUpdateAvailable: true 
           }))
           
-          // Optional: Auto-refresh după 3 secunde pentru Apple devices
-          setTimeout(() => {
-            if (navigator.userAgent.includes('iPhone') || 
-                navigator.userAgent.includes('iPad') || 
-                navigator.userAgent.includes('Safari')) {
-              forceRefresh()
-            }
-          }, 3000)
+          // Nu auto-refresh pentru a evita loop-uri infinite
+          console.log('🍎 Update available for Apple device, waiting for user action')
           break
 
         case 'FORCE_RELOAD':
@@ -123,7 +117,7 @@ export function useCacheManager() {
                          navigator.userAgent.includes('Safari')
     
     if (isAppleDevice) {
-      const interval = setInterval(checkForUpdates, 2 * 60 * 1000) // 2 minute
+      const interval = setInterval(checkForUpdates, 10 * 60 * 1000) // 10 minute pentru a evita loop-uri
       return () => {
         clearInterval(interval)
         navigator.serviceWorker.removeEventListener('message', handleServiceWorkerMessage)
@@ -143,7 +137,7 @@ export function useCacheManager() {
   }
 }
 
-// 🍎 Apple Cache Buster - Hook special pentru Apple devices
+// 🍎 Apple Cache Buster - Hook special pentru Apple devices (optimizat)
 export function useAppleCacheBuster() {
   useEffect(() => {
     const isAppleDevice = navigator.userAgent.includes('iPhone') || 
@@ -151,26 +145,32 @@ export function useAppleCacheBuster() {
                          navigator.userAgent.includes('Safari')
 
     if (isAppleDevice) {
-      // Adaugă meta tag pentru a preveni cache-ul agresiv
-      const metaTag = document.createElement('meta')
-      metaTag.httpEquiv = 'Cache-Control'
-      metaTag.content = 'no-cache, no-store, must-revalidate'
-      document.head.appendChild(metaTag)
+      // Verifică dacă meta tag-urile nu există deja
+      const existingCacheControl = document.querySelector('meta[http-equiv="Cache-Control"]')
+      const existingPragma = document.querySelector('meta[http-equiv="Pragma"]')
+      
+      if (!existingCacheControl && !existingPragma) {
+        // Adaugă meta tag-uri mai puțin agresive
+        const metaTag = document.createElement('meta')
+        metaTag.httpEquiv = 'Cache-Control'
+        metaTag.content = 'max-age=300, must-revalidate' // 5 minute cache cu revalidare
+        document.head.appendChild(metaTag)
 
-      const pragmaTag = document.createElement('meta')
-      pragmaTag.httpEquiv = 'Pragma'
-      pragmaTag.content = 'no-cache'
-      document.head.appendChild(pragmaTag)
+        const pragmaTag = document.createElement('meta')
+        pragmaTag.httpEquiv = 'Pragma'
+        pragmaTag.content = 'no-cache'
+        document.head.appendChild(pragmaTag)
 
-      const expiresTag = document.createElement('meta')
-      expiresTag.httpEquiv = 'Expires'
-      expiresTag.content = '0'
-      document.head.appendChild(expiresTag)
+        console.log('🍎 Applied Apple cache optimization')
 
-      return () => {
-        document.head.removeChild(metaTag)
-        document.head.removeChild(pragmaTag)
-        document.head.removeChild(expiresTag)
+        return () => {
+          try {
+            if (document.head.contains(metaTag)) document.head.removeChild(metaTag)
+            if (document.head.contains(pragmaTag)) document.head.removeChild(pragmaTag)
+          } catch (e) {
+            console.warn('Failed to remove meta tags:', e)
+          }
+        }
       }
     }
   }, [])
